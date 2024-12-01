@@ -20,18 +20,24 @@ const Navbar = () => {
             <Link to='/'  >
                 Home
             </Link>
+            <Link to='/blog'  >
+                Blog
+            </Link>
             { user ? 
             <>
+            {user.role === 'ADMIN' && 
+            <>
+            <Link to='/admin'>
+                Admin
+            </Link> 
+           
+            </>}
             <Link to='/account'>
                 Account
             </Link>
             <Link to='/' onClick={handleLogout}>
                 Logout
             </Link>
-            {user.role === 'ADMIN' && 
-            <Link to='/create-blog'>
-                Create Blogpost
-            </Link> }
             </>
             : 
             <>

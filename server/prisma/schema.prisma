@@ -44,9 +44,13 @@ model User{
 model Blogpost{
   id  Int  @id@default(autoincrement())
   title String
-  authorId  Int
+  userId  Int
   createdAt  DateTime  @default(now())
-  user  User  @relation(fields:[authorId], references:[id])
+  content  String
+  category  String
+  city  String?
+  country  String?
+  user  User  @relation(fields:[userId], references:[id])
   comments  Comment[]
   isPublished  Boolean  @default(false)
 }

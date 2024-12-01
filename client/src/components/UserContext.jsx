@@ -5,9 +5,11 @@ import { useNavigate } from 'react-router-dom';
 const UserContext = createContext();
 
 
+
 export const UserProvider = ({children}) => {
     const [user, setUser] = useState(null);
     const navigate = useNavigate();
+    const [loadingState, setLoadingState] = useState(true);
     useEffect(()=>{
         const checkAuthentication = async () => {
             try {
@@ -31,18 +33,19 @@ export const UserProvider = ({children}) => {
             } catch (err) {
                 console.error('Error checking authentication', err);
                 setUser(null);
+            } finally {
+                setLoadingState(false);
             }
         };
-        if (!user){
-            checkAuthentication();
-        }
-    }, [user])
+      
+        checkAuthentication();
+    }, [])
     
-    useEffect(()=>{
-        if (user){
-            console.log('User logged in: ', user)
-        }
-    }, [user, navigate])
+    // useEffect(()=>{
+    //     if (user){
+    //         console.log('User logged in: ', user)
+    //     }
+    // }, [user, navigate])
     
     
     
@@ -65,8 +68,8 @@ export const UserProvider = ({children}) => {
 
   return (
     <>
-        <UserContext.Provider value = {{user, loginUser, logoutUser}}>
-            {children}
+        <UserContext.Provider value = {{user, loginUser, logoutUser, loadingState}}>
+            {loadingState ? <p>Loading...</p> : children}
         </UserContext.Provider>
     </>
   )
