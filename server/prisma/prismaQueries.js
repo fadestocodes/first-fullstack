@@ -1,16 +1,27 @@
 import {PrismaClient} from '@prisma/client';
 import prisma from './prisma.js';
 
-async function addUser ( firstName, lastName, username, email, password ) {
+async function addUser ( userData) {
     return await prisma.user.create({
         data : {
-            firstName,
-            lastName,
-            username,
-            email,
-            password
+            firstName : userData.firstName || null ,
+            lastName : userData.lastName || null ,
+            username : userData.username || null,
+            email : userData.email || null,
+            password: userData.password || null,
+            googleId: userData.googleId || null,
+            role : userData.role || null,
+            picture : userData.picture || null
         }
 
+    })
+}
+
+async function findUser(email){
+    return await prisma.user.findUnique({
+        where : {
+            email : email
+        }
     })
 }
 
@@ -89,5 +100,37 @@ async function publishPost(postId){
     }
 }
 
+async function addComment({content, userId, blogId}){
+    return await prisma.comment.create({
+            data : {
+                content,
+                userId,
+                blogId
+            }
+    })
+}
 
-export {addUser, updateRole, addBlogpost, getAllPosts, getUnpublishPosts, getPublishPost, getSinglePost, publishPost};
+async function getAllComments(blogId){
+    return await prisma.comment.findMany({
+        where : {
+            blogId : blogId
+        },
+        include : {
+            users : {
+                select : {
+                    firstName : true,
+                    picture : true
+                }
+            }
+        },
+        orderBy : {
+            created : 'desc'
+        }
+    })
+}
+
+
+
+export {addUser, updateRole, addBlogpost, getAllPosts, 
+    getUnpublishPosts, getPublishPost, getSinglePost, publishPost, addComment, findUser,
+    getAllComments};

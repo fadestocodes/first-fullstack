@@ -6,17 +6,16 @@ import LocalStrategy from 'passport-local';
 import session from 'express-session';
 import prisma from './prisma/prisma.js';
 import { PrismaSessionStore } from '@quixo3/prisma-session-store';
-import { addBlogpost, addUser, getAllPosts, getPublishPost, getUnpublishPosts, getSinglePost, publishPost } from './prisma/prismaQueries.js';
+import { addBlogpost, addUser, getAllPosts, getPublishPost, getUnpublishPosts, getSinglePost, publishPost, addComment, findUser, getAllComments } from './prisma/prismaQueries.js';
 import jwt from 'jsonwebtoken';
 import * as dotenv from 'dotenv'
 import {Strategy as JwtStrategy, ExtractJwt } from 'passport-jwt';
 import cookieParser from 'cookie-parser';
 import {S3Client, ListBucketsCommand, PutObjectCommand} from '@aws-sdk/client-s3';
 import { getSignedUrl } from '@aws-sdk/s3-request-presigner';
-
-
+import {Strategy as GoogleStrategy} from 'passport-google-oauth20';
 import { updateRole } from './prisma/prismaQueries.js';
-
+import fetch from 'node-fetch';
 
 dotenv.config();
 const app = express();
@@ -103,6 +102,44 @@ passport.use(
     } )
 )
 
+passport.use(new GoogleStrategy({
+        clientID : process.env.GOOGLE_CLIENT_ID,
+        clientSecret : process.env.GOOGLE_CLIENT_SECRET,
+        callbackURL : 'http://localhost:5173/auth/google/callback'
+    },
+    async function (accessToken, refreshToken, profile, cb) {
+        try {
+            const { id, displayName, emails } = profile;
+            const nameParts = displayName.split(' ');
+            const firstName = nameParts[0];
+            const lastName = nameParts.slice(1).join(' ');
+            const email = emails[0].value;
+            let user = await prisma.user.findUnique({
+                where : {
+                    googleId : id
+                }
+            })
+            if (!user) {
+                user = await prisma.user.create({
+                    data : {
+                        googleId : id,
+                        firstName,
+                        lastName,
+                        email,
+                        role : 'GUEST'
+
+                    }
+                })
+            }
+            cb(null, user);
+        } catch (err) {
+            cb (err,null);
+        }
+
+
+    }
+));
+
 
 passport.serializeUser((user, done) => {
     done (null, user );
@@ -126,9 +163,22 @@ passport.deserializeUser(async (user,done) => {
 app.use(passport.initialize());
 // app.use(passport.session());
 app.use((req,res,next)=>{
+    res.setHeader('Cross-Origin-Opener-Policy', 'same-origin');
+    res.setHeader('Cross-Origin-Embedder-Policy', 'require-corp');
     res.locals.user = req.user;
     next();
 });
+
+app.get('/auth/google', passport.authenticate('google', {
+    scope : ['profile', 'email']
+}));
+
+app.get('/auth/google/callback', passport.authenticate('google', {session : false}), (req,res)=>{
+    if (!req.user){
+        return res.status(401).json({message : 'Google authentication failed'});
+    }
+    res.json({message : 'Google authentication success!', user: req.user});
+})
 
 
 app.get('/', (req,res)=>{
@@ -142,8 +192,15 @@ app.post('/sign-up', async (req,res)=>{
     const email = req.body.email;
     const password = req.body.password;
     const hashedPassword = await bcrypt.hash(password, 10);
+    const userData = {
+        firstName,
+        lastName,
+        username,
+        email,
+        password : hashedPassword
+    }
     try {
-        await addUser(firstName,lastName,username,email,hashedPassword);
+        await addUser( userData );
         res.json({message : 'Signed up successfully'});
 
     } catch (err) {
@@ -175,7 +232,7 @@ app.post('/login', (req,res, next)=>{
         res.cookie('token', token, {
             httpOnly : true,
             secure : process.env.NODE_ENV === 'production',
-            sameSite : 'Strict',
+            sameSite : 'none',
             maxAge : 1000*60*60
         });
         res.json({message : 'Login successful', user});
@@ -188,7 +245,7 @@ app.post('/logout', (req,res)=>{
     res.clearCookie('token', {
         httpOnly : true,
         secure : process.env.NODE_ENV === 'production',
-        sameSite : 'strict'
+        sameSite : 'none'
     })
     res.json({message : 'Successfully Logged Out'});
 })
@@ -244,7 +301,7 @@ app.post('/update-role', authenticateToken,  async (req,res)=>{
             'token', newToken, {
                 httpOnly : true,
                 secure : process.env.NODE_ENV === 'production',
-                sameSite : 'strict'
+                sameSite : 'none'
             }
         )
 
@@ -323,6 +380,77 @@ app.get('/get-post/:id', async (req,res)=>{
     res.json(post);
 })
 
+app.post('/comment', async (req,res)=>{
+    console.log(req.body);
+    const {firstName, lastName, email, comment, picture, blogId  } = req.body;
+    const googleId = req.body.sub;
+    const role = 'GUEST';
+
+    
+    let userId;
+
+    const userFromQuery = await findUser(email);
+    if (!userFromQuery){
+        try { 
+            const userData = {
+                firstName,
+                lastName : lastName || null,
+                email,
+                googleId,
+                role,
+                picture
+            }
+            console.log('userData is ', userData);
+
+            const addedUser = await addUser( userData);
+            console.log('addedUser is ', addedUser);
+            userId = addedUser.id;
+            console.log ('the user id from the try catch block is ', userId);
+        } catch (err) {
+            console.log('Problem adding user to db, probably already registered', err);
+        }
+
+    } else {
+        userId = userFromQuery.id;
+        console.log('User ID from else is ', userId);
+    }
+
+
+    console.log('blog ID type is ', typeof(blogId));
+
+
+
+    const addedComment = await addComment({
+        content : comment, 
+        userId,
+        blogId : Number(blogId)
+    });
+    console.log("added comment is ", addedComment);
+    res.json({addedComment});
+    
+})
+
+app.get('/comment/:id', async (req,res)=>{
+    const blogId = Number(req.params.id);
+    const allComments = await getAllComments(blogId);
+    console.log('all comments : ', allComments);
+    res.json(allComments);
+})
+    
+app.get('/image-proxy', async (req,res)=> {
+    const imageURL = req.query.url;
+    try {
+        const response = await fetch(imageURL);
+        const arrayBuffer = await response.arrayBuffer();
+        const buffer = Buffer.from(arrayBuffer);
+
+        res.set('Content-Type', response.headers.get('Content-Type'));
+        res.send(buffer);
+
+    } catch (err) {
+        res.status(500).send('Error fetching image');
+    }
+})
 
 
 app.listen(3000, ()=> console.log("Express App Listening on Port 3000"));

@@ -25,17 +25,20 @@ model Session{
 enum Role{
   REGULAR
   ADMIN
+  GUEST
 }
 
 model User{
   id  Int @id@default(autoincrement())
   firstName  String
-  lastName  String
-  username  String  @unique
+  lastName  String?
+  username  String?  @unique
   email  String  @unique
-  password  String
+  password  String?
+  googleId  String?  @unique
   role  Role  @default(REGULAR)
   createdAt  DateTime  @default(now())
+  picture  String?
   blogposts Blogpost[]
   comments  Comment[]
   sessions  Session[]
@@ -61,6 +64,9 @@ model Comment{
   created  DateTime  @default(now())
   userId  Int
   users  User  @relation(fields:[userId], references:[id])
+  parentCommentId  Int?
+  parentComment  Comment?  @relation("CommentReplies", fields:[parentCommentId], references: [id])
+  replies  Comment[]  @relation("CommentReplies")
   blogId  Int
   blogposts  Blogpost  @relation(fields:[blogId], references:[id])
 }
