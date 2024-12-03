@@ -1,6 +1,9 @@
 import React, {useState} from 'react'
 import TinyMCE from '../components/TinyMCE'
 import { useUser } from '../components/UserContext'
+import { Button } from '../components/ui/button';
+import {Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage} from '../components/ui/form'
+import {Input} from '../components/ui/input'
 
 const CreateBlog = () => {
     
@@ -78,12 +81,12 @@ const CreateBlog = () => {
                         <option  value= "other">Other</option>
                     </select>
                     </label>
-                <button type='submit'>Next</button>
+                <Button variant='default' type='submit'>Next</Button>
                 </form>
             </div>
         ) : (
             <div>
-                <button onClick={backToSetup} >Back To Setup</button><br />
+                <Button variant='default'  onClick={backToSetup} >Back To Setup</Button><br />
                 
                 < TinyMCE editorContent={editorContent}  setEditorContent={setEditorContent}  inputs ={inputs} ></TinyMCE>
             

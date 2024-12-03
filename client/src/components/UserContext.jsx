@@ -8,9 +8,10 @@ const UserContext = createContext();
 
 export const UserProvider = ({children}) => {
     const [user, setUser] = useState(null);
-    const navigate = useNavigate();
+    // const navigate = useNavigate();
     const [loadingState, setLoadingState] = useState(true);
     useEffect(()=>{
+        console.log('Running checkAuthentication()');
         const checkAuthentication = async () => {
             try {
                 const response = await fetch ('http://localhost:3000/authenticate', {
@@ -66,10 +67,15 @@ export const UserProvider = ({children}) => {
         }
     };
 
+
+    if (loadingState){
+        return <div>Loading...</div>;
+    }
+
   return (
     <>
-        <UserContext.Provider value = {{user, loginUser, logoutUser, loadingState}}>
-            {loadingState ? <p>Loading...</p> : children}
+        <UserContext.Provider value = {{user, loginUser, logoutUser}}>
+            { children}
         </UserContext.Provider>
     </>
   )

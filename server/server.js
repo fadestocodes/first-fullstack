@@ -192,6 +192,7 @@ app.post('/sign-up', async (req,res)=>{
     const email = req.body.email;
     const password = req.body.password;
     const hashedPassword = await bcrypt.hash(password, 10);
+    
     const userData = {
         firstName,
         lastName,
@@ -228,12 +229,12 @@ app.post('/login', (req,res, next)=>{
             {expiresIn : '1h'}
         )
 
-        console.log('Token from backend: ', token);
-        res.cookie('token', token, {
+        // console.log('Token from backend: ', token);
+        res.cookie('JWT', token, {
             httpOnly : true,
             secure : process.env.NODE_ENV === 'production',
-            sameSite : 'none',
-            maxAge : 1000*60*60
+            sameSite : 'strict',
+            maxAge : 1000*60*60,
         });
         res.json({message : 'Login successful', user});
     })(req,res,next);
@@ -242,10 +243,11 @@ app.post('/login', (req,res, next)=>{
 
 
 app.post('/logout', (req,res)=>{
-    res.clearCookie('token', {
+    console.log('cookei to be cleard: ', JSON.parse(req.cookies.g_state));
+    res.clearCookie('JWT', {
         httpOnly : true,
         secure : process.env.NODE_ENV === 'production',
-        sameSite : 'none'
+        sameSite : 'strict'
     })
     res.json({message : 'Successfully Logged Out'});
 })
@@ -265,16 +267,19 @@ app.get('/admin', (req,res,next) => {
 
 const authenticateToken = (req,res,next) => {
     
-    
-    const token =  req.cookies ? req.cookies.token : null ;
+    console.log('Req  Cookies is ', req.cookies);
+    const token =  req.cookies ? req.cookies.JWT : null ;
     if (!token) {
+        console.warn('Not token found in cookies');
         return res.status(200).json({user : null})
     }
     jwt.verify(token, process.env.JWT_KEY, (err, user) => {
         if (err){
+            console.error('Invalid token', err);
             return res.status(403).json({message : 'Invalid token'});
         }
         req.user = user;
+        console.log('Validated token user is ', req.user);
         next();
     });
 };
@@ -290,18 +295,16 @@ app.get('/authenticate', authenticateToken, (req,res)=>{
 
 
 app.post('/update-role', authenticateToken,  async (req,res)=>{
-    console.log("req body is ", req.body);
-    console.log("req body password is ", req.body.password);
     if (req.body.password === process.env.ADMIN_KEY) {
         const userId = req.body.id;
         const newRole = req.body.newRole;
         await updateRole(userId, newRole);
         const newToken = updateRoleInToken(req.user, newRole );
         res.cookie(
-            'token', newToken, {
+            'JWT', token, {
                 httpOnly : true,
                 secure : process.env.NODE_ENV === 'production',
-                sameSite : 'none'
+                sameSite : 'strict'
             }
         )
 
@@ -343,9 +346,7 @@ app.post('/generate-presigned-url', async (req,res)=>{
 });
 
 app.post('/save-post', async (req,res) =>{
-    console.log(req.body);
     const userId = req.body.user.id;
-    console.log(userId);
     const { content, title, city, country, category } = req.body;
     await addBlogpost( userId, content, title, city, country, category );
     res.json({message: 'success!'});
@@ -354,35 +355,30 @@ app.post('/save-post', async (req,res) =>{
 
 app.get('/unpublished-posts', async(req,res) => {
     const unpublishedPosts = await getUnpublishPosts();
-    console.log(unpublishedPosts);
     res.json({unpublishedPosts});
     // await pusblishPost(blogId);
 })
 
 app.get('/published-posts', async (req, res) => {
     const publishedPosts = await getPublishPost();
-    console.log("Published Posts: ", publishedPosts)
     res.json(publishedPosts);
 })
 
 app.put('/publish-post', async (req,res)=>{
     const  id  = parseInt(req.body.postId, 10);
-    console.log('id is : ', id);
     await publishPost(id);
     res.json({message : 'success!'});
 })
 
 app.get('/get-post/:id', async (req,res)=>{
     const id = Number(req.params.id);
-    console.log('id is : ', id);
     const post = await getSinglePost(id);
-    console.log(post);
     res.json(post);
 })
 
 app.post('/comment', async (req,res)=>{
     console.log(req.body);
-    const {firstName, lastName, email, comment, picture, blogId  } = req.body;
+    const {firstName, lastName, email, comment, picture, blogId, parentId  } = req.body;
     const googleId = req.body.sub;
     const role = 'GUEST';
 
@@ -398,12 +394,11 @@ app.post('/comment', async (req,res)=>{
                 email,
                 googleId,
                 role,
-                picture
+                picture,
+                parentId : Number(parentId) || null
             }
-            console.log('userData is ', userData);
 
             const addedUser = await addUser( userData);
-            console.log('addedUser is ', addedUser);
             userId = addedUser.id;
             console.log ('the user id from the try catch block is ', userId);
         } catch (err) {
@@ -423,7 +418,8 @@ app.post('/comment', async (req,res)=>{
     const addedComment = await addComment({
         content : comment, 
         userId,
-        blogId : Number(blogId)
+        blogId : Number(blogId),
+        parentCommentId : Number(parentId) || null
     });
     console.log("added comment is ", addedComment);
     res.json({addedComment});
@@ -433,7 +429,6 @@ app.post('/comment', async (req,res)=>{
 app.get('/comment/:id', async (req,res)=>{
     const blogId = Number(req.params.id);
     const allComments = await getAllComments(blogId);
-    console.log('all comments : ', allComments);
     res.json(allComments);
 })
     

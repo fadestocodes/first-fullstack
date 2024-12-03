@@ -1,5 +1,9 @@
 import React from 'react'
 import { useNavigate, Outlet, useLocation } from 'react-router-dom'
+import {Button} from '../components/ui/Button';
+
+
+  
 
 const  Admin = () => {
     const location = useLocation();
@@ -11,8 +15,8 @@ const  Admin = () => {
         { isAdminPage && (
         <>
             <h1>Admin</h1>
-            <button onClick={()=> navigate('/admin/unpublished-posts')} >Unpublished Posts</button>
-            <button onClick={()=>{navigate('/admin/create-blogpost')}} >Create New Post</button>
+            <Button variant='default' onClick={()=> navigate('/admin/unpublished-posts')} >Unpublished Posts</Button>
+            <Button variant='default' onClick={()=>{navigate('/admin/create-blogpost')}} >Create New Post</Button>
         </>
         )}
         <Outlet/>

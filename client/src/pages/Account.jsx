@@ -2,6 +2,7 @@ import React from 'react'
 import {useState, useEffect } from 'react';
 import { useUser } from '../components/UserContext'
 import { useNavigate } from 'react-router-dom';
+import { Button } from '../components/ui/button';
 
 
 
@@ -88,7 +89,7 @@ return (
                     <div style={{display: 'flex', justifyContent: 'center', alignItems:'center', gap : '8%', width : '100%' }} >
                         <h3>Role: </h3><p>{user.role}</p>
                     </div>
-                    <button onClick={showForm} >Change Role</button>
+                    <Button variant='default' onClick={showForm} >Change Role</Button>
                 </div>
             </div>
         )}
@@ -116,7 +117,7 @@ return (
                     </select>
                     </form>
                     </div>
-                    <button onClick={showConfirmPage}>Change Role</button>
+                    <Button variant='default' onClick={showConfirmPage}>Change Role</Button>
                 </div>
             )}
 
@@ -129,7 +130,7 @@ return (
                             <label >Password</label>
                             <input type="password" name='password' value = {inputs.password} onChange={handleChange} />
                             { errs && <div style={{color : "red"}} >Incorrect password</div> }
-                            <button>Submit</button>
+                            <Button variant='default'>Submit</Button>
                         </form>
                     </div>
 

@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
+import {Button} from '../components/ui/Button';
 
 const UnpublishedPostDetail = () => {
     const { id } = useParams();
@@ -52,7 +53,8 @@ const UnpublishedPostDetail = () => {
             }
             const data = await response.json();
             console.log('data is : ', data);
-            navigate('/blog');
+            window.location.href='/blog';
+            // navigate('/blog');
         } catch (err) {
             console.error('Fetch error', err);
         }
@@ -61,9 +63,9 @@ const UnpublishedPostDetail = () => {
 
   return (
     <div>
-        <button onClick={()=>navigate('/admin/unpublished-posts')} >Back</button>
-        <button>Edit</button>
-        <button onClick={handlePublish} >Publish</button>
+        <Button variant='default'  onClick={()=>navigate('/admin/unpublished-posts')} >Back</Button>
+        <Button variant='default' >Edit</Button>
+        <Button  variant='default' onClick={handlePublish} >Publish</Button>
         <h1></h1>
         <div dangerouslySetInnerHTML={{__html:post.content || ''}} >
 

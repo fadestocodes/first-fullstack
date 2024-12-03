@@ -4,6 +4,7 @@ import { useUser } from '../components/UserContext';
 
 const Homepage = () => {
   const {user} = useUser();
+  console.log('user is ', user);
 
 
 

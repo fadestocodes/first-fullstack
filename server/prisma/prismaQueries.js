@@ -10,7 +10,7 @@ async function addUser ( userData) {
             email : userData.email || null,
             password: userData.password || null,
             googleId: userData.googleId || null,
-            role : userData.role || null,
+            role : userData.role || undefined,
             picture : userData.picture || null
         }
 
@@ -70,6 +70,9 @@ async function getPublishPost( ){
     return await prisma.blogpost.findMany({
         where : {
             isPublished : true
+        },
+        orderBy : {
+            createdAt : 'desc'
         }
        
     })
@@ -100,12 +103,17 @@ async function publishPost(postId){
     }
 }
 
-async function addComment({content, userId, blogId}){
+async function addComment({content, userId, blogId, parentCommentId}){
     return await prisma.comment.create({
             data : {
                 content,
                 userId,
-                blogId
+                blogId,
+                parentCommentId
+            },
+            include : {
+                replies : true,
+                users : true,
             }
     })
 }
@@ -121,7 +129,19 @@ async function getAllComments(blogId){
                     firstName : true,
                     picture : true
                 }
-            }
+            },
+            replies : {
+                include : {
+                    replies : {
+                        include : {
+                            replies : true,
+                            users : true
+                        }
+                    },
+                    users : true
+                }
+            },
+            users : true
         },
         orderBy : {
             created : 'desc'

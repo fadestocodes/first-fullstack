@@ -16,40 +16,40 @@ const Navbar = () => {
 
   
     return (
-    <nav style={{gap : "20%", justifyContent : 'center'}}>
-            <Link to='/'  >
-                Home
-            </Link>
-            <Link to='/blog'  >
-                Blog
-            </Link>
-            { user ? 
-            <>
-            {user.role === 'ADMIN' && 
-            <>
-            <Link to='/admin'>
-                Admin
-            </Link> 
-           
-            </>}
-            <Link to='/account'>
-                Account
-            </Link>
-            <Link to='/' onClick={handleLogout}>
-                Logout
-            </Link>
-            </>
-            : 
-            <>
-            <Link to='/sign-up'>
-                Signup
-            </Link>
-            <Link to='/login'>
-                Login
-            </Link>
-            </>
-            }
-    </nav>
+        <nav className='flex justify-center border-2 border-solid w-full items-center fixed top-0 left-0 right-0 gap-6 bg-white h-14' >
+                <Link to='/'  >
+                    Home
+                </Link>
+                <Link to='/blog'  >
+                    Blog
+                </Link>
+                { user ? 
+                <>
+                {user.role === 'ADMIN' && 
+                <>
+                <Link to='/admin'>
+                    Admin
+                </Link> 
+            
+                </>}
+                <Link to='/account'>
+                    Account
+                </Link>
+                <Link to='/' onClick={handleLogout}>
+                    Logout
+                </Link>
+                </>
+                : 
+                <>
+                <Link to='/sign-up'>
+                    Signup
+                </Link>
+                <Link to='/login'>
+                    Login
+                </Link>
+                </>
+                }
+        </nav>
 )
 }
 
