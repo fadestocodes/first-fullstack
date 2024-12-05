@@ -6,6 +6,7 @@ import { useUser } from '../components/UserContext';
 import {Button} from '../components/ui/button';
 import {Badge, badgeVariants} from '../components/ui/badge';
 import { Link } from 'react-router-dom';
+import {Bounce, BounceFade, FadeIn} from '../components/ui/animations'
 
 
 const Blog = () => {
@@ -75,44 +76,58 @@ const Blog = () => {
 
 
   return (
-    < div className='flex flex-col w-full'>
+    < div className='flex items-start w-full h-full '>
         { isMainPage && (
-                <>
+            <>
+            < div className='flex flex-col w-full'>
             
             <div className='flex flex-col items-center'>
-                <h1  >
-                    Blog
-                </h1>
+                <Bounce>
+                    <h1  >
+                        Blog
+                    </h1>
+                </Bounce>
             </div>
 
             { posts.map( (item, index) => (
                 <div key={index} className='my-4'  >
-                    <Card>
-                        <div className='flex my-3 ml-5 gap-3' >
-                            { item.category !== 'other' && (
-                                <div> <Link className={ `${badgeVariants({ variant: "outline" })} `}>{formatString(item.category)}</Link></div>
-                            ) }
-                            { item.country !== '' && (
-                                <div> <Link className={ `${badgeVariants({ variant: "outline" })} `}>{formatString(item.country)}</Link></div>
-                            ) }
-                        </div>
-                   
-                        <CardHeader>
-                            <CardTitle><h2>{item.title}</h2></CardTitle>
-                            <CardDescription><p dangerouslySetInnerHTML={{__html: formatContent(item.content) }} ></p> </CardDescription>
-                        </CardHeader>
-                        <CardContent>
-
-                        </CardContent>
-                        <CardFooter>
-                            <Button variant='default' onClick={()=>handleButton(item)}>Read more.</Button>
-                        </CardFooter>
-                    </Card>
-                </div>
+                        <FadeIn>
+                        <Card>
+                            <div className='flex my-3 ml-5 gap-3' >
+                                { item.category !== 'other' && (
+                                    <div> <Link className={ `${badgeVariants({ variant: "outline" })} `}>{formatString(item.category)}</Link></div>
+                                ) }
+                                { item.country !== '' && (
+                                    <div> <Link className={ `${badgeVariants({ variant: "outline" })} `}>{formatString(item.country)}</Link></div>
+                                ) }
+                            </div>
+                    
+                            <CardHeader>
+                                <CardTitle><h2>{item.title}</h2></CardTitle>
+                                <CardDescription><p dangerouslySetInnerHTML={{__html: formatContent(item.content) }} ></p> </CardDescription>
+                            </CardHeader>
+                            <CardContent>
+                            </CardContent>
+                            <CardFooter>
+                                <Button variant='default' onClick={()=>handleButton(item)}>Read more.</Button>
+                            </CardFooter>
+                        </Card>
+                </FadeIn>
+                    </div>
             ) ) }
-
-            </>
-
+            
+            </div>
+        <div className='flex flex-col mt-24 w-[30%] mx-8' >
+            <div className='flex flex-col items-center' >
+                <Card className='w-full items-center flex flex-col'>
+                    <CardHeader>
+                        <CardTitle>Hello!</CardTitle>
+                    </CardHeader>
+                        <CardContent>Whats up!</CardContent>
+                </Card>
+            </div>
+        </div>
+        </>
         ) }
 
         <Outlet></Outlet>

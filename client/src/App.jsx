@@ -26,13 +26,13 @@ function App() {
 
   return (
 
-    <div >
+    <div className='w-full h-full'>
       <UserProvider>
           <BrowserRouter>
-            <SidebarProvider>
+            <SidebarProvider  >
              
                 <>
-                  <AppSidebar></AppSidebar>
+                  <AppSidebar className='relative'  ></AppSidebar>
                   
                 </>
             

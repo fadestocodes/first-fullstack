@@ -2,7 +2,7 @@ import React, { useRef, useState } from 'react';
 import { Editor } from '@tinymce/tinymce-react';
 import { useUser } from '../components/UserContext'
 import { useNavigate } from 'react-router-dom';
-
+import { Button } from './ui/button';
 
 export default function TinyMCE({editorContent , setEditorContent, inputs}) {
   const {user} = useUser();
@@ -90,7 +90,7 @@ export default function TinyMCE({editorContent , setEditorContent, inputs}) {
   return (
     <div style={{ display: 'flex' }}>
         <div style={{ flex: 1, marginRight: '20px' }}>
-            <button onClick={ handleSubmit }>Save Post</button>
+            <Button onClick={ handleSubmit }>Save Post</Button>
 
             <Editor
                 apiKey='snufoc2hzjdxv0wwdnkdfoy6utrn8xs6432q5k0q2k55rzvt'
@@ -109,7 +109,8 @@ export default function TinyMCE({editorContent , setEditorContent, inputs}) {
                     'bold italic forecolor | alignleft aligncenter ' +
                     'alignright alignjustify | bullist numlist outdent indent | ' +
                     'removeformat | image | help  ' ,images_upload_handler : handleImageUpload ,
-                content_style: 'body { font-family:Helvetica,Arial,sans-serif; font-size:14px }', branding : false
+                content_style: 'body { font-family:Helvetica,Arial,sans-serif; font-size:14px }', branding : false,
+
                 }}
                 onEditorChange={ handleEditorChange }
             />

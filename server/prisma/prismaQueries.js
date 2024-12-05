@@ -82,6 +82,9 @@ async function getSinglePost(id){
     return await prisma.blogpost.findUnique({
         where : {
             id : id
+        },
+        include : {
+            user : true
         }
     })
 }

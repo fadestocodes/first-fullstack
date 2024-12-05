@@ -44,7 +44,7 @@ const Login = () => {
   
   
   return (
-    <>
+    <div className='flex flex-col w-full h-full justify-between mb-0'>
       <h1>Login</h1>
       <form onSubmit={handleSubmit}>
         <label className='text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70' >Username: </label>
@@ -53,7 +53,7 @@ const Login = () => {
         <Input type="password"  name='password' value={inputs.password || ''} onChange={handleChange} />
         <Button variant='default' >Log In</Button  >
       </form>
-    </>
+    </div>
   )
 }
 

@@ -86,17 +86,30 @@
   }
   h1{
     @apply text-5xl font-extrabold leading-10 mb-8
+    /* @apply scroll-m-20 text-4xl font-extrabold tracking-tight lg:text-5xl */
   }
   h2{
-    @apply text-xl font-bold
+    @apply text-5xl font-semibold leading-snug mb-auto
   }
   h3{
     font-size: 2.25rem; /* 36px */
   line-height: 2.5rem; /* 40px */
   margin-bottom: 0.5rem; /* 8px */
   }
+  h4{
+    @apply text-xl font-semibold leading-normal mb-4
+  }
   p{
     margin-bottom: 1rem;
     line-height: 1.625;
+  }
+  .custom-post-content h1{
+    @apply text-3xl font-bold leading-10 mb-8;
+  }
+  .custom-post-content h2{
+    @apply text-xl font-bold ;
+  }
+  .custom-post-content h3{
+    @apply text-lg font-semibold ;
   }
 }
