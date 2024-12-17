@@ -1,0 +1,91 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+  datasource db {
+    provider = "postgresql"
+    url      = env("DATABASE_URL")
+  }
+
+model Session{
+  sid  String  @id@unique
+  expiresAt  DateTime
+  userId  Int
+  user  User  @relation(fields:[userId], references:[id])
+}
+
+enum Role{
+  ADMIN
+  GUEST
+}
+
+model User{
+  id  Int @id@default(autoincrement())
+  firstName  String
+  lastName  String?
+  email  String  @unique
+  password  String?
+  googleId  String?  @unique
+  role  Role  @default(GUEST)
+  createdAt  DateTime  @default(now())
+  picture  String?
+  blogposts Blogpost[]
+  comments  Comment[]
+  sessions  Session[]
+  bookmarks  Blogpost[]  @relation("UserBookmarks")
+  postcards  Postcard[]  
+}
+
+model Blogpost{
+  id  Int  @id@default(autoincrement())
+  title String
+  userId  Int
+  createdAt  DateTime  @default(now())
+  lastUpdated  DateTime? 
+  content  String
+  category  String
+  coverPhoto  String  
+  views  Int  @default(0)
+  likes  Int  @default(0)
+  user  User  @relation(fields:[userId], references:[id])
+  comments  Comment[]
+  isPublished  Boolean  @default(false)
+  bookmarks  User[]  @relation("UserBookmarks")
+}
+
+model Comment{
+  id  Int  @id@default(autoincrement())
+  content  String 
+  created  DateTime  @default(now())
+  userId  Int
+  users  User  @relation(fields:[userId], references:[id])
+  parentCommentId  Int?
+  parentComment  Comment?  @relation("CommentReplies", fields:[parentCommentId], references: [id])
+  replies  Comment[]  @relation("CommentReplies")
+  blogId  Int?
+  blogposts  Blogpost?  @relation(fields:[blogId], references:[id])
+  postcardId  Int?
+  postcards  Postcard?  @relation(fields:[postcardId], references:[id])
+}
+
+model Postcard{
+  id  Int  @id@default(autoincrement())
+  picture  String
+  city  String
+  counntry  String
+  countryCode  String
+  emoji  String
+  userId  Int
+  user  User  @relation(fields:[userId], references:[id])
+  comments  Comment[]
+  likes  Int
+  views  Int  @default(0)
+  createdAt  DateTime  @default(now()) 
+  lastUpdated  DateTime  @default(now()) @updatedAt
+}
