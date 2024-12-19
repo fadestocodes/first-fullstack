@@ -1,6 +1,6 @@
 'use client'
 import {Button} from '@/components/ui/button'
-import {CornerRightUp, ExternalLink} from 'lucide-react'
+import { ExternalLink} from 'lucide-react'
 
 import React from "react";
 import { useRouter } from 'next/navigation';

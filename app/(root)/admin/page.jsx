@@ -90,7 +90,7 @@ const AdminHome =  () => {
       : (
         <div>
           <Card className='p-20 flex flex-col gap-6 w-full items-center justify-center'>
-            <CardTitle>You're Already an Admin</CardTitle>
+            <CardTitle><p>You&apos;re Already an Admin</p></CardTitle>
           </Card>
         </div>
       )

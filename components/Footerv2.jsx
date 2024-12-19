@@ -28,14 +28,14 @@ export async function Footer2 (){
                         <p className='text-white font-bold text-lg'>Louise Castillo</p>
                         <p className='text-white '>At age 26, I quit my job to travel the world alone. I spent six fantastic months in Southeast
                                 Asia and turned my travel blog into a full-time business.
-                                14 years later, I'm still traveling -- 88 countries and 7 continents -- and now living in Prague!</p>
+                                14 years later, I&apos;m still traveling -- 88 countries and 7 continents -- and now living in Prague!</p>
                         <Button variant='outline' className='dark text-white'>Read more.</Button>
                     </div>
                 </Card>
                 <div className='newsletter'>
                     <div className='flex flex-col items-center  justify-center gap-4'>
                         <h3 className='mb-0 text-white font-bold' >Join My Newsletter</h3>
-                            <p className='text-white'>I'll send you quick reads about various travel tips!</p>
+                            <p className='text-white'>I&apos;ll send you quick reads about various travel tips!</p>
                         <div className='flex flex-col items-start gap-4'>
                             <Input  className='w-72 text-white dark' type='text' placeholder='email@email.com'></Input>
                             <Button className='bg-transparent w-20 dark text-white' variant='outline' >Submit</Button>

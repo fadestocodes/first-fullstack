@@ -7,13 +7,9 @@ import GoogleIcon from '@mui/icons-material/Google';
 import FacebookIcon from '@mui/icons-material/Facebook';
 import {Card, CardContent, CardHeader, CardTitle, CardDescription} from '@/components/ui/card'
 
-type Provider = {
-  id: string;
-  name: string;
-};
+
 
 export default function SignInButtons() {
-  const [providers, setProviders] = useState<Record<string, Provider> | null>(null);
 
   // useEffect(() => {
   //   const fetchProviders = async () => {
@@ -30,7 +26,7 @@ export default function SignInButtons() {
     <Card className="flex flex-col justify-center items-center gap-3 px-6 py-6">
           <CardHeader>
             <CardTitle className="justify-center items-center flex flex-col"><h2>Sign In </h2></CardTitle>
-            <CardDescription>We respect your privacy and won't share your data with anyone.</CardDescription>
+            <CardDescription>We respect your privacy and won&apos;t share your data with anyone.</CardDescription>
           </CardHeader>
           <CardContent className="flex flex-col gap-3">
             <Button variant='outline' onClick={() => signIn('google')} className="">

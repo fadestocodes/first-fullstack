@@ -1,4 +1,3 @@
-import { authOptions } from '@/app/api/auth/[...nextauth]/route';
 import { Card, CardHeader, CardContent } from '@/components/ui/card';
 import React from 'react'
 import {Badge} from '@/components/ui/badge'

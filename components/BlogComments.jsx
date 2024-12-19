@@ -1,7 +1,6 @@
 'use client'
 
 import React, {useState, useEffect, useRef} from 'react'
-import { useRouter } from 'next/navigation';
 import {Textarea} from '@/components/ui/textarea'
 import {Button} from '@/components/ui/button'
 import { signIn } from 'next-auth/react';

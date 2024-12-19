@@ -8,7 +8,7 @@ import TinyMCE from '@/components/TinyMCE';
 import {Card,  CardTitle} from '@/components/ui/card'
 import {Input} from '@/components/ui/input'
 import {Label} from '@/components/ui/label'
-import {Select, SelectContent, SelectGroup, SelectLabel, SelectItem, SelectTrigger, SelectValue} from '@/components/ui/select'
+import {Select, SelectContent, SelectGroup, SelectItem, SelectTrigger, SelectValue} from '@/components/ui/select'
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 import {createBlogFormSchema} from '@/lib/validation'
 import { SubscribeButton } from '@/components/ui/SubscribeButton';

@@ -3,7 +3,6 @@ import React from 'react'
 import {NavigationMenuDemo}  from '@/components/NavigationMenu';
 import {AppSidebar} from '@/components/Sidebar'
 import {  SidebarProvider} from '@/components/ui/sidebar';
-import { getServerSession } from 'next-auth';
 import {SessionProviderWrapper} from '@/components/SessionProviderWrapper'
 import {Footer2} from '@/components/Footerv2'
     // import { authOptions } from '../api/auth/[...nextauth]';

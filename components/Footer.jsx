@@ -21,7 +21,7 @@ const Footer = () => {
                     </div>
                     <div className='flex flex-col items-center center justify-center gap-4'>
                         <h3 className='mb-0 text-white font-bold' >Join My Newsletter</h3>
-                            <p>I'll send you quick reads about various travel tips!</p>
+                            <p>I&apos;ll send you quick reads about various travel tips!</p>
                         <div className='flex flex-col items-start gap-4'>
                             <Input  className='w-72' type='text' placeholder='email@email.com'></Input>
                             <Button className='bg-transparent w-20' variant='outline' >Submit</Button>

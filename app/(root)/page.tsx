@@ -21,7 +21,7 @@ export default function Home() {
 
             <BounceFade duration={1.3}>
               <h1 className="text-4xl sm:text-6xl font-bold mb-4  text-white">
-                Hi, I'm Louise.
+                Hi, I&apos;m Louise.
               </h1>
             </BounceFade >
             <div>

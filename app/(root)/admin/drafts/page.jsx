@@ -3,7 +3,6 @@
 import React, { useEffect, useState } from 'react'
 import { useSession } from 'next-auth/react'
 import {Card, CardContent} from '@/components/ui/card'
-import Image from 'next/image'
 import {Badge} from '@/components/ui/badge'
 import { useRouter } from 'next/navigation'
 

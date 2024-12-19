@@ -1,6 +1,6 @@
 'use client'
 
-import React, { useState } from 'react';
+import React from 'react';
 import { signIn } from 'next-auth/react';
 import {Button} from '@/components/ui/button'
 import {  X } from 'lucide-react';
