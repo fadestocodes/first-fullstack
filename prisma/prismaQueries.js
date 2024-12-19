@@ -3,9 +3,7 @@ import {prisma} from './prisma.ts';
 async function addUser ( userData) {
     return await prisma.user.create({
         data : {
-            firstName : userData.firstName || null ,
-            lastName : userData.lastName || null ,
-            username : userData.username || null,
+            name : userData.name || null ,
             email : userData.email || null,
             password: userData.password || null,
             googleId: userData.googleId || null,
@@ -56,6 +54,7 @@ async function getAllPosts(){
         },
         include : {
             user : true,
+            comments : true
         },
         orderBy : {
             lastUpdated : 'desc'
@@ -139,19 +138,13 @@ async function getAllComments(blogId){
         include : {
             users : {
                 select : {
-                    firstName : true,
+                    name : true,
                     picture : true
                 }
             },
             replies : {
                 include : {
-                    replies : {
-                        include : {
-                            replies : true,
-                            users : true
-                        }
-                    },
-                    users : true
+                    users :true
                 }
             },
             users : true

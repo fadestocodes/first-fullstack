@@ -9,16 +9,16 @@ import {X} from 'lucide-react'
 
 const libraries = ['places'];
 
-function getCountryFlag(countryCode) {
-    if (!countryCode || countryCode === 'ZZ') return '🌍';
-    return countryCode
-        .toUpperCase()
-        .split('')
-        .map(char => String.fromCodePoint(127397 + char.charCodeAt(0)))
-        .join('');
-}
+// function getCountryFlag(countryCode) {
+//     if (!countryCode || countryCode === 'ZZ') return '🌍';
+//     return countryCode
+//         .toUpperCase()
+//         .split('')
+//         .map(char => String.fromCodePoint(127397 + char.charCodeAt(0)))
+//         .join('');
+// }
 
-export const PlacesAutocomplete = () => {
+export const PlacesAutocomplete = ({onSelect}) => {
     const [selectedData, setSelectedData] = useState({
         country: '',
         countryCode : '',
@@ -61,16 +61,16 @@ export const PlacesAutocomplete = () => {
     }
 
     const handlePlaceSelect = (place) => {
+        console.log('selcted data is ', selectedData)
         setSelectedData(place); // Store selected place details
         setQuery(place.name);   // Update input field with the selected place name
-        setSelectedData({
-            emoji : getCountryFlag(place.countryCode)
-        });
+        
         setSearchResults([]);
         setError('')
         console.log('selected data is ', selectedData);
-    console.log('the place is ',place);
-    console.log('the country is ',place.country);
+        console.log('the place is ',place);
+        console.log('the country is ',place.country);
+        onSelect(place);
     };
 
     const handleSubmit = (event) => {
@@ -95,33 +95,34 @@ export const PlacesAutocomplete = () => {
         setError('');
         setQuery('');
         setSearchResults([]);
-
-
     }
 
     return (
         <div>
-        <form onSubmit={handleSubmit} className='flex flex-col gap-3'>
-            <Input
-                type="text"
-                value={query}
-                onChange={handleQueryChange}
-                className="w-auto"
-                placeholder="Say hi from: "
-            />
-            <Button variant='outline' className='w-14' onClick={clearSearch}  ><X className='text-gray-400 '/></Button>
+        <form onSubmit={handleSubmit} className='flex flex-col gap-3 w-full'>
+            <div className='relative flex w-[100%]'>
+                <Input
+                    type="text"
+                    value={query}
+                    onChange={handleQueryChange}
+                    className="  w-80"
+                    placeholder="eg. Tokyo, Japan"
+
+                />
+                <Button variant='outline'  className='absolute  right-3 top-1 h-7 text-gray-400 hover:text-gray-400' onClick={clearSearch}  >Clear <X className='text-gray-400 '/></Button>
+            </div>
             {error && <div className="text-red-500">{error}</div>}
             
-            <Button variant="outline" type="submit" className='w-20'>Submit</Button>
+            {/* <Button variant="outline" onClick={handleSubmit} className='w-20'>Submit</Button> */}
         </form>
 
         {searchResults.length > 0 && (
-                <ul className="mt-2 border border-gray-300 rounded shadow-md bg-white">
+                <ul className="mt-2 border border-gray-300 rounded shadow-md bg-white w-full overflow-hidden">
                     {searchResults.map((result, index) => (
                         <li
                             key={index}
                             onClick={() => handlePlaceSelect(result)} // Make it clickable
-                            className="p-2 cursor-pointer hover:bg-gray-200"
+                            className="p-2 cursor-pointer hover:bg-gray-100 text-sm"
                         >
                             {result.name}
                         </li>

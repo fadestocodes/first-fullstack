@@ -3,7 +3,7 @@ import { addComment, addUser, findUser } from '../../../../../prisma/prismaQueri
 
 export async function POST(req) {
     
-    const {firstName, lastName, email, picture, comment, blogId, parentId} = await req.json();
+    const {name, email, picture, comment, blogId, parentId} = await req.json();
     // const params = await req.json();
     // console.log('params are ', params);
 
@@ -14,8 +14,7 @@ export async function POST(req) {
     if (!checkUser) {
         try {
             const userData = {
-                firstName,
-                lastName : lastName || null,
+                name,
                 email,
                 googleId ,
                 role,

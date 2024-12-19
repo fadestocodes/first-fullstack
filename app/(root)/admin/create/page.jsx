@@ -38,12 +38,26 @@ const [ inputs, setInputs ] = useState({
     coverPhoto : ''
     
 })
+
+
 const [errors, setErrors] = useState([]);
 const [imageLoading, setImageLoading] = useState(false);
 
 const [editorContent, setEditorContent] = useState('<p>Start writing your blog!</p>');
 
+useEffect(() => {
+    if (session.status === 'loading') {
+      return; // Wait for session to load
+    }
 
+    if (!session || session.data.user.role !== 'ADMIN') {
+      router.push('/'); // Redirect to login page
+    }
+  }, [session, session.status, router]);
+
+  if (session.status === 'loading') {
+    return <div>Loading...</div>;
+  }
 
 const handleChange = (event) => {
     const name = event.target.name;
@@ -81,9 +95,6 @@ const coverPhotoUpload = async (event) => {
 
     console.log('its working');
     const file = event.target.files[0];
-
-    // const requestCall = await fetch('/api/presigned-url'
-    // )
 
     const requestCall = await fetch('/api/presigned-url', {
         method : 'POST',

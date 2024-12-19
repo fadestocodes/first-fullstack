@@ -32,6 +32,7 @@ export async function POST(request) {
 
 
     const url = await getSignedUrl(s3, command, {expiresIn : 3600});
+    // console.log('url is ', url)
     const responseData = { url, location };
     return new Response(JSON.stringify(responseData), { headers: { 'Content-Type': 'application/json' } });
 

@@ -9,7 +9,7 @@ import tofino from '@/public/tofino.png'
 import moherCliffs from '@/public/mohercliffs.jpg'
 import ireland from '@/public/ireland1.jpg'
 import sunset from '@/public/sunset.jpg'
-import { ArrowRight, MoveUpRight } from 'lucide-react';
+import { ArrowRight, CornerRightUp } from 'lucide-react';
 import { Badge } from "@/components/ui/badge";
 
 
@@ -48,7 +48,7 @@ export default function Home() {
                       <Badge variant='secondary' className=" text-xs" >Travel Guide</Badge>
                     </div>
                     <div className="flex gap-3 justify-start items-center">
-                      <p className="text-white font-bold">Final Day in Ireland </p><MoveUpRight  className="text-white size-4"/>
+                      <p className="text-white font-bold">Final Day in Ireland </p><CornerRightUp  className="text-white size-4"/>
                     </div>
                   </div>
                   <div className="bg-black opacity-0 flex flex-col justify-end  bg-opacity-0 hover:opacity-100 hover:bg-opacity-50 inset-0 absolute transition-opacity duration-300">
@@ -62,7 +62,7 @@ export default function Home() {
                       <Badge variant='secondary' className=" text-xs" >Travel Guide</Badge>
                     </div>
                     <div className="flex gap-3 justify-start items-center">
-                      <p className="text-white font-bold">Camping in Tofino</p><MoveUpRight  className="text-white size-4"/>
+                      <p className="text-white font-bold">Camping in Tofino</p><CornerRightUp  className="text-white size-4"/>
                     </div>
                   </div>
                   <div className="bg-black opacity-0 flex flex-col justify-end  bg-opacity-0 hover:opacity-100 hover:bg-opacity-50 inset-0 absolute transition-opacity duration-300">
@@ -75,7 +75,7 @@ export default function Home() {
                       <Badge variant='secondary' className=" text-xs" >Travel Guide</Badge>
                     </div>
                     <div className="flex gap-3 justify-start items-center">
-                      <p className="text-white font-bold">Ireland Pt.1 </p><MoveUpRight  className="text-white size-4"/>
+                      <p className="text-white font-bold">Ireland Pt.1 </p><CornerRightUp  className="text-white size-4"/>
                     </div>
                   </div>
                   <div className="bg-black opacity-0 flex flex-col justify-end  bg-opacity-0 hover:opacity-100 hover:bg-opacity-50 inset-0 absolute transition-opacity duration-300">
@@ -88,7 +88,7 @@ export default function Home() {
                       <Badge variant='secondary' className=" text-xs" >Travel Guide</Badge>
                     </div>
                     <div className="flex gap-3 justify-start items-center">
-                      <p className="text-white font-bold">The Majestic Cliffs of Moher</p><MoveUpRight  className="text-white size-4"/>
+                      <p className="text-white font-bold">The Majestic Cliffs of Moher</p><CornerRightUp  className="text-white size-4"/>
                     </div>
                   </div>
                   <div className="bg-black opacity-0 flex flex-col justify-end  bg-opacity-0 hover:opacity-100 hover:bg-opacity-50 inset-0 absolute transition-opacity duration-300">

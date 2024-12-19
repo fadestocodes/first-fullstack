@@ -2,7 +2,7 @@
 
 import * as React from "react"
 import Link from "next/link"
-import { MapPin } from "lucide-react"
+import { MapPin, MapPinned } from "lucide-react"
 import { cn } from "@/lib/utils"
 // import { Icons } from "@/components/icons"
 import {
@@ -21,12 +21,17 @@ import {Avatar, AvatarFallback, AvatarImage} from '@/components/ui/avatar'
 import {useState, useEffect} from 'react'
 import { redirect } from "next/navigation"
 import { Bounce, FadeIn, BounceFade } from "./ui/animations"
+import ChatBubble from '@/components/ui/chatBubble'
+import {HoverCardLocation} from '@/components/HoverCard'
 
 export function NavigationMenuDemo() {
 
   const session = useSession();
   console.log('Session is: ', session);
   const [isOpen, setIsOpen] = useState(false);
+  const [locationOpen, setLocationOpen] = useState(false);
+
+
   const handleAvatarClick = () => {
     setIsOpen((prevState)=>(!prevState))
   }
@@ -36,12 +41,22 @@ export function NavigationMenuDemo() {
     redirect('/')
   }
 
+  const mapClick = () => {
+    console.log('clicked')
+    setLocationOpen(prevData => (
+      !prevData
+    ));
+  }
+
+
 
   return (
     <NavigationMenu>
       <NavigationMenuList className="z-40   w-full fixed top-0 items-center left-0 right-0  grid grid-cols-3 bg-white h-16" >
-        <div className='currently-at flex items-center ml-12'>
-          <MapPin className='size-4'></MapPin> <div className='text-xs font-semibold justify-center items-center'>Currently: Vancouver, BC</div>
+        <div className='currently-at flex  gap-3 items-center  ml-8  md:ml-12'>
+          <div className="flex justify-center items-center ">
+            <HoverCardLocation  target={ <MapPinned className="w-48 "/> }/>
+          </div>
         </div>
         <div className="flex justify-center items-center " >
           <NavigationMenuItem>
@@ -77,7 +92,7 @@ export function NavigationMenuDemo() {
             { session && session?.data?.user ? (
               <div className="flex flex-col items-center justify-center ">
                 <Avatar className="size-7 cursor-pointer" onClick={handleAvatarClick} >
-                  <AvatarImage className="" src={session.data.user.image} />
+                  <AvatarImage className="" src={session?.data?.user?.image} />
                   <AvatarFallback>{session.data.user.name?.split('')[0]}</AvatarFallback>
                 </Avatar>{ isOpen && (
                   <Button className="w-13 h-8 absolute mt-20 mr-5 " variant='default' onClick={handleLogout}>Log Out</Button>
@@ -85,7 +100,7 @@ export function NavigationMenuDemo() {
               </div>
             ) : (
               <div>
-                <Button className='' onClick={async () => await signIn('google')}>Log In</Button>
+                <Button className='' onClick={async () => await signIn()}>Log In</Button>
               </div>
 
             ) }

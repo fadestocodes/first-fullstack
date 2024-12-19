@@ -13,6 +13,7 @@ const DraftsPage =  () => {
     const router = useRouter();
     const [loadingData, setLoadingData] = useState(true);
     const [savedDrafts, setSavedDrafts] = useState({});
+    const session = useSession();
 
     useEffect(()=>{
         const fetchDrafts = async () => {
@@ -24,6 +25,21 @@ const DraftsPage =  () => {
         }
         fetchDrafts();
     }, [])
+
+
+    useEffect(() => {
+        if (session.status === 'loading') {
+          return; // Wait for session to load
+        }
+    
+        if (!session || session.data.user.role !== 'ADMIN') {
+          router.push('/'); // Redirect to login page
+        }
+      }, [session, session.status, router]);
+    
+      if (session.status === 'loading') {
+        return <div>Loading...</div>;
+      }
 
     const shortenContent = (content) => {
         const text = content.replace(/<[^>]*>/g, ''); 

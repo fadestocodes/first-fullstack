@@ -36,8 +36,8 @@ export default function LoginModal( {onSuccess, comment , onClose  }  ) {
             <h3 className='font-bold leading-3 mt-6'>Sign In</h3>
             <p>Please log in to post your comment</p>
             <Button  className='w-60' variant='outline' onClick={() => handleLogin('google')}><GoogleIcon sx={{ color: '#4285F4'}}/>Sign in with Google</Button>
-            <Button className='w-60' variant='outline' onClick={() => handleLogin('github')}>Sign in with GitHub</Button>
-            <Button variant='destructive' onClick={onClose} >Cancel</Button>
+            <Button disabled={true} className='w-60' variant='outline' onClick={() => handleLogin('facebook')}>Sign in with Facebook</Button>
+            <Button variant='outline' onClick={onClose} >Cancel</Button>
           </Card>
         </div>
       )}

@@ -1,4 +1,12 @@
 
+function getCountryFlag(countryCode) {
+    if (!countryCode || countryCode === 'ZZ') return '🌍';
+    return countryCode
+        .toUpperCase()
+        .split('')
+        .map(char => String.fromCodePoint(127397 + char.charCodeAt(0)))
+        .join('');
+}
 
 
 export async function GET(req) {
@@ -47,6 +55,7 @@ export async function GET(req) {
                     name: prediction.description,
                     country: countryComponent?.long_name,
                     countryCode: countryComponent?.short_name,
+                    emoji : getCountryFlag(countryComponent?.short_name)
                 };
             })
         );

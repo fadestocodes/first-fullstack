@@ -1,26 +1,32 @@
-// middleware.js (in the root or in the app directory)
-
 import { NextResponse } from 'next/server';
 import { getSession } from 'next-auth/react';
 
-export async function middleware(req) {
-  console.log('thjis is from middelwar');
-  // Only protect routes under /admin
-  if (req.url.includes('/admin')) {
-    const session = await getSession({ req });
-    console.log('middleware session is ', session)
+// 1. Define protected routes (i.e., /admin and its sub-routes)
+const protectedRoutes = ['/admin', '/admin/:path*']; // Protect all /admin routes
 
-    // If no session or not an admin, redirect to login
-    if (!session.data || session.user.role !== 'ADMIN') {
-      return NextResponse.redirect(new URL('/', req.url)); // Or another page (e.g., '/403')
+export async function middleware(req) {
+  console.log('Middleware triggered for:', req.url);
+
+  // 2. Check if the current route is a protected one
+  const isProtectedRoute = protectedRoutes.some(route => req.url.startsWith(route));
+
+  // 3. If it’s a protected route, check if the user is authenticated
+  if (isProtectedRoute) {
+    const session = await getSession({ req });
+    console.log('Session in middleware:', session);
+
+    // 4. If the session is not found or the user is not an admin, redirect them to the login page
+    if (!session || session.user.role !== 'ADMIN') {
+      console.log('User not authorized or not logged in, redirecting...');
+      return NextResponse.redirect(new URL('/login', req.url)); // Redirect to the login page
     }
   }
 
-  // Continue with the request if the user is authenticated and authorized
+  // 5. If everything is good, continue with the request
   return NextResponse.next();
 }
 
-// Optionally, specify the routes that should apply this middleware
+// 6. Specify which routes this middleware should apply to
 export const config = {
-  matcher: '/admin/:path*' // Only apply middleware to /admin routes
+  matcher: ['/admin/*', '/admin']
 };

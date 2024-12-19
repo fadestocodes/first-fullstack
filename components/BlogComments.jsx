@@ -20,6 +20,7 @@ const BlogComments = ({postId}) => {
     const [commentPosted, setCommentPosted] = useState(false); 
     const [replyingTo, setReplyingTo] = useState(null)
     const [commentsList, setCommentList] = useState([]);
+    const [replies, setReplies] = useState([]);
 
     // const [selectedTextArea, setSelectedTextArea] = useState(true);
     // const handleFocus = () => {
@@ -46,6 +47,16 @@ const BlogComments = ({postId}) => {
             }
         }
         getAllComments();
+        // const getAllReplies = async () => {
+        //     try {
+        //         const response = await fetch(`http://localhost:3000/api/comments/replies/${blogId}`);
+        //         const data = await response.json();
+        //         console.log('The replies are ', data);
+        //     } catch (err) {
+        //         console.log("couldn't fetch replies");
+        //     }
+        // }
+        // getAllReplies();
     }, [blogId])
 
 
@@ -54,8 +65,7 @@ const BlogComments = ({postId}) => {
   
   
     const [inputs, setInputs] = useState({
-        firstName : session?.data?.user?.firstName || '',
-        lastName : session?.data?.user?.lastName || '',
+        name : session?.data?.user?.name || '',
         email: session?.data?.user?.email || '',
         comment : '',
         picture : session?.data?.user?.image || '',
@@ -77,8 +87,7 @@ const BlogComments = ({postId}) => {
     useEffect(()=>{
         setInputs((prevData)=>({
             ...prevData,
-            firstName : session?.data?.user?.firstName,
-            lastName : session?.data?.user?.lastName ,
+            name : session?.data?.user?.name,
             email: session?.data?.user?.email ,
             picture : session?.data?.user?.image,
             blogId : blogId,
@@ -245,18 +254,19 @@ const BlogComments = ({postId}) => {
                                         variant="outline"
                                         onClick={() => handleLogin("google")}
                                     >
-                                        <GoogleIcon sx={{ color: "#4285F4" }} />
+                                        <GoogleIcon sx={{ color: "#EA4335" }} />
                                         Sign in with Google
                                     </Button>
                                     <Button
+                                    disabled = {true}
                                         className="w-60"
                                         variant="outline"
-                                        onClick={() => handleLogin("github")}
+                                        onClick={() => handleLogin("facebook")}
                                     >
-                                        Sign in with GitHub
+                                        Sign in with Facebook
                                     </Button>
                                     <Button
-                                        variant="destructive"
+                                        variant=""
                                         onClick={() => setShowModal(false)}
                                     >
                                         Cancel
@@ -278,7 +288,7 @@ const BlogComments = ({postId}) => {
                                         <div className="single-comment  flex justify-start">
                                             <div className="image flex justify-start items-start">
                                                 <img
-                                                    src={item.users.picture}
+                                                    src={`/api/proxy-image?url=${encodeURIComponent(item.users.picture)}`}
                                                     style={{
                                                         borderRadius: "50%",
                                                         scale: "40%",
@@ -295,7 +305,7 @@ const BlogComments = ({postId}) => {
                                                             lineHeight: "0",
                                                         }}
                                                     >
-                                                        {item.users.firstName}
+                                                        {item.users.name}
                                                     </p>
                                                     <small
                                                         style={{
@@ -374,10 +384,7 @@ const BlogComments = ({postId}) => {
                                                     >
                                                         <div className="image  flex p-0 m-0 justify-start  items-start">
                                                             <img className='size-9'
-                                                                src={
-                                                                    element.users
-                                                                        .picture
-                                                                }
+                                                                src={`/api/proxy-image?url=${encodeURIComponent(element.users.picture)}`}
                                                                 style={{
                                                                     borderRadius:
                                                                         "50%",
@@ -398,7 +405,7 @@ const BlogComments = ({postId}) => {
                                                                 >
                                                                     {
                                                                         element.users
-                                                                            .firstName
+                                                                            .name
                                                                     }
                                                                 </p>
                                                                 <small

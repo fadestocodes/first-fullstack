@@ -13,19 +13,20 @@ import { useRouter } from 'next/navigation';
 const AdminHome =  () => {
 
   const session = useSession();
-  const [errors, setErrors] = useState(false);
+  const [errors, setErrors] = useState('');
   const router = useRouter();
 
 
 
-  const handleSubmit = async (prevState, formData) => {
-
-    const password = formData.get('password');
-    const email = session.data.user.email;
+  const handleSubmit = async (prevState, event) => {
+    event.preventDefault();
+    const formData = new FormData(event.target);
+  const password = formData.get('password');
+  const email = session.data.user.email;
     const reqObj = { email , password};
     try {
       // adminRequestForm.parse(zObject);
-      const response = await fetch('/api/admin', {
+      const response = await fetch('http://localhost:3000/api/admin', {
         method : 'POST',
         headers : {
           'Content-Type' : 'application/json'
@@ -38,9 +39,9 @@ const AdminHome =  () => {
       if (data.success) {
         setErrors(false);
         try {
-          const response = await fetch ('/api/admin/update', {
+          const response = await fetch ('http://localhost:3000/api/admin/update', {
             method : 'POST',
-            headers : {
+            headers : { 
               'Content-Type' : 'application/json'
             },
             body : JSON.stringify(email)
@@ -59,41 +60,37 @@ const AdminHome =  () => {
           // }
           window.location.href = '/';
       } else {
-        setErrors(true);
+        setErrors(data.message);
       }
-    } catch (err) {
-      setErrors(true);
+    } catch (err) { 
+      setErrors(data.message);
       }
     }
 
-    const [state, formAction, isPending] = useActionState(handleSubmit, '' )
-
-    const refreshSession = async ()=>{
-      await getSession();
-    }
+  
 
     
     
   return (
     <div className='flex flex-col justify-center items-center w-full'>
-    {session?.user 
-      ? session.user.role === 'ADMIN' 
+    {session?.data?.user 
+      && session?.data?.user.role === 'GUEST' 
         ? (
           <div className='admin-request-card flex flex-col justify-center items-center w-full'>
             <Card className='admin-card flex flex-col items-center justify-center py-10 px-10 gap-8'>
               <CardTitle>Admin Access</CardTitle>
-              <form onSubmit={handleSubmit}>
+              <form method='POST' onSubmit={handleSubmit}>
                 <div className='flex flex-col items-center justify-center gap-5'>
                   <label htmlFor="">Enter password for admin access</label>
                   <Input type='password' name='password' required />
                   {errors && <p className='text-red-500'>Invalid password</p>}
-                  <Button variant='default' type='submit'>Request Access</Button>
+                  <Button variant='default'>Request Access</Button>
                 </div>
               </form>
             </Card>
           </div>
         ) 
-        : <div>Access Denied</div>  // If the user is not an admin
+       
       : (
         <div>
           <Card className='p-20 flex flex-col gap-6 w-full items-center justify-center'>

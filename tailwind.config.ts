@@ -19,6 +19,19 @@ export default {
   				raw: '(hover: hover)'
   			}
   		},
+		animation: {
+			jiggle: 'jiggle 0.5s ease-in-out 2', // Runs 1 time
+			'delayed-jiggle': 'jiggle 0.5s ease-in-out 1 ',  // 60-second delay
+		},
+		keyframes: {
+			jiggle: {
+				'0%': { transform: 'rotate(0deg)' },
+				'25%': { transform: 'rotate(5deg)' },
+				'50%': { transform: 'rotate(-5deg)' },
+				'75%': { transform: 'rotate(5deg)' },
+				'100%': { transform: 'rotate(0deg)' },
+			},
+		},
   		colors: {
   			background: 'hsl(var(--background))',
   			foreground: 'hsl(var(--foreground))',

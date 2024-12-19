@@ -4,7 +4,8 @@ import {dateFormat} from '@/lib/dateFormat'
 import  BlogComments from '@/components/BlogComments'
 
 const BlogDetails = async ( {params} ) => {
-    const {postId} = await params;
+    const {id} = await params;
+    const postId = id;
     console.log('post id is ', postId);
     const res = await fetch('http://localhost:3000/api/post/get-single', {
         method : 'POST',
@@ -38,10 +39,10 @@ const BlogDetails = async ( {params} ) => {
                     <h1>{post.title}</h1>
                     <div className='flex gap-3 justify-start items-center'>
                         <Avatar className='size-9'>
-                            <AvatarImage src={post.user.picture} />
+                            <AvatarImage src={ `/api/proxy-image?url=${encodeURIComponent( post.user.picture)}` } />
                         </Avatar>
                         <div className='flex flex-col'>
-                            <p className='font-bold text-sm !my-0 '>Written by {post.user.firstName} {post.user?.lastName}</p>
+                            <p className='font-bold text-sm !my-0 '>Written by {post.user.name}</p>
                             <p className='text-sm italic !my-0 '>Published on {dateFormat(post.createdAt)}</p>
                         </div>
                     </div>
@@ -59,5 +60,3 @@ const BlogDetails = async ( {params} ) => {
 
 
 export default BlogDetails
-
-

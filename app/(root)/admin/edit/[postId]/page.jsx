@@ -33,7 +33,8 @@ const EditPost =   () => {
     console.log('hello')
     const router = useRouter();
     // const postId = (await params).postId
-    const {postId} = useParams();
+    const {id} = useParams();
+    const postId = id;
     const session = useSession();
    
     const [inputs, setInputs] = useState({
@@ -84,6 +85,7 @@ const EditPost =   () => {
         }
         fetchPost();
     },[])
+
     if (!postId){
         return <div>Loading....</div>
     }
@@ -122,7 +124,6 @@ const EditPost =   () => {
     const coverPhotoUpload = async (event) => {
     
         setImageLoading(true);
-        console.log('its working');
         const file = event.target.files[0];
 
         const requestCall = await fetch('/api/presigned-url', {
@@ -287,6 +288,7 @@ const EditPost =   () => {
 
 }
 
+
     return (
         <div className='flex flex-col items-center justify-center'>
                     <div className='flex flex-col  w-[70%] mb-8 -mt-8'>
@@ -344,13 +346,17 @@ const EditPost =   () => {
                                 <Label htmlFor="" className='font-medium  mb-4'>Upload Cover Photo*</Label>
 
                                 <Input className=' mb-8 cursor-pointer w-[25%]' type='file'  name='coverPhoto' accept='image/*' onChange={coverPhotoUpload} ></Input>
-                                { inputs.coverPhoto ?  (
-                                    <img className='w-[30%] self-center' src={inputs.coverPhoto} ></img>
-                                ) : imageLoading && (
+                              
+                                { imageLoading ? (
                                     <Card className='flex flex-col self-center justify-center items-center w-[150px] h-[150px]'>
                                         <div className='spinner'></div>
                                     </Card>
-                                )  }
+                                )  : (
+                                    <div className='flex flex-col justify-center items-center gap-2'>
+                                    {/* <Button variant='outline' className='w-12' onClick={()=>clearPhoto}>Clear</Button> */}
+                                    <img className='w-[30%] self-center' src={inputs.coverPhoto} ></img>
+                                    </div>
+                                )}
                                 { errors.find((error)=> error.path.includes('coverPhoto')) && <span className='text-red-400'>{errors.find((error)=>error.path.includes('coverPhoto'))?.message}</span> }
 
                             </div>
