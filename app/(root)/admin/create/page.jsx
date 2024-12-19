@@ -240,9 +240,7 @@ const AdminCreatePage =  () => {
             } catch (err) {
                 console.error('Error', err);
             }
-
     }
-
         return (
             <div className='flex flex-col items-center justify-center'>
                         <div className='flex flex-col  w-[90%] md:w-[60%] mb-8 -mt-8'>
