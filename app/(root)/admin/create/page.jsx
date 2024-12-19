@@ -334,4 +334,3 @@ const saveDraft = async () => {
 
   )
 }
-export default AdminCreatePage
