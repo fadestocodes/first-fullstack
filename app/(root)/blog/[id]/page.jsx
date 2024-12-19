@@ -9,7 +9,7 @@ const BlogDetails = async ( {params} ) => {
     const {id} = await params;
     const postId = id;
     console.log('post id is ', postId);
-    const res = await fetch('http://localhost:3000/api/post/get-single', {
+    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/post/get-single`, {
         method : 'POST',
         headers : {
             'Content-Type' : 'application/json'

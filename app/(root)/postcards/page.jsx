@@ -56,7 +56,7 @@ const PostcardsPage = () => {
 
     const getPostcardComments = async () => {
         try {
-            const data = await fetch('http://localhost:3000/api/postcards/comments');
+            const data = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/postcards/comments`);
             const allPostcardCommentsRes = await data.json();
             setAllPostcardComments(allPostcardCommentsRes);
             console.log('all postcard comments', allPostcardComments);
@@ -67,7 +67,7 @@ const PostcardsPage = () => {
     useEffect(()=>{
         const getAllPostcards = async () => {
             try {
-                const allPostcardsRes = await fetch ('http://localhost:3000/api/postcards/get-all');
+                const allPostcardsRes = await fetch (`${process.env.NEXT_PUBLIC_API_URL}/api/postcards/get-all`);
                 const allPostcardsData = await allPostcardsRes.json();
                 console.log('all postcards', allPostcards);
                 setAllPostcards(allPostcardsData);
@@ -119,7 +119,7 @@ const PostcardsPage = () => {
         }
         console.log('data is ', data);
 
-        const response = await fetch('http://localhost:3000/api/postcards/create', {
+        const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/postcards/create`, {
             method : 'POST',
             headers : {
                 'Content-Type' : 'application/json'
@@ -156,7 +156,7 @@ const PostcardsPage = () => {
     const photoUpload = async (event) => {
         setImageLoading(true);
         const file = event.target.files[0];
-        const requestCall = await fetch('http://localhost:3000/api/presigned-url', {
+        const requestCall = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/presigned-url`, {
             method : 'POST',
             headers:{
                 'Content-Type' : 'application/json'
@@ -215,7 +215,7 @@ const PostcardsPage = () => {
             postcardId : selectedPost.id
         }
         console.log('data is ', data);
-        const newComment = await fetch('http://localhost:3000/api/postcards/comments', {
+        const newComment = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/postcards/comments`, {
             method: "POST",
             headers : {
                 'Content-Type' : 'application/json',

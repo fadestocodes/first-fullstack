@@ -26,7 +26,7 @@ const authOptions = {
       ],
 
     pages:{
-    signIn : 'http://localhost:3000/auth/signin'
+    signIn : `${process.env.NEXT_PUBLIC_API_URL}/auth/signin`
     },
       
     callbacks : {

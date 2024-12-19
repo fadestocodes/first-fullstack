@@ -1,4 +1,4 @@
-import { addComment, addUser, findUser } from '../../../../../prisma/prismaQueries'
+import { addComment, addUser, findUser } from '@/prisma/prismaQueries'
 
 export async function POST(req) {
     

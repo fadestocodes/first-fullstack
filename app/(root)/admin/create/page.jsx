@@ -91,7 +91,7 @@ const AdminCreatePage =  () => {
         console.log('its working');
         const file = event.target.files[0];
 
-        const requestCall = await fetch('/api/presigned-url', {
+        const requestCall = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/presigned-url`, {
             method : 'POST',
             headers:{
                 'Content-Type' : 'application/json'
@@ -138,7 +138,7 @@ const AdminCreatePage =  () => {
             }
             console.log('payload is ', payload)
 
-            const submitResponse = await fetch('/api/post/create-draft', {
+            const submitResponse = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/post/create-draft`, {
                 method : 'POST',
                 headers : {
                     'Content-Type' : 'application/json'
@@ -170,7 +170,7 @@ const AdminCreatePage =  () => {
         const fileType = file.type;
 
         try {
-            const response = await fetch ('/api/presigned-url', {
+            const response = await fetch (`${process.env.NEXT_PUBLIC_API_URL}/api/presigned-url`, {
                 method : 'POST',
                 headers : {
                     'Content-Type' : 'application/json',
@@ -223,7 +223,7 @@ const AdminCreatePage =  () => {
                 }
                 console.log('payload is ', payload)
 
-                const submitResponse = await fetch('/api/post/publish', {
+                const submitResponse = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/post/publish`, {
                     method : 'POST',
                     headers : {
                         'Content-Type' : 'application/json'

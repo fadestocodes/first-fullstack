@@ -48,7 +48,7 @@ const EditPost =   () => {
         const fetchPost = async () => {
             try {
                 console.log('post id is ', postId);
-                const data = await fetch('http://localhost:3000/api/post/get-single', {
+                const data = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/post/get-single`, {
                     method : 'POST',
                     headers : {
                         'Content-Type' : 'application/json',
@@ -118,7 +118,7 @@ const EditPost =   () => {
         setImageLoading(true);
         const file = event.target.files[0];
 
-        const requestCall = await fetch('/api/presigned-url', {
+        const requestCall = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/presigned-url`, {
             method : 'POST',
             headers:{
                 'Content-Type' : 'application/json'
@@ -166,7 +166,7 @@ const EditPost =   () => {
             }
             console.log('payload is ', payload)
 
-            const submitResponse = await fetch('/api/save-post', {
+            const submitResponse = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/save-post`, {
                 method : 'POST',
                 headers : {
                     'Content-Type' : 'application/json'
@@ -198,7 +198,7 @@ const EditPost =   () => {
     const fileType = file.type;
 
     try {
-        const response = await fetch ('/api/presigned-url', {
+        const response = await fetch (`${process.env.NEXT_PUBLIC_API_URL}/api/presigned-url`, {
             method : 'POST',
             headers : {
                 'Content-Type' : 'application/json',
@@ -257,7 +257,7 @@ const EditPost =   () => {
         }
         console.log('payload is ', payload)
 
-        const submitResponse = await fetch('/api/post/publish', {
+        const submitResponse = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/post/publish`, {
             method : 'POST',
             headers : {
                 'Content-Type' : 'application/json'

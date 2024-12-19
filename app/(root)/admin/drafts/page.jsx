@@ -15,7 +15,7 @@ const DraftsPage =  () => {
 
     useEffect(()=>{
         const fetchDrafts = async () => {
-            const data = await fetch('/api/post/get-drafts');
+            const data = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/post/get-drafts`);
             const savedDrafts = await data.json();
             console.log('saved drafts : ', savedDrafts);
             setSavedDrafts(savedDrafts);
