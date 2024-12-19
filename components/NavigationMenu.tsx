@@ -53,7 +53,7 @@ export function NavigationMenuDemo() {
   return (
     <NavigationMenu>
       <NavigationMenuList className="z-40   w-full fixed top-0 items-center left-0 right-0  grid grid-cols-3 bg-white h-16" >
-        <div className='currently-at flex  gap-3 items-center  ml-8  md:ml-12'>
+        <div className='currently-at flex  gap-3 items-center  ml-6  md:ml-12'>
           <div className="flex justify-center items-center ">
             <HoverCardLocation  target={ <MapPinned className="w-48 "/> }/>
           </div>

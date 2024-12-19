@@ -9,12 +9,14 @@ import { Button } from '@/components/ui/button';
 import {Label} from '../components/ui/label'
 import Image from 'next/image';
 import { Avatar, AvatarImage } from './ui/avatar';
+import FooterCurrentLocation from '@/components/FooterCurrentLocation'
+import { MapPinned, PlaneTakeoff, Plane } from 'lucide-react';
 
 
 
 export async function Footer2 (){
   return (
-    <div className="footer-container relative bg-black  items-center justify-center  py-32  ">
+    <div className="footer-container relative bg-black  items-center justify-center  pt-32 flex flex-col  ">
         
             <div className='flex flex-col justify-center items-center gap-28 md:flex-row md:justify-evenly '>
                 <Card className='dark bg-transparent pt-14 flex-col gap-3 justify-center items-center w-96 h-full '>
@@ -45,7 +47,16 @@ export async function Footer2 (){
                     </div>
                 </div>
             </div>
-                
+            <div className="flex flex-col justify-center items-center relative">
+                <div className=' bottom-8 justify-center w-full flex gap-2 items-center mt-36 mb-4'>
+                    <p className='text-white text-xs !my-0'>Next trip: New Mexico</p>
+                </div>
+                    <div className="w-12 h-6 bottom-4 absolute text-white rounded-full flex items-center justify-center  animate-takeoffFlyLand">
+                        <Plane color='white'  />
+                    </div>
+
+
+            </div>
     </div>
 
         

@@ -2,6 +2,8 @@ import React, {Suspense} from 'react'
 import {Avatar, AvatarImage, AvatarFallback} from '@/components/ui/avatar'
 import {dateFormat} from '@/lib/dateFormat'
 import  BlogComments from '@/components/BlogComments'
+import { Bounce, BounceFade, FadeIn } from "@/components/ui/animations";
+
 
 const BlogDetails = async ( {params} ) => {
     const {id} = await params;
@@ -51,7 +53,9 @@ const BlogDetails = async ( {params} ) => {
                     <div  dangerouslySetInnerHTML={{__html : post.content}}>
                 </div>
                 <hr className='my-12'/>
-                    <BlogComments  postId={postId}  />
+                    <BounceFade>
+                        <BlogComments  postId={postId}  />
+                    </BounceFade>
                 </div>
         </div>
 

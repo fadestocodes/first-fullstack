@@ -9,7 +9,7 @@ import tofino from '@/public/tofino.png'
 import moherCliffs from '@/public/mohercliffs.jpg'
 import ireland from '@/public/ireland1.jpg'
 import sunset from '@/public/sunset.jpg'
-import { ArrowRight, CornerRightUp } from 'lucide-react';
+import { ArrowRight, ExternalLink } from 'lucide-react';
 import { Badge } from "@/components/ui/badge";
 
 
@@ -43,12 +43,14 @@ export default function Home() {
          <div className="vertical-cards-container relative gap-3 justify-center items-center mt-10  w-full flex flex-shrink flex-1 flex-wrap flex-col  lg:flex-row" >
               <div className="vertical-card  my-2 w-[22rem] h-[38rem] relative hover-effect cursor-pointer">
                 <Image src={sunset} alt="" className=" object-cover w-full h-full" />
+                <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent rounded-md"></div>
+
                   <div className=" inset-0 z-20 absolute justify-end flex flex-col pl-4 pb-4 gap-3" >
                     <div>
                       <Badge variant='secondary' className=" text-xs" >Travel Guide</Badge>
                     </div>
                     <div className="flex gap-3 justify-start items-center">
-                      <p className="text-white font-bold">Final Day in Ireland </p><CornerRightUp  className="text-white size-4"/>
+                      <p className="text-white font-bold">Final Day in Ireland </p><ExternalLink   className="text-white size-4"/>
                     </div>
                   </div>
                   <div className="bg-black opacity-0 flex flex-col justify-end  bg-opacity-0 hover:opacity-100 hover:bg-opacity-50 inset-0 absolute transition-opacity duration-300">
@@ -57,12 +59,13 @@ export default function Home() {
 
               <div className="vertical-card  my-2 w-[22rem] h-[38rem] relative hover-effect cursor-pointer ">
                 <Image src={tofino} alt="" className=" object-cover w-full h-full" />
+                <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent rounded-md"></div>
                   <div className=" inset-0 z-20 absolute justify-end flex flex-col pl-4 pb-4 gap-3" >
                     <div>
                       <Badge variant='secondary' className=" text-xs" >Travel Guide</Badge>
                     </div>
                     <div className="flex gap-3 justify-start items-center">
-                      <p className="text-white font-bold">Camping in Tofino</p><CornerRightUp  className="text-white size-4"/>
+                      <p className="text-white font-bold">Camping in Tofino</p><ExternalLink   className="text-white size-4"/>
                     </div>
                   </div>
                   <div className="bg-black opacity-0 flex flex-col justify-end  bg-opacity-0 hover:opacity-100 hover:bg-opacity-50 inset-0 absolute transition-opacity duration-300">
@@ -70,12 +73,14 @@ export default function Home() {
               </div>
               <div className="vertical-card  my-2 w-[22rem] h-[38rem] relative hover-effect cursor-pointer">
                 <Image src={ireland} alt="" className=" object-cover w-full h-full" />
+                <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent rounded-md"></div>
+
                   <div className=" inset-0 z-20 absolute justify-end flex flex-col pl-4 pb-4 gap-3" >
                     <div>
                       <Badge variant='secondary' className=" text-xs" >Travel Guide</Badge>
                     </div>
                     <div className="flex gap-3 justify-start items-center">
-                      <p className="text-white font-bold">Ireland Pt.1 </p><CornerRightUp  className="text-white size-4"/>
+                      <p className="text-white font-bold">Ireland Pt.1 </p><ExternalLink   className="text-white size-4"/>
                     </div>
                   </div>
                   <div className="bg-black opacity-0 flex flex-col justify-end  bg-opacity-0 hover:opacity-100 hover:bg-opacity-50 inset-0 absolute transition-opacity duration-300">
@@ -83,12 +88,14 @@ export default function Home() {
               </div>
               <div className="vertical-card  my-2 w-[22rem] h-[38rem] relative hover-effect cursor-pointer">
                 <Image src={moherCliffs} alt="" className=" object-cover w-full h-full" />
+                <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent rounded-md"></div>
+
                   <div className=" inset-0 z-20 absolute justify-end flex flex-col pl-4 pb-4 gap-3" >
                     <div>
                       <Badge variant='secondary' className=" text-xs" >Travel Guide</Badge>
                     </div>
                     <div className="flex gap-3 justify-start items-center">
-                      <p className="text-white font-bold">The Majestic Cliffs of Moher</p><CornerRightUp  className="text-white size-4"/>
+                      <p className="text-white font-bold">The Majestic Cliffs of Moher</p><ExternalLink   className="text-white size-4"/>
                     </div>
                   </div>
                   <div className="bg-black opacity-0 flex flex-col justify-end  bg-opacity-0 hover:opacity-100 hover:bg-opacity-50 inset-0 absolute transition-opacity duration-300">

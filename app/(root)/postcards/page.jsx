@@ -29,6 +29,8 @@ import { fakeData } from '@/lib/fakePostcardData'
 import {dateFormat} from '@/lib/dateFormat'
 import {Avatar, AvatarImage} from '@/components/ui/avatar'
 import { useRouter } from 'next/navigation';
+import { Bounce, BounceFade, FadeIn } from "@/components/ui/animations";
+
 
 const PostcardsPage = () => {
 
@@ -134,7 +136,8 @@ const PostcardsPage = () => {
         const postcard = await response.json()
         console.log('postcard is ', postcard);
         setCreateMenu(false);
-        router.push('/postcards')
+        // router.push('/postcards')
+        window.location.href='/postcards';
     }
 
     const seeDetails = (id) => {
@@ -244,10 +247,12 @@ const PostcardsPage = () => {
 
   return (
     <div className="p-8 bigscreen:px-80 flex flex-col gap-6">
-            <div className='flex flex-col justify-center items-center gap-4 lg:my-12'>
-                <h1>Postcards</h1>
-                <h4>Digital postcards from the community</h4>
-            </div>
+            <BounceFade>
+                <div className='flex flex-col justify-center items-center gap-4 lg:my-12'>
+                    <h1>Postcards</h1>
+                    <h4>Digital postcards from the community</h4>
+                </div>
+            </BounceFade>
             <div className="flex flex-col  justify-center items-center gap-4">
                 { !createMenu && (  <Button  className='w-40' onClick={()=>setCreateMenu(true)} ><Send />Send a Postcard</Button> ) }
                     { createMenu && !session?.data?.user ? (
@@ -292,28 +297,27 @@ const PostcardsPage = () => {
                     ) }
                    
             </div>
-            <Masonry
-                breakpointCols={breakpointColumnsObj}
-                className="flex -ml-3 w-auto"
-                columnClassName="pl-3 bg-clip-padding"
-                >
-                {allPostcards.map((post) => (
-                    <div key={post.id} className="mb-6 cursor-pointer hover-effect  relative rounded-md" onClick={()=>openDrawer(post.id)} >
-                        <img
-                            src={post.picture}
-                            alt='digital postcards from users'
-                            className="rounded-md hover-effect cursor-pointer overflow-hidden "
-                            // layout="responsive"
-                            // objectFit="cover"
-                        />
-                         <div
-                            className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent rounded-md"
-                            ></div>
-                        <p className="text-left mt-0 absolute bottom-3 left-3 text-white p-2">👋 from {post.location}  {post.emoji}</p>
-
-                    </div>
-                ))}
-            </Masonry>
+                <Masonry
+                    breakpointCols={breakpointColumnsObj}
+                    className="flex -ml-3 w-auto"
+                    columnClassName="pl-3 bg-clip-padding"
+                    >
+                    {allPostcards.map((post) => (
+                        <div key={post.id} className="mb-6 cursor-pointer hover-effect  relative rounded-md" onClick={()=>openDrawer(post.id)} >
+                            <img
+                                src={post.picture}
+                                alt='digital postcards from users'
+                                className="rounded-md hover-effect cursor-pointer overflow-hidden "
+                                // layout="responsive"
+                                // objectFit="cover"
+                            />
+                             <div
+                                className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent rounded-md"
+                                ></div>
+                            <p className="text-left mt-0 absolute bottom-3 left-3 text-white p-2">👋 from {post.location}  {post.emoji}</p>
+                        </div>
+                    ))}
+                </Masonry>
                 {/* { viewDetails && (
                     <div  className='detailed-view z-40 bg-black bg-opacity-50 inset-0 fixed flex flex-col justify-center items-center' >
                         <div className='rounded-md border-0 shadow-none w-[90%] flex flex-col justify-center items-center cursor-pointer' onClick={()=>setViewDetails(false)}>
