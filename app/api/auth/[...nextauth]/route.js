@@ -5,7 +5,7 @@ import {prisma} from "@/prisma/prisma";
 // import {PrismaAdapter} from '@next-auth/prisma-adapter'
 
 
-export const authOptions = {
+const authOptions = {
     // adapter : PrismaAdapter(prisma),
 
     providers: [

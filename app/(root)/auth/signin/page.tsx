@@ -1,16 +1,16 @@
-import { getServerSession } from "next-auth";
-import { authOptions } from "@/app/api/auth/[...nextauth]/route";
-import { redirect } from "next/navigation";
+// import { getServerSession } from "next-auth";
+// import { authOptions } from "@/app/api/auth/[...nextauth]/route";
+// import { redirect } from "next/navigation";
 import SignInButtons from "@/components/SignInButtons"; // Import Client Component
 
 export default async function SignInPage() {
   // Fetch the current session
-  const session = await getServerSession(authOptions);
+  // const session = await getServerSession(authOptions);
 
   // Redirect if the user is already logged in
-  if (session) {
-    redirect("/");
-  }
+  // if (session) {
+  //   redirect("/");
+  // }
 
   return (
     <div className="px-12 py-20 pt-32 md:px-96  flex flex-col items-center justify-center">
