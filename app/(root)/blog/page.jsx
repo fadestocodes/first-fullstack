@@ -11,11 +11,11 @@ import { BounceFade } from "@/components/ui/animations";
 
 
 
-
 const BlogsPage = async () => {
   const data = await fetch('http://localhost:3000/api/post/get-all');
   const allPosts = await data.json();
   console.log('all psots: ', allPosts);
+
 
 
   return (
