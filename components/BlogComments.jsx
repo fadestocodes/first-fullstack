@@ -2,13 +2,12 @@
 
 import React, {useState, useEffect, useRef} from 'react'
 import { useRouter } from 'next/navigation';
-import LoginModal from '@/components/ui/signInCard'
 import {Textarea} from '@/components/ui/textarea'
 import {Button} from '@/components/ui/button'
 import { signIn } from 'next-auth/react';
 import { useSession } from 'next-auth/react';
-import { CircleX, X } from 'lucide-react';
-import {Card, CardContent, CardHeader, CardTitle} from '@/components/ui/card'
+import {  X } from 'lucide-react';
+import {Card} from '@/components/ui/card'
 import GoogleIcon from '@mui/icons-material/Google';
 
 
@@ -16,11 +15,9 @@ const BlogComments = ({postId}) => {
     const commentsRef = useRef(null);
     const session = useSession();
     const blogId = postId;
-    const router = useRouter();
     const [commentPosted, setCommentPosted] = useState(false); 
     const [replyingTo, setReplyingTo] = useState(null)
     const [commentsList, setCommentList] = useState([]);
-    const [replies, setReplies] = useState([]);
 
     // const [selectedTextArea, setSelectedTextArea] = useState(true);
     // const handleFocus = () => {
@@ -186,14 +183,6 @@ const BlogComments = ({postId}) => {
         setReplyingTo(null);
     }
 
-    const formatDate = (dateStr) => {
-        return format(new Date(dateStr), 'MMMM d, yyyy')
-    }
-
-    const closeModal = () => {
-        setShowModal(false);
-    }
-
     const handleLogin = async (provider) => {
         sessionStorage.setItem(`userComment-${blogId}`, inputs.comment);
         try {
@@ -289,6 +278,7 @@ const BlogComments = ({postId}) => {
                                             <div className="image flex justify-start items-start">
                                                 <img
                                                     src={`/api/proxy-image?url=${encodeURIComponent(item.users.picture)}`}
+                                                    alt='User avatar photo'
                                                     style={{
                                                         borderRadius: "50%",
                                                         scale: "40%",
@@ -385,6 +375,7 @@ const BlogComments = ({postId}) => {
                                                         <div className="image  flex p-0 m-0 justify-start  items-start">
                                                             <img className='size-9'
                                                                 src={`/api/proxy-image?url=${encodeURIComponent(element.users.picture)}`}
+                                                                alt='User avatar photo'
                                                                 style={{
                                                                     borderRadius:
                                                                         "50%",

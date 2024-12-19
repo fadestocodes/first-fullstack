@@ -1,23 +1,19 @@
 import { authOptions } from '@/app/api/auth/[...nextauth]/route';
-import { Card, CardTitle, CardHeader, CardContent, CardDescription, CardFooter } from '@/components/ui/card';
-import { getServerSession } from 'next-auth';
+import { Card, CardHeader, CardContent } from '@/components/ui/card';
 import React from 'react'
-import {Button} from '@/components/ui/button'
 import {Badge} from '@/components/ui/badge'
 import {dateFormat} from '@/lib/dateFormat'
 import {formatKebab} from '@/lib/formatKebabCase'
-import { Heart, Eye, MessageSquareText, CornerRightUp } from 'lucide-react';
+import {  Eye, MessageSquareText } from 'lucide-react';
 import {paraphraseContent} from  '@/lib/paraphraseContent'
-import {Avatar, AvatarFallback, AvatarImage} from '@/components/ui/avatar'
-import {getInitials} from '@/lib/getInitials'
+import {Avatar, AvatarImage} from '@/components/ui/avatar'
 import {RedirectButton} from '@/lib/RedirectButton'
-import { Bounce, BounceFade, FadeIn } from "@/components/ui/animations";
+import { BounceFade } from "@/components/ui/animations";
 
 
 
 
-const BlogsPage = async ({params}) => {
-  const session = await getServerSession(authOptions);
+const BlogsPage = async () => {
   const data = await fetch('http://localhost:3000/api/post/get-all');
   const allPosts = await data.json();
   console.log('all psots: ', allPosts);
@@ -34,7 +30,7 @@ const BlogsPage = async ({params}) => {
               {/* <img src={post.coverPhoto} alt='post cover photo' className='' ></img> */}
                 <Card className='border-0 shadow-none items-center flex flex-col  m-12 w-96   md:w-[42rem]  lg:flex-row lg:h-[14rem] lg:w-[52rem] lg:py-0 lg:my-4  lg:gap-0 '>
                     <div className='relative  object-cover  w-full  md:w-full lg:w-[20rem] lg:h-[14rem]'>
-                      <img src={post.coverPhoto} alt="" className='object-cover  h-56 w-full   md:w-full  lg:w-[20rem] lg:h-[14rem] '   />
+                      <img src={post.coverPhoto} alt="Blog post cover photo" className='object-cover  h-56 w-full   md:w-full  lg:w-[20rem] lg:h-[14rem] '   />
                       <div><Badge variant='secondary' className='absolute bottom-4 left-4 '>{formatKebab(post.category)}</Badge></div>
                     </div>
                     <div className="  w-full h-full flex justify-evenly flex-col overflow-hidden lg:h-[14rem] lg:w-full">

@@ -1,16 +1,12 @@
 'use server';
 
 import React from 'react';
-import {Card, CardHeader, CardContent, CardFooter, CardTitle} from '../components/ui/card';
-import footerimage from '../public/footer.jpg'
+import {Card} from '../components/ui/card';
 import newprofilepic from '@/public/newprofilepic.jpg'
 import { Input } from '@/components/ui/input'
 import { Button } from '@/components/ui/button';
-import {Label} from '../components/ui/label'
 import Image from 'next/image';
-import { Avatar, AvatarImage } from './ui/avatar';
-import FooterCurrentLocation from '@/components/FooterCurrentLocation'
-import { MapPinned, PlaneTakeoff, Plane } from 'lucide-react';
+import {  Plane } from 'lucide-react';
 
 
 

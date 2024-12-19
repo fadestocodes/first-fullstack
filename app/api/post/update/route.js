@@ -1,4 +1,3 @@
-import React from 'react'
 import { updatePost } from '@/prisma/prismaQueries';
 
 export async function POST (req){

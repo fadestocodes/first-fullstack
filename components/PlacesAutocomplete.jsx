@@ -1,8 +1,6 @@
 'use client'
 
-import React, { useState, useRef, useEffect } from 'react';
-import { useLoadScript, Autocomplete } from '@react-google-maps/api';
-import {  FormHelperText } from '@mui/material';
+import React, { useState, useEffect } from 'react';
 import {Input} from '@/components/ui/input'
 import {Button} from '@/components/ui/button'
 import {X} from 'lucide-react'
@@ -57,6 +55,7 @@ export const PlacesAutocomplete = ({onSelect}) => {
             }
         } catch (err){
             setError('No results')
+            console.log(err.message)
         }
     }
 

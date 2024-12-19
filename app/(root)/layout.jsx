@@ -1,19 +1,14 @@
 
 import React from 'react'
-import Navbar from '../../components/Navbar';
-import { Card, CardTitle, CardContent, CardHeader, CardDescription } from '../../components/ui/card';
-import Footer from '../../components/Footer'
 import {NavigationMenuDemo}  from '@/components/NavigationMenu';
 import {AppSidebar} from '@/components/Sidebar'
-import { SessionProvider } from 'next-auth/react';
-import { SidebarTrigger, SidebarProvider} from '@/components/ui/sidebar';
+import {  SidebarProvider} from '@/components/ui/sidebar';
 import { getServerSession } from 'next-auth';
 import {SessionProviderWrapper} from '@/components/SessionProviderWrapper'
 import {Footer2} from '@/components/Footerv2'
     // import { authOptions } from '../api/auth/[...nextauth]';
 
 const Layout = async ({children}) => {
-    const session = await getServerSession();
 
     
     return (

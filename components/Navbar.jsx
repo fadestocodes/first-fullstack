@@ -7,10 +7,6 @@ import { MapPin } from 'lucide-react';
 
 const Navbar = () => {
   
-    const handleLogout = () => {
-        logoutUser();
-    }
-    
 
   
     return (

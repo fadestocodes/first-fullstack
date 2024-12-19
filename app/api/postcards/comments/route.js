@@ -1,5 +1,4 @@
 import {prisma} from '@/prisma/prisma'
-import { Rewind } from 'lucide-react'
 
 export async function GET(){
     try {

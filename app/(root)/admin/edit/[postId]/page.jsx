@@ -2,18 +2,13 @@
 'use client'
 
 import {Button} from '@/components/ui/button'
-import { getServerSession } from 'next-auth';
 import { useSession } from 'next-auth/react'
-import { redirect } from 'next/navigation';
 import React, {useState, useEffect} from 'react'
-import {authOptions} from '@/app/api/auth/[...nextauth]/route.js'
 import TinyMCE from '@/components/TinyMCE';
-import {Card, CardContent, CardHeader, CardTitle} from '@/components/ui/card'
+import {Card,  CardTitle} from '@/components/ui/card'
 import {Input} from '@/components/ui/input'
 import {Label} from '@/components/ui/label'
 import {Select, SelectContent, SelectGroup, SelectLabel, SelectItem, SelectTrigger, SelectValue} from '@/components/ui/select'
-import {Tabs, TabsContent, TabsList, TabsTriger} from '@/components/ui/tabs'
-import {Stepper} from '@/components/ui/stepper'
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 import {createBlogFormSchema} from '@/lib/validation'
 import { SubscribeButton } from '@/components/ui/SubscribeButton';
@@ -22,7 +17,6 @@ import { useParams } from 'next/navigation';
 import {
     Dialog,
     DialogContent,
-    DialogDescription,
     DialogHeader,
     DialogTitle,
     DialogTrigger,
@@ -33,8 +27,7 @@ const EditPost =   () => {
     console.log('hello')
     const router = useRouter();
     // const postId = (await params).postId
-    const {id} = useParams();
-    const postId = id;
+    const {postId} = useParams();
     const session = useSession();
    
     const [inputs, setInputs] = useState({
@@ -45,7 +38,6 @@ const EditPost =   () => {
 
 
     const [ firstPage, setFirstPage ]  = useState(true);
-    const [modalOn, setModalOn] = useState(false);
     const [errors, setErrors] = useState([]);
     const [imageLoading, setImageLoading] = useState(false);
     const [editorContent, setEditorContent] = useState(null);
@@ -86,9 +78,9 @@ const EditPost =   () => {
         fetchPost();
     },[])
 
-    if (!postId){
-        return <div>Loading....</div>
-    }
+    // if (!postId){
+    //     return <div>Loading....</div>
+    // }
     
    
 
@@ -248,9 +240,6 @@ const EditPost =   () => {
     router.push('/admin/drafts')
   }
   
-  const toggleModal = () => {
-    setModalOn(prevData => (!prevData));
-  }
 
   const publishPost = async () => {
     const user = session.data.user;
@@ -294,7 +283,6 @@ const EditPost =   () => {
                     <div className='flex flex-col  w-[70%] mb-8 -mt-8'>
                         <div className="flex justify-between mt-12">
                         <Button variant="outline" size="icon" className={`w-auto px-3  bg-zinc-50 text-gray-400'  }  `} onClick={firstPage ? backToDrafts : backToSetup}><ChevronLeft />Back</Button>
-                        {/* <Button variant='default' size='lg'  className={`size-lg ${firstPage && 'hidden bg-zinc-50 text-gray-400 transition-none pointer-events-none  cursor-default' } `}  onClick={firstPage ? null : toggleModal }>Save Post</Button> */}
                         <Dialog>
                         <DialogTrigger className={`size-lg bg-black rounded-md text-sm text-white px-4 py-2 ${firstPage && 'hidden bg-zinc-50 text-gray-400 transition-none pointer-events-none  cursor-default' } `}>Save Post</DialogTrigger>
                         <DialogContent>
@@ -354,7 +342,8 @@ const EditPost =   () => {
                                 )  : (
                                     <div className='flex flex-col justify-center items-center gap-2'>
                                     {/* <Button variant='outline' className='w-12' onClick={()=>clearPhoto}>Clear</Button> */}
-                                    <img className='w-[30%] self-center' src={inputs.coverPhoto} ></img>
+                                    { inputs.coverPhoto && (  <img className='w-[30%] self-center' alt='user uploaded cover photo for blog' src={inputs.coverPhoto} ></img>) }
+                                   
                                     </div>
                                 )}
                                 { errors.find((error)=> error.path.includes('coverPhoto')) && <span className='text-red-400'>{errors.find((error)=>error.path.includes('coverPhoto'))?.message}</span> }

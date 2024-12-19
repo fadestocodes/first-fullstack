@@ -1,6 +1,5 @@
 'use server'
 
-import React from 'react';
 import {NextResponse} from 'next/server';
 
 
@@ -25,4 +24,3 @@ export const POST = async ( request ) => {
         {status:200}
     )
 }
-    

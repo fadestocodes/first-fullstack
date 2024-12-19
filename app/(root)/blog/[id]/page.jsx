@@ -1,8 +1,8 @@
-import React, {Suspense} from 'react'
-import {Avatar, AvatarImage, AvatarFallback} from '@/components/ui/avatar'
+import React from 'react'
+import {Avatar, AvatarImage} from '@/components/ui/avatar'
 import {dateFormat} from '@/lib/dateFormat'
 import  BlogComments from '@/components/BlogComments'
-import { Bounce, BounceFade, FadeIn } from "@/components/ui/animations";
+import {BounceFade } from "@/components/ui/animations";
 
 
 const BlogDetails = async ( {params} ) => {
@@ -33,7 +33,7 @@ const BlogDetails = async ( {params} ) => {
         <div className='main-container flex flex-col gap-8'>
              
             <div className='w-full relative'>
-                <img src={post.coverPhoto} alt="" className=' h-[32rem] w-full object-cover  2xl:h-[40rem] bigscreen:h-[56rem]'/>
+                <img src={post.coverPhoto} alt="Blog cover photo" className=' h-[32rem] w-full object-cover  2xl:h-[40rem] bigscreen:h-[56rem]'/>
                 <div className="absolute inset-0 bg-black opacity-0"></div>
             </div>
             <div className='flex flex-col sm:px-12  lg:px-40   2xl:px-[28rem] '>

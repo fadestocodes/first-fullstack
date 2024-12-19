@@ -1,5 +1,4 @@
 import NextAuth from "next-auth"
-import GithubProvider from 'next-auth/providers/github'
 import FacebookProvider from 'next-auth/providers/facebook'
 import GoogleProvider from 'next-auth/providers/google'
 import {prisma} from "@/prisma/prisma";
@@ -78,7 +77,7 @@ export const authOptions = {
             return token;
         },
 
-        async session ({session, user ,token}){
+        async session ({session ,token}){
             // if (token?.id) {
             //     session.id = token.id;
             //     session.user = user

@@ -1,29 +1,24 @@
 'use client'
 import {Button} from '@/components/ui/button'
-import { getServerSession } from 'next-auth';
 import { useSession } from 'next-auth/react'
-import { redirect } from 'next/navigation';
 import React, {useState, useEffect} from 'react'
-import {authOptions} from '@/app/api/auth/[...nextauth]/route.js'
 import TinyMCE from '../../../../components/TinyMCE';
-import {Card, CardContent, CardHeader, CardTitle} from '@/components/ui/card'
+import {Card, CardTitle} from '@/components/ui/card'
 import {Input} from '@/components/ui/input'
 import {Label} from '@/components/ui/label'
-import {Select, SelectContent, SelectGroup, SelectLabel, SelectItem, SelectTrigger, SelectValue} from '@/components/ui/select'
-import {Tabs, TabsContent, TabsList, TabsTriger} from '@/components/ui/tabs'
-import {Stepper} from '@/components/ui/stepper'
+import {Select, SelectContent, SelectGroup, SelectItem, SelectTrigger, SelectValue} from '@/components/ui/select'
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 import {createBlogFormSchema} from '@/lib/validation'
 import { useRouter } from 'next/navigation';
 import {
     Dialog,
     DialogContent,
-    DialogDescription,
     DialogHeader,
     DialogTitle,
     DialogTrigger,
   } from "@/components/ui/dialog"
   import { SubscribeButton } from '@/components/ui/SubscribeButton';
+  import Image from 'next/image'
 
 
 
@@ -253,7 +248,7 @@ const saveDraft = async () => {
 
     return (
         <div className='flex flex-col items-center justify-center'>
-                    <div className='flex flex-col  w-[70%] mb-8 -mt-8'>
+                    <div className='flex flex-col  w-[90%] md:w-[60%] mb-8 -mt-8'>
                         <div className="flex justify-between mt-12">
                         <Button variant="outline" size="icon" className={`w-auto px-3 ${firstPage && 'pointer-events-none bg-zinc-50 text-gray-400'  }  `} onClick={firstPage ? null : backToSetup}><ChevronLeft />Back</Button>
 
@@ -276,7 +271,7 @@ const saveDraft = async () => {
                         </div>
                     </div>
             { firstPage ? (
-                <div className='w-[70%]'>
+                <div className='w-[90%] md:w-[60%]'>
 
                     <form action="" className=''>
                         <Card className='flex flex-col justify-center items-center px-20 py-10 gap-8 '>
@@ -310,7 +305,12 @@ const saveDraft = async () => {
 
                                 <Input className=' mb-8 cursor-pointer w-[25%]' type='file'  name='coverPhoto' accept='image/*' onChange={coverPhotoUpload} ></Input>
                                 { inputs.coverPhoto ?  (
-                                    <img className='w-[30%] self-center' src={inputs.coverPhoto} ></img>
+                                    <Image
+                                    src={inputs.coverPhoto}
+                                    alt="User entered cover photo for blog"
+                                    layout="responsive"
+                                    width={100} 
+                                    height={100} />
                                 ) : imageLoading && (
                                     <Card className='flex flex-col self-center justify-center items-center w-[150px] h-[150px]'>
                                         <div className='spinner'></div>

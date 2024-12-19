@@ -1,6 +1,6 @@
 import {prisma} from '@/prisma/prisma'
 
-async function GET(req) {
+export async function GET(req) {
     const {take, cursor } = await req.json();
     try {
         const results = await prisma.blogpost.findMany({

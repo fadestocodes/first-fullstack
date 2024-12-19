@@ -4,10 +4,8 @@ import React, { useEffect, useState } from 'react'
 import {Toggle} from '@/components/ui/toggle'
 import {PlacesAutocomplete} from '@/components/PlacesAutocomplete'
 import Masonry from "react-masonry-css";
-import Image from 'next/image'
-import {Card, CardContent, CardHeader, CardTitle, CardDescription, CardFooter} from '@/components/ui/card'
+import {Card, CardContent, CardHeader, CardFooter} from '@/components/ui/card'
 import {Button} from '@/components/ui/button'
-import CommentsDrawer from '@/components/CommentsDrawer';
 import {
     Drawer,
     DrawerClose,
@@ -16,20 +14,18 @@ import {
     DrawerFooter,
     DrawerHeader,
     DrawerTitle,
-    DrawerTrigger,
   } from "@/components/ui/drawer"
-import { RectangleHorizontal, RectangleVertical, Maximize2, Minimize2 } from 'lucide-react';
+import {  Maximize2, Minimize2 } from 'lucide-react';
 import {Textarea} from '@/components/ui/textarea'
 import { useSession } from 'next-auth/react';
 import {Input} from '@/components/ui/input'
 import { Send } from 'lucide-react';
 import {Label} from '@/components/ui/label'
 import SignInButtons from '@/components/SignInButtons'
-import { fakeData } from '@/lib/fakePostcardData'
 import {dateFormat} from '@/lib/dateFormat'
 import {Avatar, AvatarImage} from '@/components/ui/avatar'
 import { useRouter } from 'next/navigation';
-import { Bounce, BounceFade, FadeIn } from "@/components/ui/animations";
+import { BounceFade } from "@/components/ui/animations";
 
 
 const PostcardsPage = () => {
@@ -44,7 +40,6 @@ const PostcardsPage = () => {
     const session = useSession();
     const [viewDetails, setViewDetails] = useState(false);
     const [selectedPost, setSelectedPost] = useState(null);
-    const [selectedImage, setSelectedImage] = useState('');
     const [selectedToggle, setSelectedToggle] = useState('vertical');
     const [imageLoading, setImageLoading] = useState(false);
     const [createMenu, setCreateMenu] = useState(false);
@@ -55,7 +50,6 @@ const PostcardsPage = () => {
         picture : ''
     })
     const [errors, setErrors] = useState({});
-    const router = useRouter();
     const [allPostcards, setAllPostcards] = useState([]);
     const [allPostcardComments, setAllPostcardComments] = useState([]);
     const [commentModal, setCommentModal] = useState(false);
@@ -140,12 +134,7 @@ const PostcardsPage = () => {
         window.location.href='/postcards';
     }
 
-    const seeDetails = (id) => {
-        setViewDetails(true);
-        const postcard = allPostcards.find(post=>post.id===id);
-        console.log('postcard is ', postcard)
-
-    }
+   
 
     const closeDrawer  =() => {
         setViewDetails(false);
@@ -158,7 +147,7 @@ const PostcardsPage = () => {
 
 
     const openDrawer = (id) => {
-        const postcardId = id;
+        // const postcardId = id;
         setSelectedPost(allPostcards.find(post=>post.id===id));
         console.log('all carsd from openDrawer', allPostcards);
         setViewDetails(true)
@@ -273,7 +262,7 @@ const PostcardsPage = () => {
                                     <div className='spinner'></div>
                                 </Card>
                                 ) :  inputs.picture ? (
-                                <img className='w-[100px] h-[100px] self-center object-cover mb-8' src={inputs.picture} ></img>
+                                <img className='w-[100px] h-[100px] self-center object-cover mb-8' src={inputs.picture} alt='User posted cover photo' ></img>
                                 ) : (<div></div>) }
                                 <div className="flex flex-col items-start gap-6 w-full">
                                     <div className="flex flex-col gap-2">

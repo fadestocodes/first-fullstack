@@ -1,12 +1,11 @@
 "use client";
 
-import { useEffect, useState } from "react";
-import { signIn, getProviders } from "next-auth/react";
+import {  useState } from "react";
+import { signIn } from "next-auth/react";
 import {Button} from '@/components/ui/button'
 import GoogleIcon from '@mui/icons-material/Google';
 import FacebookIcon from '@mui/icons-material/Facebook';
 import {Card, CardContent, CardHeader, CardTitle, CardDescription} from '@/components/ui/card'
-import Facebook from "next-auth/providers/facebook";
 
 type Provider = {
   id: string;

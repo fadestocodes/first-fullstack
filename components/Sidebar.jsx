@@ -11,13 +11,11 @@ import {
     SidebarTrigger,
     SidebarGroupLabel,
     SidebarGroup,
-    SidebarHeader,
   } from "@/components/ui/sidebar";
-  import { Home, Settings , FileStack, FilePlus2, UserRoundCheck, NotepadTextDashed} from "lucide-react";
+  import { Home, FileStack, FilePlus2, NotepadTextDashed} from "lucide-react";
 
-import {useSession, signIn, signOut} from 'next-auth/react'
+import {useSession} from 'next-auth/react'
 import {Avatar, AvatarFallback, AvatarImage} from './ui/avatar';
-import { useEffect } from "react";
 import { useRouter } from "next/navigation";
 
 

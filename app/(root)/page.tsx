@@ -1,15 +1,10 @@
 import Image from "next/image";
-import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
-import { AppleCardsCarouselDemo } from "@/components/AppleCarousel";
-import TofinoPic from '../../public/tofinopic.jpg'
-import profilepic from '@/public/newprofilepic.jpg'
 import { Bounce, BounceFade, FadeIn } from "@/components/ui/animations";
-import {BentoGridDemo} from '@/components/BentoGridDemo'
 import tofino from '@/public/tofino.png'
 import moherCliffs from '@/public/mohercliffs.jpg'
 import ireland from '@/public/ireland1.jpg'
 import sunset from '@/public/sunset.jpg'
-import { ArrowRight, ExternalLink } from 'lucide-react';
+import { ExternalLink } from 'lucide-react';
 import { Badge } from "@/components/ui/badge";
 
 
@@ -42,7 +37,7 @@ export default function Home() {
           <h2 className="text-center !mt-12 !py-0 !leading-3">Featured Posts</h2>
          <div className="vertical-cards-container relative gap-3 justify-center items-center mt-10  w-full flex flex-shrink flex-1 flex-wrap flex-col  lg:flex-row" >
               <div className="vertical-card  my-2 w-[22rem] h-[38rem] relative hover-effect cursor-pointer">
-                <Image src={sunset} alt="" className=" object-cover w-full h-full" />
+                <Image src={sunset} alt="placeholder photo" className=" object-cover w-full h-full" />
                 <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent rounded-md"></div>
 
                   <div className=" inset-0 z-20 absolute justify-end flex flex-col pl-4 pb-4 gap-3" >
@@ -58,7 +53,7 @@ export default function Home() {
               </div>
 
               <div className="vertical-card  my-2 w-[22rem] h-[38rem] relative hover-effect cursor-pointer ">
-                <Image src={tofino} alt="" className=" object-cover w-full h-full" />
+                <Image src={tofino} alt="placeholder photo" className=" object-cover w-full h-full" />
                 <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent rounded-md"></div>
                   <div className=" inset-0 z-20 absolute justify-end flex flex-col pl-4 pb-4 gap-3" >
                     <div>
@@ -72,7 +67,7 @@ export default function Home() {
                   </div>
               </div>
               <div className="vertical-card  my-2 w-[22rem] h-[38rem] relative hover-effect cursor-pointer">
-                <Image src={ireland} alt="" className=" object-cover w-full h-full" />
+                <Image src={ireland} alt="placeholder photo" className=" object-cover w-full h-full" />
                 <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent rounded-md"></div>
 
                   <div className=" inset-0 z-20 absolute justify-end flex flex-col pl-4 pb-4 gap-3" >
@@ -87,7 +82,7 @@ export default function Home() {
                   </div>
               </div>
               <div className="vertical-card  my-2 w-[22rem] h-[38rem] relative hover-effect cursor-pointer">
-                <Image src={moherCliffs} alt="" className=" object-cover w-full h-full" />
+                <Image src={moherCliffs} alt="placeholder photo" className=" object-cover w-full h-full" />
                 <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent rounded-md"></div>
 
                   <div className=" inset-0 z-20 absolute justify-end flex flex-col pl-4 pb-4 gap-3" >

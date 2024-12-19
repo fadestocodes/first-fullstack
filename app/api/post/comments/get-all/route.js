@@ -1,4 +1,3 @@
-import React from 'react'
 import { getAllComments } from '@/prisma/prismaQueries'
 
 export async function GET(req) {

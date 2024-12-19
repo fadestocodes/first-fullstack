@@ -1,4 +1,3 @@
-import React from 'react'
 import { addComment, addUser, findUser } from '../../../../../prisma/prismaQueries'
 
 export async function POST(req) {

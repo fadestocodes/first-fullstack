@@ -3,7 +3,7 @@
 import * as React from "react"
 import { Slot } from "@radix-ui/react-slot"
 import { cva, type VariantProps } from "class-variance-authority"
-import { BellIcon, Save } from "lucide-react";
+import {  Save } from "lucide-react";
 import { useState, useEffect } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 
@@ -199,10 +199,10 @@ export const SubscribeButton: React.FC<SubscribeButtonProps> = ({
       : "rgb(200,200,200)",
   };
 
-  const buttonTextColor = {
-    light: isSubscribed ? "black" : "white",
-    dark: isSubscribed ? "white" : "black",
-  };
+  // const buttonTextColor = {
+  //   light: isSubscribed ? "black" : "white",
+  //   dark: isSubscribed ? "white" : "black",
+  // };
 
 
   return (

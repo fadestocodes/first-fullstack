@@ -1,5 +1,4 @@
 
-import React from 'react'
 import { getSinglePost } from '@/prisma/prismaQueries';
 import { prisma } from '@/prisma/prisma';
 

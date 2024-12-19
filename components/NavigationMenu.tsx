@@ -2,16 +2,14 @@
 
 import * as React from "react"
 import Link from "next/link"
-import { MapPin, MapPinned } from "lucide-react"
+import { MapPinned } from "lucide-react"
 import { cn } from "@/lib/utils"
 // import { Icons } from "@/components/icons"
 import {
   NavigationMenu,
-  NavigationMenuContent,
   NavigationMenuItem,
   NavigationMenuLink,
   NavigationMenuList,
-  NavigationMenuTrigger,
   navigationMenuTriggerStyle,
 } from "@/components/ui/navigation-menu"
 import { useSession } from "next-auth/react"
@@ -20,8 +18,6 @@ import { Button } from "@/components/ui/button"
 import {Avatar, AvatarFallback, AvatarImage} from '@/components/ui/avatar'
 import {useState, useEffect} from 'react'
 import { redirect } from "next/navigation"
-import { Bounce, FadeIn, BounceFade } from "./ui/animations"
-import ChatBubble from '@/components/ui/chatBubble'
 import {HoverCardLocation} from '@/components/HoverCard'
 
 export function NavigationMenuDemo() {
@@ -29,7 +25,6 @@ export function NavigationMenuDemo() {
   const session = useSession();
   console.log('Session is: ', session);
   const [isOpen, setIsOpen] = useState(false);
-  const [locationOpen, setLocationOpen] = useState(false);
 
 
   const handleAvatarClick = () => {
@@ -41,12 +36,6 @@ export function NavigationMenuDemo() {
     redirect('/')
   }
 
-  const mapClick = () => {
-    console.log('clicked')
-    setLocationOpen(prevData => (
-      !prevData
-    ));
-  }
 
 
 

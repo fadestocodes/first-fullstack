@@ -2,8 +2,7 @@
 
 import React, { useEffect, useState } from 'react'
 import { useSession } from 'next-auth/react'
-import { getDrafts } from '@/prisma/prismaQueries'
-import {Card, CardTitle, CardContent, CardHeader, CardDescription} from '@/components/ui/card'
+import {Card, CardContent} from '@/components/ui/card'
 import Image from 'next/image'
 import {Badge} from '@/components/ui/badge'
 import { useRouter } from 'next/navigation'
@@ -73,7 +72,7 @@ const DraftsPage =  () => {
             <div key={draft.id} >
                 <Card onClick={()=>editPost(draft.id)} className=' h-[30rem] relative justify-center items-center flex flex-col gap-4  cursor-pointer hover-effect overflow-hidden m-4'>
                         <div className=' w-full h-[15rem] flex flex-col justify-stretch items-stretch'>
-                            <img src={draft.coverPhoto }  alt='cover photo for post' className='rounded-lg object-cover w-full h-[16rem] absolute left-0 top-0' ></img>
+                            <img src={draft.coverPhoto }  alt='cover photo for post' className='object-cover w-full h-[16rem] absolute left-0 top-0' ></img>
                                 <Badge className='absolute top-5 left-4'>Draft</Badge>
                                 <Badge className='absolute top-5 left-20'>{reformatDashes(draft.category)}</Badge>
                         </div>

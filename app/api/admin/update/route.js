@@ -1,4 +1,3 @@
-import React from 'react'
 import {prisma} from '@/prisma/prisma';
 // import { NextResponse } from 'next/server';
 

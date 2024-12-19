@@ -1,13 +1,11 @@
 // 'use server';
 
-import React, { useRef, useState } from 'react';
+import React from 'react';
 import { Editor } from '@tinymce/tinymce-react';
-import { Button } from '@/components/ui/button';
-import { useRouter } from 'next/navigation';
 
 export default function TinyMCE({value , onEditorChange, handleImageUpload}) {
 
-    const handleEditorChange = (content, editor) =>{
+    const handleEditorChange = (content) =>{
         onEditorChange(content);
   }
 
@@ -29,7 +27,7 @@ export default function TinyMCE({value , onEditorChange, handleImageUpload}) {
                 // automatic_uploads : true,
                 resize : false,
                 file_picker_types : 'file image media',
-                file_picker_callback: (cb, value, meta) => {
+                file_picker_callback: (cb) => {
                     const input = document.createElement('input');
                     input.setAttribute('type', 'file');
                     input.setAttribute('accept', 'image/*');
@@ -72,7 +70,6 @@ export default function TinyMCE({value , onEditorChange, handleImageUpload}) {
                 content_style: 'body { font-family:Helvetica,Arial,sans-serif; font-size:14px }', branding : false,
 
                 }}
-                onEditorChange={ handleEditorChange }
             />
         </div>
 

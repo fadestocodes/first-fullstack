@@ -1,24 +1,19 @@
 'use client';
 
-import React, {useEffect, useState, useActionState} from 'react'
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import React, { useState} from 'react'
+import { Card,  CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
-import {useSession, signIn, signOut } from 'next-auth/react';
-import authenticateAdmin from  '@/lib/authenticateAdmin'
-import {adminRequestForm} from '@/lib/validation'
-import { useRouter } from 'next/navigation';
+import {useSession } from 'next-auth/react';
 
 const AdminHome =  () => {
 
   const session = useSession();
   const [errors, setErrors] = useState('');
-  const router = useRouter();
 
 
 
-  const handleSubmit = async (prevState, event) => {
+  const handleSubmit = async ( event) => {
     event.preventDefault();
     const formData = new FormData(event.target);
   const password = formData.get('password');
@@ -64,6 +59,7 @@ const AdminHome =  () => {
       }
     } catch (err) { 
       setErrors(data.message);
+      console.log(err.message);
       }
     }
 

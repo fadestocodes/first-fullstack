@@ -1,6 +1,6 @@
 'use client'
 
-import { motion, useAnimation, Variants } from "framer-motion";
+import { motion, useAnimation } from "framer-motion";
 import React, { useEffect } from "react";
 import { useInView } from "react-intersection-observer";
 
