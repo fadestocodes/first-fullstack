@@ -10,12 +10,26 @@
   import { BounceFade } from "@/components/ui/animations";
 
 
+  async function fetchPosts() {
+    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/post/get-all`, {
+      cache: 'no-store', // Ensure always up-to-date content
+    });
+  
+    if (!res.ok) {
+      throw new Error('Failed to fetch posts');
+    }
+  
+    return res.json();
+  }
+  
+
 
   const BlogsPage = async () => {
 
 
-    const data = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/post/get-all`);
-    const allPosts = await data.json();
+    // const data = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/post/get-all`);
+    // const allPosts = await data.json();
+    const allPosts = await fetchPosts();
     console.log('all psots: ', allPosts);
 
 
