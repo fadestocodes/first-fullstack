@@ -12,7 +12,11 @@
 
 
   const BlogsPage = async () => {
-    if (!process.env.NEXT_PUBLIC_API_URL) return null;
+
+    if (!process.env.NEXT_PUBLIC_API_URL) {
+      return null;
+  }
+
     const data = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/post/get-all`);
     const allPosts = await data.json();
     console.log('all psots: ', allPosts);

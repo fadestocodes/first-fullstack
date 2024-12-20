@@ -28,8 +28,11 @@ import { BounceFade } from "@/components/ui/animations";
 
 
 const PostcardsPage = () => {
-    if (!process.env.NEXT_PUBLIC_API_URL) return null;
 
+
+    if (!process.env.NEXT_PUBLIC_API_URL) {
+        return null;
+    }
 
     const breakpointColumnsObj = {
         default: 5,

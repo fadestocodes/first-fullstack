@@ -24,7 +24,10 @@ import {
   
 
 const EditPost =   () => {
-    if (!process.env.NEXT_PUBLIC_API_URL) return null;
+    
+    if (!process.env.NEXT_PUBLIC_API_URL) {
+        return null;
+    }
 
     console.log('hello')
     const router = useRouter();
