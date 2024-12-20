@@ -24,9 +24,7 @@ import {
 
 const AdminCreatePage =  () => {
 
-    if (!process.env.NEXT_PUBLIC_API_URL) {
-        return null;
-    }
+
 
     const router = useRouter();
     const session = useSession();
