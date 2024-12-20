@@ -9,6 +9,8 @@ const BlogDetails = async ( {params} ) => {
     const {id} = await params;
     const postId = id;
     console.log('post id is ', postId);
+    if (!process.env.NEXT_PUBLIC_API_URL) return null;
+
     const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/post/get-single`, {
         method : 'POST',
         headers : {

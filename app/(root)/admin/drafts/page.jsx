@@ -7,7 +7,8 @@ import {Badge} from '@/components/ui/badge'
 import { useRouter } from 'next/navigation'
 
 const DraftsPage =  () => {
-  
+    if (!process.env.NEXT_PUBLIC_API_URL) return null;
+
     const router = useRouter();
     const [loadingData, setLoadingData] = useState(true);
     const [savedDrafts, setSavedDrafts] = useState({});

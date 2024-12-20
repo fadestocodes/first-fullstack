@@ -24,6 +24,8 @@ import {
   
 
 const EditPost =   () => {
+    if (!process.env.NEXT_PUBLIC_API_URL) return null;
+
     console.log('hello')
     const router = useRouter();
     // const postId = (await params).postId

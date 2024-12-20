@@ -7,6 +7,7 @@ import { Input } from '@/components/ui/input';
 import {useSession } from 'next-auth/react';
 
 const AdminHome =  () => {
+  if (!process.env.NEXT_PUBLIC_API_URL) return null;
 
   const session = useSession();
   const [errors, setErrors] = useState('');
