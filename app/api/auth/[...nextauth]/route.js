@@ -5,7 +5,7 @@ import {prisma} from "@/prisma/prisma";
 // import {PrismaAdapter} from '@next-auth/prisma-adapter'
 
 
-const authOptions = {
+export const authOptions = {
     // adapter : PrismaAdapter(prisma),
 
     providers: [
@@ -26,7 +26,8 @@ const authOptions = {
       ],
 
     pages:{
-    signIn : `${process.env.NEXT_PUBLIC_API_URL}/auth/signin`
+        signIn : `${process.env.NEXT_PUBLIC_API_URL}/auth/signin`,
+        error: '/auth/error'
     },
       
     callbacks : {

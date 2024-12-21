@@ -44,18 +44,15 @@ const AdminCreatePage =  () => {
     const [editorContent, setEditorContent] = useState('<p>Start writing your blog!</p>');
 
     useEffect(() => {
-        if (session.status === 'loading') {
-        return; // Wait for session to load
-        }
-
-        if (!session || session.data.user.role !== 'ADMIN') {
-        router.push('/'); // Redirect to login page
+        if (!session || session?.data?.user?.role !== 'ADMIN') {
+        router.push('/auth/error') 
         }
     }, [session, session.status, router]);
 
     if (session.status === 'loading') {
         return <div>Loading...</div>;
     }
+
 
     const handleChange = (event) => {
         const name = event.target.name;

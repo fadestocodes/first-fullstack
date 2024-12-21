@@ -24,19 +24,29 @@ import {
   
 
 const EditPost =   () => {
-    
-   
-    console.log('hello')
     const router = useRouter();
     // const postId = (await params).postId
     const {postId} = useParams();
     const session = useSession();
+
+    useEffect(() => {
+        if (session.status === "authenticated") {
+            if (session.data?.user?.role !== "ADMIN") {
+                router.push("/auth/error");
+            }
+        } else if (session.status === 'unauthenticated'){
+            router.push('/auth/error')
+        }
+
+    }, [session, router]);
+    
    
     const [inputs, setInputs] = useState({
         title : '',
         category : '',
         coverPhoto : ''
     })
+
 
 
     const [ firstPage, setFirstPage ]  = useState(true);
@@ -46,6 +56,7 @@ const EditPost =   () => {
    
 
     useEffect(()=>{
+      
         if (!postId) return;
         const fetchPost = async () => {
             try {
@@ -84,6 +95,9 @@ const EditPost =   () => {
     //     return <div>Loading....</div>
     // }
     
+    if (session.status === "loading") {
+        return <p>Loading...</p>;
+      }
    
 
     const handleChange = (event) => {

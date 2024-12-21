@@ -3,8 +3,9 @@ generator client {
 }
 
 datasource db {
-  provider = "postgresql"
-  url      = env("DATABASE_URL")
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
 }
 
 model Session {
@@ -16,18 +17,19 @@ model Session {
 
 model User {
   id        Int        @id @default(autoincrement())
-  firstName String
-  lastName  String?
+  name      String
   email     String     @unique
   password  String?
   googleId  String?    @unique
+  facebookId  String?  @unique
   role      Role       @default(GUEST)
   createdAt DateTime   @default(now())
   picture   String?
   blogposts Blogpost[]
   comments  Comment[]
   sessions  Session[]
-}
+  postcards  Postcard[]
+} 
 
 model Blogpost {
   id          Int       @id @default(autoincrement())
@@ -38,7 +40,11 @@ model Blogpost {
   category    String
   city        String?
   country     String?
+  coverPhoto  String
+  lastUpdated  DateTime?    
   isPublished Boolean   @default(false)
+  likes  Int  @default(0)
+  views  Int  @default(0)
   user        User      @relation(fields: [userId], references: [id])
   comments    Comment[]
 }
@@ -49,37 +55,30 @@ model Comment {
   created         DateTime  @default(now())
   userId          Int
   parentCommentId Int?
-  blogId          Int
-  blogposts       Blogpost  @relation(fields: [blogId], references: [id])
+  blogId          Int?
+  postcardId      Int?
+  postcards       Postcard?  @relation("PostcardComments", fields:[postcardId], references:[id])
+  blogposts       Blogpost?  @relation(fields: [blogId], references: [id])
   parentComment   Comment?  @relation("CommentReplies", fields: [parentCommentId], references: [id])
   replies         Comment[] @relation("CommentReplies")
   users           User      @relation(fields: [userId], references: [id])
 }
 
-/// The underlying table does not contain a valid unique identifier and can therefore currently not be handled by Prisma Client.
 model Postcard {
-  id          Int      @default(autoincrement())
+  id          Int      @id @default(autoincrement())
   picture     String
   countryCode String
   emoji       String
   userId      Int
+  user       User    @relation(fields:[userId], references:[id])
   likes       Int      @default(0)
   views       Int      @default(0)
   createdAt   DateTime @default(now())
   caption     String
   country     String
   location    String
-
-  @@ignore
-}
-
-/// The underlying table does not contain a valid unique identifier and can therefore currently not be handled by Prisma Client.
-model UserBookmarks {
-  A Int
-  B Int
-
-  @@map("_UserBookmarks")
-  @@ignore
+  comments  Comment[]  @relation("PostcardComments")
+  
 }
 
 enum Role {

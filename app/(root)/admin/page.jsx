@@ -1,10 +1,11 @@
 'use client';
 
-import React, { useState} from 'react'
+import React, { useEffect, useState} from 'react'
 import { Card,  CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import {useSession } from 'next-auth/react';
+import { useRouter } from 'next/navigation';
 
 const AdminHome =  () => {
   
@@ -12,6 +13,13 @@ const AdminHome =  () => {
 
   const session = useSession();
   const [errors, setErrors] = useState('');
+  const router = useRouter
+  
+  useEffect(()=>{
+    if (!session || session?.data?.user?.role !== 'ADMIN') {
+      router.push('/auth/error') 
+      }
+  }, [])
 
 
 

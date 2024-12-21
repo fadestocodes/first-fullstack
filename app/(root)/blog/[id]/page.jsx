@@ -40,16 +40,16 @@ const BlogDetails = async ( {params} ) => {
                 <img src={post.coverPhoto} alt="Blog cover photo" className=' h-[32rem] w-full object-cover  2xl:h-[40rem] bigscreen:h-[56rem]'/>
                 <div className="absolute inset-0 bg-black opacity-0"></div>
             </div>
-            <div className='flex flex-col sm:px-12  lg:px-40   2xl:px-[28rem] '>
-                <div className='title-author self-center gap-3 flex  flex-col justify-center items-center'>
-                    <h1>{post.title}</h1>
+            <div className='flex flex-col sm:px-12  lg:px-40   2xl:px-[22rem] bigscreen:px-[32rem] '>
+                <div className='title-author self-center gap-5 flex  flex-col justify-center items-center'>
+                    <h1 className='text-center' >{post.title}</h1>
                     <div className='flex gap-3 justify-start items-center'>
                         <Avatar className='size-9'>
                             <AvatarImage src={ `/api/proxy-image?url=${encodeURIComponent( post.user.picture)}` } />
                         </Avatar>
                         <div className='flex flex-col'>
-                            <p className='font-bold text-sm !my-0 '>Written by {post.user.name}</p>
-                            <p className='text-sm italic !my-0 '>Published on {dateFormat(post.createdAt)}</p>
+                            <p className='font-bold   text-sm !my-0 '>Written by {post.user.name}</p>
+                            <p className='text-xs text-[rgb(120,113,108)]  !my-0 '>Published on {dateFormat(post.createdAt)}</p>
                         </div>
                     </div>
                 </div>

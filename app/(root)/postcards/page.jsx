@@ -85,7 +85,7 @@ const PostcardsPage = () => {
 
     useEffect(()=>{
         getPostcardComments();
-    }, [ viewDetails ])
+    }, [ selectedPost ])
 
     const createPostcard = async () => {
         const newErrors = {};
@@ -210,20 +210,22 @@ const PostcardsPage = () => {
     const postComment = async () => {
         setCommentModal(true);
         console.log('clicked');
+        if (!session.data) return
         const data = {
             content : inputs.comment,
-            userId : session.data.user.id,
+            userId : session?.data?.user?.id,
             parentCommentId : inputs.parentId || null,
             postcardId : selectedPost.id
         }
         console.log('data is ', data);
-        const newComment = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/postcards/comments`, {
+        const newCommentData = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/postcards/comments`, {
             method: "POST",
             headers : {
                 'Content-Type' : 'application/json',
             },
             body : JSON.stringify(data)
         })
+        const newComment = await newCommentData.json();
         console.log('the newComment added is ', newComment );
         setSelectedPost(prevPost => ({
             ...prevPost,
@@ -233,17 +235,19 @@ const PostcardsPage = () => {
             ...prevInputs,
             comment : ''
         }))
+            window.location.href='/postcards';
+
     }
 
   return (
-    <div className="p-8 bigscreen:px-80 flex flex-col gap-6">
+    <div className="p-8 bigscreen:px-80 flex flex-col gap-3">
             <BounceFade>
-                <div className='flex flex-col justify-center items-center gap-4 lg:my-12'>
+                <div className='flex flex-col justify-center items-center gap-4 lg:my-4'>
                     <h1>Postcards</h1>
                     <h4>Digital postcards from the community</h4>
                 </div>
             </BounceFade>
-            <div className="flex flex-col  justify-center items-center gap-4">
+            <div className="flex flex-col  justify-center items-center gap-4  mb-10">
                 { !createMenu && (  <Button  className='w-40' onClick={()=>setCreateMenu(true)} ><Send />Send a Postcard</Button> ) }
                     { createMenu && !session?.data?.user ? (
                         <div className='login-modal px-20 bg-black bg-opacity-50 z-30 fixed w-full h-full inset-0 flex flex-col justify-center items-center' onClick={()=>setCreateMenu(false)}>
@@ -293,7 +297,7 @@ const PostcardsPage = () => {
                     columnClassName="pl-3 bg-clip-padding"
                     >
                     {allPostcards.map((post) => (
-                        <div key={post.id} className="mb-6 cursor-pointer hover-effect  relative rounded-md" onClick={()=>openDrawer(post.id)} >
+                        <div key={post.id} className="mb-6 cursor-pointer hover-effect overflow-hidden relative rounded-md" onClick={()=>openDrawer(post.id)} >
                             <img
                                 src={post.picture}
                                 alt='digital postcards from users'
@@ -358,8 +362,8 @@ const PostcardsPage = () => {
                                 </div>
                                     <hr className='w-[70%] mb-4' />
                                 { selectedPost.comments && (
-                                    selectedPost.comments.map(comment=>(
-                                        <div key={comment?.id} className='comments flex justify-start w-full px-10 md:px-32 items-start gap-3'>
+                                    selectedPost.comments.map((comment,index)=>(
+                                        <div key={comment.id || index} className='comments flex justify-start w-full px-10 md:px-32 items-start gap-3'>
                                             <Avatar>
                                                 <AvatarImage src={`/api/proxy-image?url=${encodeURIComponent(comment?.users?.picture)}` }/>
                                             </Avatar>

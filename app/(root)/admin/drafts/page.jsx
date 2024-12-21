@@ -14,6 +14,13 @@ const DraftsPage =  () => {
     const [savedDrafts, setSavedDrafts] = useState({});
     const session = useSession();
 
+    useEffect(() => {
+        if (!session || session?.data?.user?.role !== 'ADMIN') {
+        router.push('/auth/error') 
+        }
+    }, [session, session.status, router]);
+
+
     useEffect(()=>{
         const fetchDrafts = async () => {
             const data = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/post/get-drafts`);
