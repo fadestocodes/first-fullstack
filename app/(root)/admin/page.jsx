@@ -16,7 +16,7 @@ const AdminHome =  () => {
   const router = useRouter();
   
   useEffect(()=>{
-    if (!session || session?.data?.user?.role !== 'ADMIN') {
+    if (!session &&  session?.data?.user?.role !== 'ADMIN') {
       router.push('/auth/error') 
       }
   }, [])
