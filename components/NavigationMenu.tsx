@@ -3,7 +3,7 @@
 import SignInButtons from "./SignInButtons"
 import * as React from "react"
 import Link from "next/link"
-import { MapPinned, Menu, House, BookText, Image, Hand } from "lucide-react"
+import { MapPinned, Menu, House, BookText, Image, Hand, PlaneTakeoff } from "lucide-react"
 import { cn } from "@/lib/utils"
 // import { Icons } from "@/components/icons"
 import {
@@ -19,8 +19,8 @@ import { Button } from "@/components/ui/button"
 import {Avatar, AvatarFallback, AvatarImage} from '@/components/ui/avatar'
 import {useState} from 'react'
 import { redirect } from "next/navigation"
-import {HoverCardLocation} from '@/components/HoverCard'
 import {Toggle} from '@/components/ui/toggle'
+import { Card, CardContent} from '@/components/ui/card'
 
 export function NavigationMenuDemo() {
 
@@ -28,7 +28,8 @@ export function NavigationMenuDemo() {
   console.log('Session is: ', session);
   const [isOpen, setIsOpen] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
-  const [modalOn, setModalOn] = useState(false)
+  const [modalOn, setModalOn] = useState(false);
+  const [locationToggle, setLocationToggle] = useState(false);
 
 
   const handleAvatarClick = () => {
@@ -49,12 +50,35 @@ export function NavigationMenuDemo() {
 
 
 
+
+
   return (
     <NavigationMenu>
       <NavigationMenuList className="z-40   w-full fixed top-0 items-start left-0 right-0  grid grid-cols-3 bg-white h-24  pt-4 " >
         <div className='currently-at flex  gap-3 items-center  ml-6  md:ml-12'>
-          <div className="flex justify-center items-center ">
-            <HoverCardLocation  target={ <MapPinned className="w-48 "/> }/>
+          <div className="flex flex-col justify-center items-center relative ">
+
+            <Toggle data-state={locationToggle ? 'on' : 'off'} onClick={()=>setLocationToggle(prevData => !prevData)}><MapPinned></MapPinned></Toggle>
+            { locationToggle && (
+              <Card className="pt-4 absolute top-8 left-0 w-52 md:w-64 z-50">
+                  <CardContent>
+                    <div className="flex justify-between space-x-4 ">
+                      <div className="space-y-1">
+                        <h4 className="text-sm font-semibold">Currently: Vancouver, BC</h4>
+                        <p className="text-sm">
+                        😪 Daydreaming of the next trip while working at the hospital.
+                        </p>
+                        <div className="flex items-center pt-2">
+                          <PlaneTakeoff  className="mr-2 h-4 w-4 opacity-70" />{" "}
+                          <span className="text-xs text-muted-foreground">
+                            Next trip: New Mexico
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+                  </CardContent>
+              </Card>
+            ) }
           </div>
         </div>
           <Toggle className="sm:hidden" data-state={menuOpen === true ? 'on' : 'off'} onClick={handleToggle}><Menu/></Toggle>

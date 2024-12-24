@@ -240,11 +240,11 @@ const PostcardsPage = () => {
     }
 
   return (
-    <div className="p-8 bigscreen:px-80 flex flex-col gap-3">
+    <div className="py-8 lg:px-8  bigscreen:px-80 flex flex-col gap-3">
             <BounceFade>
                 <div className='flex flex-col justify-center items-center gap-4 lg:my-4'>
                     <h1>Postcards</h1>
-                    <h4>Digital postcards from the community</h4>
+                    <h4 className='!my-0 text-center !leading-6'>Digital postcards from the community.</h4>
                 </div>
             </BounceFade>
             <div className="flex flex-col  justify-center items-center gap-4  mb-10">
@@ -335,7 +335,7 @@ const PostcardsPage = () => {
                             <img
                                 src={selectedPost.picture}
                                 alt='digit postcard from users'
-                                className={`rounded-md m-0 w-full   ${ selectedToggle === 'vertical' ? 'h-[65vh]  object-cover lg:h-[80vh] ' : 'h-[50vh] object-contain '}  `}
+                                className={`rounded-md m-0 w-full   ${ selectedToggle === 'vertical' ? 'h-[65vh]  object-cover lg:h-full lg:px-32 lg:object-contain ' : 'h-[50vh] object-contain '}  `}
                                 />
                                 <div className='flex justify-center gap-3 my-3'>
                                     <Toggle data-state={selectedToggle === 'vertical' ? 'on' : 'off'} onClick={()=>setSelectedToggle('vertical')} >

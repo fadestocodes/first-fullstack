@@ -13,7 +13,7 @@ const AdminHome =  () => {
 
   const session = useSession();
   const [errors, setErrors] = useState('');
-  const router = useRouter
+  const router = useRouter();
   
   useEffect(()=>{
     if (!session || session?.data?.user?.role !== 'ADMIN') {

@@ -7,18 +7,15 @@ import {
   HoverCardTrigger,
 } from "@/components/ui/hover-card"
 
+// const []
+
 export function HoverCardLocation({target}) {
   return (
     <HoverCard>
-      <HoverCardTrigger asChild>
         <Button variant="outline" className="justify-center items-center flex  animate-jiggle">{target}</Button>
-      </HoverCardTrigger>
       <HoverCardContent className="w-80 ml-8">
         <div className="flex justify-between space-x-4">
-          {/* <Avatar>
-            <AvatarImage src="https://github.com/vercel.png" />
-            <AvatarFallback>VC</AvatarFallback>
-          </Avatar> */}
+         
           <div className="space-y-1">
             <h4 className="text-sm font-semibold">Currently: Vancouver, BC</h4>
             <p className="text-sm">

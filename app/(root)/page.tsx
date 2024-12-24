@@ -15,7 +15,7 @@ export default function Home() {
   return (
     <div className="w-full  flex flex-col relative justify-center items-center gap-20 ">
      <div 
-        className="hero-image   h-[46rem]  w-full   -mt-14 bg-cover  bg-center"
+        className="hero-image   h-[46rem]  w-full   -mt-14 bg-cover  bg-center lg:h-[60rem] bigscreen:h-[80rem]"
         style={{ backgroundImage: `url('/tofinopic.jpg')` }}>
         <div className="pt-48  relative flex flex-col items-center justify-center h-full w-full text-center text-white px-4">
 
