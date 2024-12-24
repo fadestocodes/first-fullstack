@@ -14,7 +14,7 @@ import {
   navigationMenuTriggerStyle,
 } from "@/components/ui/navigation-menu"
 import { useSession } from "next-auth/react"
-import { signOut, signIn} from 'next-auth/react'
+import { signOut} from 'next-auth/react'
 import { Button } from "@/components/ui/button"
 import {Avatar, AvatarFallback, AvatarImage} from '@/components/ui/avatar'
 import {useState} from 'react'

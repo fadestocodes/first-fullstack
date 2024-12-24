@@ -16,7 +16,6 @@ import { useRouter } from "next/navigation";
 export default function SignInButtons() {
 
   const [signupModal, setSignupModal] = useState(false);
-  const [photoUpload, setPhotoUpload] = useState(false);
   const [errors, setErrors] = useState({})
   const [inputs, setInputs ] = useState({
     name : '',
@@ -40,8 +39,6 @@ export default function SignInButtons() {
     
     const name = event.target.name;
     const value = event.target.value;
-    const type = event.target.type;
-    const files = event.target.files;
     
     setInputs(prevData => ({
       ...prevData,
@@ -53,6 +50,7 @@ export default function SignInButtons() {
   useEffect(()=>{
     if (signupModal){
       const {picture, ...fieldsToValidate} = inputs;
+      console.log('picture is', picture)
       const validation = signUpValidation.safeParse(fieldsToValidate);
       if (validation.success){
         console.log('validation success', validation.data);
@@ -155,8 +153,6 @@ export default function SignInButtons() {
   const handleCredentialsSignin = async (event) => {
     event.preventDefault();
     console.log('inputs are ', inputs)
-    const reloadUrl = router.asPath;
-
     const response = await signIn('credentials', {
       redirect : false,
       email : inputs.loginEmail,

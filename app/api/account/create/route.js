@@ -27,7 +27,7 @@ export async function POST(req){
                 return Response.json(account);
             } catch (err) {
                 console.log('couldnt create account')
-                return Response.json({message : "Couldn't create account"})
+                return Response.json({message : err.message})
             }
         }
     } catch (err) {
