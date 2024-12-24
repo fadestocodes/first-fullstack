@@ -1,8 +1,9 @@
 "use client"
 
+import SignInButtons from "./SignInButtons"
 import * as React from "react"
 import Link from "next/link"
-import { MapPinned } from "lucide-react"
+import { MapPinned, Menu, House, BookText, Image, Hand } from "lucide-react"
 import { cn } from "@/lib/utils"
 // import { Icons } from "@/components/icons"
 import {
@@ -19,12 +20,15 @@ import {Avatar, AvatarFallback, AvatarImage} from '@/components/ui/avatar'
 import {useState} from 'react'
 import { redirect } from "next/navigation"
 import {HoverCardLocation} from '@/components/HoverCard'
+import {Toggle} from '@/components/ui/toggle'
 
 export function NavigationMenuDemo() {
 
   const session = useSession();
   console.log('Session is: ', session);
   const [isOpen, setIsOpen] = useState(false);
+  const [menuOpen, setMenuOpen] = useState(false);
+  const [modalOn, setModalOn] = useState(false)
 
 
   const handleAvatarClick = () => {
@@ -35,19 +39,27 @@ export function NavigationMenuDemo() {
     signOut();
     redirect('/')
   }
+  
+  const handleToggle = () => {
+    setMenuOpen(prevData => (
+      !prevData
+    ))
+  }
 
 
 
 
   return (
     <NavigationMenu>
-      <NavigationMenuList className="z-40   w-full fixed top-0 items-center left-0 right-0  grid grid-cols-3 bg-white h-16" >
+      <NavigationMenuList className="z-40   w-full fixed top-0 items-start left-0 right-0  grid grid-cols-3 bg-white h-24  pt-4 " >
         <div className='currently-at flex  gap-3 items-center  ml-6  md:ml-12'>
           <div className="flex justify-center items-center ">
             <HoverCardLocation  target={ <MapPinned className="w-48 "/> }/>
           </div>
         </div>
-        <div className="flex justify-center items-center " >
+          <Toggle className="sm:hidden" data-state={menuOpen === true ? 'on' : 'off'} onClick={handleToggle}><Menu/></Toggle>
+        <div className="sm:flex justify-center items-center hidden " >
+          
           <NavigationMenuItem>
               <Link href="/" legacyBehavior passHref>
                 <NavigationMenuLink className={navigationMenuTriggerStyle()}>
@@ -76,6 +88,7 @@ export function NavigationMenuDemo() {
                 </NavigationMenuLink>
               </Link>
             </NavigationMenuItem>
+            
         </div>
         <div className=" login  text-black items-center justify-self-end px-8  " >
             { session && session?.data?.user?.image ? (
@@ -89,13 +102,54 @@ export function NavigationMenuDemo() {
               </div>
             ) : (
               <div>
-                <Button className='' onClick={async () => await signIn()}>Log In</Button>
+                <Button className='' onClick={async () => setModalOn(true)}>Log In</Button>
               </div>
 
             ) }
         </div>
+        { modalOn && (
+            <div className='login-modal px-6 bg-black bg-opacity-50 z-30 fixed w-full h-full inset-0 flex flex-col justify-center items-center' onClick={()=>setModalOn(false)}>
+                <div onClick={(e) => e.stopPropagation()}>
+                    <SignInButtons ></SignInButtons>
+                </div>
+            </div>
+        )  }
+        { menuOpen && (
+              <div className="fixed top-16 left-0 right-0 bottom-0 z-40 bg-white flex flex-col items-center justify-start !px-0  !mx-0 py-6 animate-fadeIn w-full">
+              <ul className="space-y-4 flex flex-col  items-start  ">
+                <li className="">
+                  <Link className="flex justify-center items-center gap-2" href="/" onClick={() => setMenuOpen(false)}>
+                    <House size='14'/> Home
+                  </Link>
+                </li>
+                <hr />
+                <li>
+                  <Link className="flex justify-center items-center gap-2" href="/blog" onClick={() => setMenuOpen(false)}>
+                  <BookText size='14' />Blog
+                  </Link>
+                </li>
+                <hr />
+                <li>
+                  <Link className="flex justify-center items-center gap-2" href="/postcards" onClick={() => setMenuOpen(false)}>
+                    <Image size='14' />Postcards
+                  </Link>
+                </li>
+                <hr />
+                <li>
+                  <Link className="flex justify-center items-center gap-2" href="/about" onClick={() => setMenuOpen(false)}>
+                    <Hand size='14'/>About Me
+                  </Link>
+                </li>
+                <hr />
+              </ul>
+            </div>
+            ) }
+          {/* <div className="absolute top-[4rem] left-12 text-[rgb(120,113,108)] hover:text-black cursor-pointer text-sm">
+              /blog/1
+          </div> */}
       </NavigationMenuList>
     </NavigationMenu>
+    
   )
 }
 

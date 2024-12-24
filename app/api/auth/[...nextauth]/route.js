@@ -1,8 +1,10 @@
 import NextAuth from "next-auth"
 import FacebookProvider from 'next-auth/providers/facebook'
 import GoogleProvider from 'next-auth/providers/google'
+import CredentialsProvider from "next-auth/providers/credentials";
 import {prisma} from "@/prisma/prisma";
-// import {PrismaAdapter} from '@next-auth/prisma-adapter'
+import bcrypt from 'bcrypt'
+import { redirect } from "next/dist/server/api-utils";
 
 
 const authOptions = {
@@ -22,6 +24,29 @@ const authOptions = {
         FacebookProvider({
             clientId:process.env.FB_APP_ID,
             clientSecret:process.env.FB_APP_SECRET
+        }),
+        CredentialsProvider({
+            name : "Credentials",
+            credentials : {
+                email : { label:'Email', type:'text' },
+                password : {label:'Password', type:'password'}
+            },
+            async authorize(credentials){
+                console.log('credentials are ', credentials)
+                const user = await prisma.user.findUnique({
+                    where : { email : credentials.email }
+                })
+                console.log('user is ', user)
+                if (!user){
+                    throw new Error ('No user found with this email')
+                }
+                const validPassword = await bcrypt.compare(credentials.password, user.password);
+                if (!validPassword){
+                    throw new Error('Invalid password')
+                }
+                return user
+            },
+
         })
       ],
 
@@ -36,6 +61,9 @@ const authOptions = {
             console.log("Account:", account);
             console.log("Profile:", profile);
             console.log("User:", user);
+            if (account?.provider === 'credentials') {
+                return true
+            }
             if (!profile || !account) {
               console.error("Missing profile or account data");
               return false;
@@ -71,7 +99,14 @@ const authOptions = {
             }
         },
 
-        async jwt ({token ,account}) {
+        async jwt ({token ,account, user}) {
+            if (account && account.provider === "credentials") {
+                token.id = user.id;
+                token.email = user.email;
+                token.name = user.name;
+                token.picture = user.picture;
+                token.role = user.role;
+            }
             if (account){
                 token.refreshToken = account.refresh_token;
             }
@@ -79,26 +114,14 @@ const authOptions = {
         },
 
         async session ({session ,token}){
-            // if (token?.id) {
-            //     session.id = token.id;
-            //     session.user = user
-            //     console.log('token id is: ', token?.id);
-            // }
-            // const userWithRole = await prisma.user.findUnique({
-            //     where : {
-            //         email : session.user.email
-            //     },
-            //     select : {
-            //         name : true,
-            //         id : true,
-            //         role : true
-            //     }
-            // });
-            
-            // session.user.role = userWithRole?.role;
-            // session.user.id = userWithRole?.id;
-            // session.user.name = userWithRole?.name;
-            // session.user.refreshToken = token.refreshToken;
+            if (token) {
+                session.user.id = token.id;
+                session.user.email = token.email;
+                session.user.name = token.name;
+                session.user.picture = token.picture;
+                session.user.role = token.role;
+            }
+          
             if (session.user) {  // Ensure session.user exists
                 console.log("Session User:", session.user);
             

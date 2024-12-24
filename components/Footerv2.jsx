@@ -15,7 +15,7 @@ export async function Footer2 (){
     <div className="footer-container relative bg-black  items-center justify-center  pt-32 flex flex-col  ">
         
             <div className='flex flex-col justify-center items-center gap-28 md:flex-row md:justify-evenly '>
-                <Card className='dark bg-transparent pt-14 flex-col gap-3 justify-center items-center w-96 h-full '>
+                <Card className='dark bg-transparent pt-14 flex-col gap-3 justify-center items-center w-72 h-full '>
                     <div className='flex justify-center items-center'>
                         <Image
                             src={newprofilepic}
@@ -32,10 +32,10 @@ export async function Footer2 (){
                         <Button variant='outline' className='dark text-white'>Read more.</Button>
                     </div>
                 </Card>
-                <div className='newsletter'>
-                    <div className='flex flex-col items-center  justify-center gap-4'>
-                        <h3 className='mb-0 text-white font-bold' >Join My Newsletter</h3>
-                            <p className='text-white'>I&apos;ll send you quick reads about various travel tips!</p>
+                <div className='newsletter px-10'>
+                    <div className='flex flex-col items-center  justify-center gap-0    '>
+                        <h3 className=' text-white font-bold' >Join My Newsletter</h3>
+                            <p className='text-white mb-6   '>I&apos;ll send you quick reads about various travel tips!</p>
                         <div className='flex flex-col items-start gap-4'>
                             <Input  className='w-72 text-white dark' type='text' placeholder='email@email.com'></Input>
                             <Button className='bg-transparent w-20 dark text-white' variant='outline' >Submit</Button>

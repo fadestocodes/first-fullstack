@@ -11,7 +11,6 @@ export async function POST(req){
         },
         data : {
             views : { increment: 1},
-            lastUpdated : prisma.blogpost.lastUpdated
         }
     })
 

@@ -86,9 +86,6 @@ const AdminCreatePage =  () => {
     const coverPhotoUpload = async (event) => {
         
         setImageLoading(true);
-        
-
-        console.log('its working');
         const file = event.target.files[0];
 
         const requestCall = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/presigned-url`, {

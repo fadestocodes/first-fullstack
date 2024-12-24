@@ -24,6 +24,7 @@ export default {
 			'delayed-jiggle': 'jiggle 0.5s ease-in-out 1 ',  // 60-second delay
 			takeoff: 'takeoff 2s ease-in-out infinite',
 			takeoffFlyLand: 'takeoffFlyLand 5s ease-in-out infinite',
+			fadeIn: 'fadeIn 0.2s ease-in-out',
 		},
 		keyframes: {
 			jiggle: {
@@ -37,23 +38,27 @@ export default {
 				'0%': { transform: 'translate(0, 0) rotate(0deg)' },
 				'50%': { transform: 'translate(30px, -20px) rotate(10deg)' },
 				'100%': { transform: 'translate(80px, -50px) rotate(15deg)' },
-			  },
-			  takeoffFlyLand: {
-			'0%': {
-            transform: 'translateX(-200px) translateY(0) rotate(0deg)',
-          },
-          '25%': {
-            transform: 'translateX(-100px) translateY(-45px) rotate(30deg)',
-          },
-          '50%': {
-            transform: 'translateX(0) translateY(-45px) rotate(0deg)',
-          },
-          '75%': {
-            transform: 'translateX(100px) translateY(-45px) rotate(-30deg)',
-          },
-          '100%': {
-            transform: 'translateX(200px) translateY(0) rotate(0deg)',
-          },
+			},
+			takeoffFlyLand: {
+				'0%': {
+				transform: 'translateX(-200px) translateY(0) rotate(0deg)',
+				},
+				'25%': {
+					transform: 'translateX(-100px) translateY(-45px) rotate(30deg)',
+				},
+				'50%': {
+					transform: 'translateX(0) translateY(-45px) rotate(0deg)',
+				},
+				'75%': {
+					transform: 'translateX(100px) translateY(-45px) rotate(-30deg)',
+				},
+				'100%': {
+					transform: 'translateX(200px) translateY(0) rotate(0deg)',
+				},
+			},
+			fadeIn: {
+				'0%': { opacity: '0' },
+				'100%': { opacity: '1' },
 			  },
 		},
   		colors: {

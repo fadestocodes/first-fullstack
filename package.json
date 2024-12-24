@@ -50,6 +50,7 @@
     "@tailwindcss/typography": "^0.5.15",
     "@tinymce/tinymce-react": "^5.1.1",
     "ai": "^4.0.13",
+    "bcrypt": "^5.1.1",
     "bcryptjs": "^2.4.3",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
@@ -85,6 +86,7 @@
     "zod": "^3.23.8"
   },
   "devDependencies": {
+    "@types/bcrypt": "^5.0.2",
     "@types/node": "^20",
     "@types/react": "18.3.14",
     "eslint": "^8",

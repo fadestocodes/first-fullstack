@@ -308,7 +308,7 @@ const PostcardsPage = () => {
                              <div
                                 className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent rounded-md"
                                 ></div>
-                            <p className="text-left mt-0 absolute bottom-3 left-3 text-white p-2">👋 from {post.location}  {post.emoji}</p>
+                            <p className="text-left text-xs md:text-base !my-0 absolute bottom-3 left-3 text-white px-2">👋 from {post.location}  {post.emoji}</p>
                         </div>
                     ))}
                 </Masonry>
@@ -339,10 +339,10 @@ const PostcardsPage = () => {
                                 />
                                 <div className='flex justify-center gap-3 my-3'>
                                     <Toggle data-state={selectedToggle === 'vertical' ? 'on' : 'off'} onClick={()=>setSelectedToggle('vertical')} >
-                                        <Maximize2  className={`bg-muted  ${selectedToggle === 'vertical' ? 'bg-accent text-accent-foreground' : ''}`}/>
+                                        <Maximize2  />
                                     </Toggle>
                                     <Toggle data-state={selectedToggle === 'horizontal' ? 'on' : 'off'} onClick={()=>setSelectedToggle('horizontal')}>
-                                        <Minimize2 className={`bg-muted ${selectedToggle === 'vertical' ? 'bg-accent text-accent-foreground' : ''}`}/>
+                                        <Minimize2 />
                                     </Toggle>
                                 </div>
                             <div className="flex flex-col justify-center items-center gap-8">

@@ -5,12 +5,20 @@ import Image from 'next/image'
 
 const ErrorPage = () => {
   return (
-    <div className='w-full h-full  flex justify-center items-center' >
-        <Image src={biggieKawawa} alt="restriced page photo" className='object-cover relative w-full h-full' />
-        <div className='absolute text-white top-1/2 flex flex-col justify-center items-center'>
-            <h1 className='  justify-center items-center text-center w-full h-full' >Restricted Access</h1>
-            <p>You need admin permissions to access this page. </p>
-        </div>
+    <div className="w-screen h-screen relative">
+      {/* Full-page background image */}
+      <Image 
+        src={biggieKawawa} 
+        alt="restricted page photo" 
+        className="object-cover w-full h-full absolute top-0 left-0" 
+      />
+      {/* Semi-transparent overlay */}
+      <div className="bg-black bg-opacity-15 w-full h-full absolute top-0 left-0"></div>
+      {/* Content */}
+      <div className="absolute z-30 text-white inset-0 flex flex-col justify-center items-center">
+        <h1 className="text-center">Something's wrong</h1>
+        <p className="!my-0">This is Biggie, and he senses something went wrong.</p>
+      </div>
     </div>
   )
 }

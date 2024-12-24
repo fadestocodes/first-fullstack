@@ -8,6 +8,7 @@
   import {Avatar, AvatarImage} from '@/components/ui/avatar'
   import {RedirectButton} from '@/lib/RedirectButton'
   import { BounceFade } from "@/components/ui/animations";
+  import ClickableDiv from '@/components/ClickableDiv';
 
 
   async function fetchPosts() {
@@ -37,22 +38,23 @@
 
 
     return (
-      <div className='main-container flex flex-col justify-center items-center h-full w-full p-8'>
+      <div className='main-container flex flex-col justify-center items-center h-full w-full py-8'>
         <BounceFade>
           <h1 className='text-left my-8'>All posts</h1>
         </BounceFade>
-          <div className=''>
+          <div className='w-full'>
             { allPosts.map((post)=>(
-              <div key={post.id}>
-                {/* <img src={post.coverPhoto} alt='post cover photo' className='' ></img> */}
-                  <Card className='border-0 shadow-none items-center flex flex-col  m-12 w-96   md:w-[42rem]  lg:flex-row lg:h-[14rem] lg:w-[52rem] lg:py-0 lg:my-4  lg:gap-0 '>
+              <div key={post.id} className='flex flex-col justify-center items-center'>
+                  <Card className='w-full border-0 shadow-none items-center flex flex-col px-4  my-12     md:w-[42rem]  lg:flex-row lg:h-[14rem] lg:w-[52rem] lg:py-0 lg:my-4  lg:gap-0 '>
                       <div className='relative  object-cover  w-full  md:w-full lg:w-[20rem] lg:h-[14rem]'>
                         <img src={post.coverPhoto} alt="Blog post cover photo" className='object-cover  h-56 w-full   md:w-full  lg:w-[20rem] lg:h-[14rem] '   />
-                        <div><Badge variant='secondary' className='absolute bottom-4 left-4 '>{formatKebab(post.category)}</Badge></div>
+                        <div><Badge variant='secondary' className='absolute z-1 bottom-4 left-4 '>{formatKebab(post.category)}</Badge></div>
                       </div>
                       <div className="  w-full h-full flex justify-evenly flex-col overflow-hidden lg:h-[14rem] lg:w-full">
                           <CardHeader className='px-0  lg:py-2 lg:px-6'>
-                          <p className='!my-0 text-2xl font-bold line-clamp-2'>{post.title}</p> 
+                          <ClickableDiv route={`/blog/${post.id}`} >
+                            <p className='!my-0 text-2xl font-bold line-clamp-2 cursor-pointer'>{post.title}</p> 
+                          </ClickableDiv>
                               <div className='flex gap-2 justify-start items-center '>
                                 <Avatar className='size-5' >
                                   <AvatarImage className='' src={ `/api/proxy-image?url=${encodeURIComponent(post.user.picture)}` } ></AvatarImage>
