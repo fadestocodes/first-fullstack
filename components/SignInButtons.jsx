@@ -183,7 +183,7 @@ export default function SignInButtons() {
                 <div className="flex flex-col gap-3">
                   <div className="w-full justify-center items-center">
                     <Label>Profile picture*</Label>
-                    <Input className="w-[70%] cursor-pointer " accept='image/*' name="picture" onChange={imageUpload} type="file"></Input>
+                    <Input className="w-[70%] cursor-pointer " accept='image/*,.heic' name="picture" onChange={imageUpload} type="file"></Input>
                     {inputs?.picture && !imageLoading ? (
                       <div className=" w-full h-full flex justify-center items-center my-8">
                         <Avatar size='40' className="size-20 md:size-32">

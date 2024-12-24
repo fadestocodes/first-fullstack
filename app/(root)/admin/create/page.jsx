@@ -294,7 +294,7 @@ const AdminCreatePage =  () => {
                                 <div className='flex flex-col  w-full' >
                                     <Label htmlFor="" className='font-medium  mb-4'>Upload Cover Photo*</Label>
 
-                                    <Input className=' mb-8 cursor-pointer w-[25%]' type='file'  name='coverPhoto' accept='image/*' onChange={coverPhotoUpload} ></Input>
+                                    <Input className=' mb-8 cursor-pointer w-[25%]' type='file'  name='coverPhoto' accept='image/*,.heic' onChange={coverPhotoUpload} ></Input>
                                     { inputs.coverPhoto ?  (
                                         <Image
                                         src={inputs.coverPhoto}
