@@ -40,7 +40,7 @@ export default function Home() {
                 <Image src={sunset} alt="placeholder photo" className=" object-cover w-full h-full" />
                 <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent rounded-md"></div>
 
-                  <div className=" inset-0 z-20 absolute justify-end flex flex-col pl-4 pb-4 gap-3" >
+                  <div className=" inset-0 z-5 absolute justify-end flex flex-col pl-4 pb-4 gap-3" >
                     <div>
                       <Badge variant='secondary' className=" text-xs" >Travel Guide</Badge>
                     </div>
@@ -55,7 +55,7 @@ export default function Home() {
               <div className="vertical-card  my-2 w-[22rem] h-[38rem] relative hover-effect cursor-pointer ">
                 <Image src={tofino} alt="placeholder photo" className=" object-cover w-full h-full" />
                 <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent rounded-md"></div>
-                  <div className=" inset-0 z-20 absolute justify-end flex flex-col pl-4 pb-4 gap-3" >
+                  <div className=" inset-0 z-5 absolute justify-end flex flex-col pl-4 pb-4 gap-3" >
                     <div>
                       <Badge variant='secondary' className=" text-xs" >Travel Guide</Badge>
                     </div>
@@ -70,7 +70,7 @@ export default function Home() {
                 <Image src={ireland} alt="placeholder photo" className=" object-cover w-full h-full" />
                 <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent rounded-md"></div>
 
-                  <div className=" inset-0 z-20 absolute justify-end flex flex-col pl-4 pb-4 gap-3" >
+                  <div className=" inset-0 z-5 absolute justify-end flex flex-col pl-4 pb-4 gap-3" >
                     <div>
                       <Badge variant='secondary' className=" text-xs" >Travel Guide</Badge>
                     </div>
@@ -85,7 +85,7 @@ export default function Home() {
                 <Image src={moherCliffs} alt="placeholder photo" className=" object-cover w-full h-full" />
                 <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent rounded-md"></div>
 
-                  <div className=" inset-0 z-20 absolute justify-end flex flex-col pl-4 pb-4 gap-3" >
+                  <div className=" inset-0 z-5 absolute justify-end flex flex-col pl-4 pb-4 gap-3" >
                     <div>
                       <Badge variant='secondary' className=" text-xs" >Travel Guide</Badge>
                     </div>
