@@ -52,7 +52,7 @@ const PostcardsPage = () => {
     })
     const [errors, setErrors] = useState({});
     const [allPostcards, setAllPostcards] = useState([]);
-    const [allPostcardComments, setAllPostcardComments] = useState([]);
+    // const [allPostcardComments, setAllPostcardComments] = useState([]);
     const [commentModal, setCommentModal] = useState(false);
 
 

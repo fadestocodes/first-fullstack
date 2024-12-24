@@ -280,7 +280,7 @@ const BlogComments = ({postId}) => {
                                                     { item.users.picture ? (
                                                         <AvatarImage className=' object-cover' src={`${process.env.NEXT_PUBLIC_API_URL}/api/proxy-image?url=${encodeURIComponent(item.users.picture)}`}></AvatarImage>
                                                     ) : (
-                                                        <div className="flex h-full w-full items-center justify-center rounded-full bg-muted">{item.users.name.charAt(0).toUpperCase()}</div >
+                                                        <AvatarFallback >{item.users.name.charAt(0).toUpperCase()}</AvatarFallback >
                                                     ) }
                                                 </Avatar>
                                                 {/* <img
@@ -384,7 +384,7 @@ const BlogComments = ({postId}) => {
                                                             { element.users.picture ? (
                                                                 <AvatarImage className=' object-cover' src={`${process.env.NEXT_PUBLIC_API_URL}/api/proxy-image?url=${encodeURIComponent(element.users.picture)}`}></AvatarImage>
                                                             ) : (
-                                                                <div className="flex h-full w-full items-center justify-center rounded-full bg-muted">{element.users.name.charAt(0).toUpperCase()}</div>
+                                                                <AvatarFallback >{element.users.name.charAt(0).toUpperCase()}</AvatarFallback>
                                                             ) }
                                                          </Avatar>
                                                           
