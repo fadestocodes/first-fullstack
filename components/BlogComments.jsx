@@ -31,7 +31,7 @@ const BlogComments = ({postId}) => {
     useEffect(()=>{
         const getAllComments = async () => {
             try {
-                const response = await fetch(`${NEXT_PUBLIC_API_URL}/api/post/comments/get-all/${blogId}`);
+                const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/post/comments/get-all/${blogId}`);
                 if (!response.ok){
                     throw new Error('Bad response');
                 }
@@ -128,7 +128,7 @@ const BlogComments = ({postId}) => {
 
             try {
                 console.log('made it this far');
-                const result = await fetch(`${NEXT_PUBLIC_API_URL}/api/post/comments/create`, {
+                const result = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/post/comments/create`, {
                     method : 'POST',
                     headers : {
                         'Content-Type' : 'application/json'
