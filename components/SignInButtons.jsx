@@ -71,7 +71,7 @@ export default function SignInButtons() {
     const file = event.target.files[0]
     const fileName =  file.name;
     const fileType = file.type;
-    console.log('tryting')
+  
     try {
       const data = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/presigned-url`, {
         method : "POST",
