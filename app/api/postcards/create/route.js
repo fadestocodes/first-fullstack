@@ -9,6 +9,7 @@ export async function POST(req){
     console.log('picture is ', picture)
     console.log('userId is ', userId)
     try {
+        console.log('gonna try to create')
         const postcard = await prisma.postcard.create({
             data : {
                 picture, 
