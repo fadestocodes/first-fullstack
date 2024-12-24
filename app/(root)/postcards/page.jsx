@@ -23,7 +23,7 @@ import { Send } from 'lucide-react';
 import {Label} from '@/components/ui/label'
 import SignInButtons from '@/components/SignInButtons'
 import {dateFormat} from '@/lib/dateFormat'
-import {Avatar, AvatarImage} from '@/components/ui/avatar'
+import {Avatar, AvatarFallback, AvatarImage} from '@/components/ui/avatar'
 import { BounceFade } from "@/components/ui/animations";
 
 
