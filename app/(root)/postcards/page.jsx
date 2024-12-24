@@ -120,7 +120,7 @@ const PostcardsPage = () => {
             userId : session?.data?.user?.id,
             caption : inputs.caption,
         }
-        console.log('data is ', data);
+        console.log('data to create is ', data);
 
         const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/postcards/create`, {
             method : 'POST',
