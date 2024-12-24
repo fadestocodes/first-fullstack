@@ -8,6 +8,7 @@ import { useSession } from 'next-auth/react';
 import {  X } from 'lucide-react';
 import {Card} from '@/components/ui/card'
 import GoogleIcon from '@mui/icons-material/Google';
+import {Avatar, AvatarFallback, AvatarImage} from '@/components/ui/avatar'
 
 
 const BlogComments = ({postId}) => {
@@ -274,8 +275,12 @@ const BlogComments = ({postId}) => {
                                         className="comment-with-replies flex flex-col justify-start items-start"
                                     >
                                         <div className="single-comment  flex justify-start">
-                                            <div className="image flex justify-start items-start">
-                                                <img
+                                            <div className="image flex justify-center items-start">
+                                                <Avatar className='size-8 mr-4 my-4 '>
+                                                    <AvatarImage className=' object-cover' src={`/api/proxy-image?url=${encodeURIComponent(item.users.picture)}`}></AvatarImage>
+                                                    <AvatarFallback>{item.users.name.charAt(0).toUpperCase()}</AvatarFallback>
+                                                </Avatar>
+                                                {/* <img
                                                     src={`/api/proxy-image?url=${encodeURIComponent(item.users.picture)}`}
                                                     alt='User avatar photo'
                                                     style={{
@@ -283,7 +288,7 @@ const BlogComments = ({postId}) => {
                                                         scale: "40%",
                                                         margin: "0% 0 0 0",
                                                     }}
-                                                />
+                                                /> */}
                                             </div>
                                             <div className="comment-right-section flex flex-col my-5 ">
                                                 <div className="name-andcomment   flex flex-col gap-2">
@@ -368,11 +373,15 @@ const BlogComments = ({postId}) => {
                                             {item.replies.length > 0 &&
                                                 item.replies.map((element) => (
                                                     <div
-                                                        className="comment-container flex gap-4  justify-center items-start my-4 "
+                                                        className="comment-container flex   justify-center items-start my-4 "
                                                         key={element.id}
                                                     >
                                                         <div className="image  flex p-0 m-0 justify-start  items-start">
-                                                            <img className='size-9'
+                                                        <Avatar className='size-8 mr-4  '>
+                                                    <AvatarImage className=' object-cover' src={`/api/proxy-image?url=${encodeURIComponent(element.users.picture)}`}></AvatarImage>
+                                                    <AvatarFallback>{element.users.name.charAt(0).toUpperCase()}</AvatarFallback>
+                                                </Avatar>
+                                                            {/* <img className='size-9'
                                                                 src={`/api/proxy-image?url=${encodeURIComponent(element.users.picture)}`}
                                                                 alt='User avatar photo'
                                                                 style={{
@@ -380,7 +389,7 @@ const BlogComments = ({postId}) => {
                                                                         "50%",
                                                                     margin: "0% 0 0 0",
                                                                 }}
-                                                            />
+                                                            /> */}
                                                         </div>
                                                             <div className="commentInfo flex flex-col justify-center items-start gap-2 " >
                                                                 <p

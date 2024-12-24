@@ -105,40 +105,56 @@ export default function SignInButtons() {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    
-    const data = {
-      name : inputs.name,
-      email : inputs.email,
-      password : inputs.password,
-      picture : inputs.picture
+    const {picture, ...fieldsToValidate} = inputs;
+    console.log('picture is', picture)
+    const validation = signUpValidation.safeParse(fieldsToValidate);
+    if (validation.success){
+      console.log('validation success', validation.data);
+      setErrors({});
+    } else {
+      const formattedErrors = validation.error.errors.reduce((acc,err)=>{
+        acc[err.path[0]] = err.message;
+        return acc;
+      }, {});
+      setErrors(formattedErrors);
+      console.log('validation errors:', formattedErrors);
     }
-    try {
-      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/account/create`, {
-        method : 'POST',
-        headers : {
-          'Content-type' : 'application/json'
-        },
-        body : JSON.stringify(data)
-      })
-      console.log('response is ', response)
-      const responseData = await response.json();
-      console.log('response data is ', responseData)
-      if (!response.ok){
-        setErrors(prevData => ({
-          ...prevData,
-          email : responseData.message
-        }))
-      } else {
-        setErrors({});
-        setSignupComplete(true);
-        setSignupModal(false);
+    if (Object.keys(errors).length === 0){
 
-
-      }  
-
-    } catch (err) {
-      console.log('Error is ', err.message)
-    } 
+      const data = {
+        name : inputs.name,
+        email : inputs.email,
+        password : inputs.password,
+        picture : inputs.picture
+      }
+      try {
+        const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/account/create`, {
+          method : 'POST',
+          headers : {
+            'Content-type' : 'application/json'
+          },
+          body : JSON.stringify(data)
+        })
+        console.log('response is ', response)
+        const responseData = await response.json();
+        console.log('response data is ', responseData)
+        if (!response.ok){
+          setErrors(prevData => ({
+            ...prevData,
+            email : responseData.message
+          }))
+        } else {
+          setErrors({});
+          setSignupComplete(true);
+          setSignupModal(false);
+  
+  
+        }  
+  
+      } catch (err) {
+        console.log('Error is ', err.message)
+      } 
+    }
 
 
   }

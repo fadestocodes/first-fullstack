@@ -366,6 +366,7 @@ const PostcardsPage = () => {
                                         <div key={comment.id || index} className='comments flex justify-start w-full px-10 md:px-32 items-start gap-3'>
                                             <Avatar>
                                                 <AvatarImage src={`/api/proxy-image?url=${encodeURIComponent(comment?.users?.picture)}` }/>
+                                                    <AvatarFallback>{item.users.name.charAt(0).toUpperCase()}</AvatarFallback>
                                             </Avatar>
                                             <div className='flex flex-col justify-center items-start'>
                                                 <p className='text-sm !my-2 font-bold !leading-[0]'>{comment?.users?.name}</p>
