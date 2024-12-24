@@ -25,6 +25,7 @@ import SignInButtons from '@/components/SignInButtons'
 import {dateFormat} from '@/lib/dateFormat'
 import {Avatar, AvatarFallback, AvatarImage} from '@/components/ui/avatar'
 import { BounceFade } from "@/components/ui/animations";
+// import heic2any from "heic2any";
 
 
 const PostcardsPage = () => {
@@ -190,6 +191,76 @@ const PostcardsPage = () => {
         setImageLoading(false);
         console.log('url is ', url);
     }
+    
+    
+    // const photoUpload = async (event) => {
+    //     setImageLoading(true);
+    //     const file = event.target.files[0];
+        
+    //     // This section will handle HEIC file conversion to JPEG
+    //     let fileToUpload = file;  // By default, use the original file
+    //     let fileName = file.name;
+        
+    //     if (file.type === 'image/heic') {
+    //         try {
+    //             const fileBlob = file;  // The file itself is already a Blob
+                
+    //             // Convert HEIC to JPEG using heic2any
+    //             const conversionResult = await heic2any({
+    //                 blob: fileBlob,
+    //                 toType: 'image/jpeg',  // Convert to JPEG
+    //             });
+                
+    //             // `conversionResult` is a Blob containing the converted image
+    //             // Use it as the file to upload
+    //             fileToUpload = conversionResult;
+    //             fileName = fileName.replace(/\.heic$/, '.jpg');  // Rename the file to .jpg for S3
+    //         } catch (error) {
+    //             console.error('Error converting HEIC file:', error);
+    //             setImageLoading(false);
+    //             return;  // Exit early if conversion fails
+    //         }
+    //     }
+    
+    //     // Step 1: Request the presigned URL for uploading
+    //     const requestCall = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/presigned-url`, {
+    //         method: 'POST',
+    //         headers: {
+    //             'Content-Type': 'application/json'
+    //         },
+    //         body: JSON.stringify({
+    //             fileName: fileName,
+    //             fileType: fileToUpload.type  // Use the converted type (image/jpeg for HEIC)
+    //         })
+    //     });
+    
+    //     const { url, location } = await requestCall.json();
+    //     console.log('Location is : ', location);
+    
+    //     // Step 2: Upload the file (or the converted file) to S3 using the presigned URL
+    //     const uploadResponse = await fetch(url, {
+    //         method: 'PUT',
+    //         headers: {
+    //             'Content-Type': fileToUpload.type,  // Use the file type for PUT
+    //         },
+    //         body: fileToUpload  // Upload the file or converted file
+    //     });
+    
+    //     if (!uploadResponse.ok) {
+    //         setImageLoading(false);
+    //         throw new Error('Image upload to S3 failed');
+    //     }
+        
+    //     console.log('status from the PUT request', uploadResponse.status);
+    //     setInputs(prevData => ({
+    //         ...prevData,
+    //         picture: location  // Save the URL of the uploaded image
+    //     }));
+    //     setImageLoading(false);
+    //     console.log('Uploaded file URL is ', location);
+    // };
+    
+
 
     const handlePlaceSelect = (place) => {
         setSelectedPlace(place)

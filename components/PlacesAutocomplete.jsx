@@ -43,7 +43,7 @@ export const PlacesAutocomplete = ({onSelect}) => {
             return
         }
         try {
-            const response = await fetch(`http://localhost:3000/api/google-places?query=${query}`);
+            const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/google-places?query=${query}`);
             const data = await response.json();
             console.log('data is ', data);
             if (data.error){
