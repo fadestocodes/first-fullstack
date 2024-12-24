@@ -119,7 +119,7 @@ export function NavigationMenuDemo() {
               <div className="flex flex-col items-center justify-center ">
                 <Avatar className="size-7 cursor-pointer" onClick={handleAvatarClick} >
                   <AvatarImage className="" src={ `/api/proxy-image?url=${encodeURIComponent(session?.data?.user?.picture)}` } />
-                  <AvatarFallback>{session.data.user.name.split('')[0]}</AvatarFallback>
+                  <AvatarFallback>{session?.data?.user?.name.split('')[0]}</AvatarFallback>
                 </Avatar>{ isOpen && (
                   <Button className="w-13 h-8 absolute mt-20 mr-5 " variant='default' onClick={handleLogout}>Log Out</Button>
                 ) }
