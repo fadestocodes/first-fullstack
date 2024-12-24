@@ -266,7 +266,7 @@ const BlogComments = ({postId}) => {
                     </form>
                 </div>
                 <div className="comment-list">
-                    {commentsList.length > 0 &&
+                    {commentsList?.length > 0 &&
                         commentsList.map(
                             (item) =>
                                 item.parentCommentId === null && (
@@ -277,8 +277,11 @@ const BlogComments = ({postId}) => {
                                         <div className="single-comment  flex justify-start">
                                             <div className="image flex justify-center items-start">
                                                 <Avatar className='size-8 mr-4 my-4 '>
-                                                    <AvatarImage className=' object-cover' src={`/api/proxy-image?url=${encodeURIComponent(item.users.picture)}`}></AvatarImage>
-                                                    <AvatarFallback>{item.users.name.charAt(0).toUpperCase()}</AvatarFallback>
+                                                    { item.users.picture ? (
+                                                        <AvatarImage className=' object-cover' src={`${process.env.NEXT_PUBLIC_API_URL}/api/proxy-image?url=${encodeURIComponent(item.users.picture)}`}></AvatarImage>
+                                                    ) : (
+                                                        <div className="flex h-full w-full items-center justify-center rounded-full bg-muted">{item.users.name.charAt(0).toUpperCase()}</div >
+                                                    ) }
                                                 </Avatar>
                                                 {/* <img
                                                     src={`/api/proxy-image?url=${encodeURIComponent(item.users.picture)}`}
@@ -370,7 +373,7 @@ const BlogComments = ({postId}) => {
                                             </div>
                                         </div>
                                         <div className="flex flex-col pl-20">
-                                            {item.replies.length > 0 &&
+                                            {item?.replies?.length > 0 &&
                                                 item.replies.map((element) => (
                                                     <div
                                                         className="comment-container flex   justify-center items-start my-4 "
@@ -378,18 +381,13 @@ const BlogComments = ({postId}) => {
                                                     >
                                                         <div className="image  flex p-0 m-0 justify-start  items-start">
                                                         <Avatar className='size-8 mr-4  '>
-                                                    <AvatarImage className=' object-cover' src={`/api/proxy-image?url=${encodeURIComponent(element.users.picture)}`}></AvatarImage>
-                                                    <AvatarFallback>{element.users.name.charAt(0).toUpperCase()}</AvatarFallback>
-                                                </Avatar>
-                                                            {/* <img className='size-9'
-                                                                src={`/api/proxy-image?url=${encodeURIComponent(element.users.picture)}`}
-                                                                alt='User avatar photo'
-                                                                style={{
-                                                                    borderRadius:
-                                                                        "50%",
-                                                                    margin: "0% 0 0 0",
-                                                                }}
-                                                            /> */}
+                                                            { element.users.picture ? (
+                                                                <AvatarImage className=' object-cover' src={`${process.env.NEXT_PUBLIC_API_URL}/api/proxy-image?url=${encodeURIComponent(element.users.picture)}`}></AvatarImage>
+                                                            ) : (
+                                                                <div className="flex h-full w-full items-center justify-center rounded-full bg-muted">{element.users.name.charAt(0).toUpperCase()}</div>
+                                                            ) }
+                                                         </Avatar>
+                                                          
                                                         </div>
                                                             <div className="commentInfo flex flex-col justify-center items-start gap-2 " >
                                                                 <p

@@ -56,16 +56,16 @@ const PostcardsPage = () => {
     const [commentModal, setCommentModal] = useState(false);
 
 
-    const getPostcardComments = async () => {
-        try {
-            const data = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/postcards/comments`);
-            const allPostcardCommentsRes = await data.json();
-            setAllPostcardComments(allPostcardCommentsRes);
-            console.log('all postcard comments', allPostcardComments);
-        } catch (err ) {
-            console.log("couldn't fetch postcard comments", err);
-        }
-    }
+    // const getPostcardComments = async () => {
+    //     try {
+    //         const data = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/postcards/comments`);
+    //         const allPostcardCommentsRes = await data.json();
+    //         setAllPostcardComments(allPostcardCommentsRes);
+    //         console.log('all postcard comments', allPostcardComments);
+    //     } catch (err ) {
+    //         console.log("couldn't fetch postcard comments", err);
+    //     }
+    // }
     useEffect(()=>{
         const getAllPostcards = async () => {
             try {
@@ -79,13 +79,13 @@ const PostcardsPage = () => {
         }
         getAllPostcards();
 
-        getPostcardComments();
+        // getPostcardComments();
         console.log('all postcards from usefffect', allPostcards)
     }, [])
 
-    useEffect(()=>{
-        getPostcardComments();
-    }, [ selectedPost ])
+    // useEffect(()=>{
+    //     getPostcardComments();
+    // }, [ selectedPost ])
 
     const createPostcard = async () => {
         const newErrors = {};
@@ -351,7 +351,7 @@ const PostcardsPage = () => {
                                
                                 <div className="flex justify-start gap-3 items-center mb-4">
                                     <Avatar className='size-6' >
-                                        <AvatarImage className='justify-center items-center'  src={ `/api/proxy-image?url=${encodeURIComponent(selectedPost.user.picture)}` }/>
+                                        <AvatarImage className='justify-center items-center'  src={ `${process.env.NEXT_PUBLIC_API_URL}/api/proxy-image?url=${encodeURIComponent(selectedPost.user.picture)}` }/>
                                     </Avatar>   
                                     <div className="flex flex-col justify-start items-start gap-0">
                                         <p className='!my-2 text-sm !leading-[0] p-0 font-bold '>Posted by {selectedPost.user.name}</p>
@@ -365,8 +365,8 @@ const PostcardsPage = () => {
                                     selectedPost.comments.map((comment,index)=>(
                                         <div key={comment.id || index} className='comments flex justify-start w-full px-10 md:px-32 items-start gap-3'>
                                             <Avatar>
-                                                <AvatarImage src={`/api/proxy-image?url=${encodeURIComponent(comment?.users?.picture)}` }/>
-                                                    <AvatarFallback>{item.users.name.charAt(0).toUpperCase()}</AvatarFallback>
+                                                <AvatarImage src={`${process.env.NEXT_PUBLIC_API_URL}/api/proxy-image?url=${encodeURIComponent(comment.users.picture)}` }/>
+                                                    <AvatarFallback>{comment.users.name.charAt(0).toUpperCase()}</AvatarFallback>
                                             </Avatar>
                                             <div className='flex flex-col justify-center items-start'>
                                                 <p className='text-sm !my-2 font-bold !leading-[0]'>{comment?.users?.name}</p>
