@@ -11,7 +11,6 @@ import { Input } from "./ui/input";
 import {signUpValidation} from '@/lib/validation';
 import {Label} from '@/components/ui/label';
 import {Avatar, AvatarImage} from '@/components/ui/avatar'
-import { useRouter } from "next/navigation";
 
 export default function SignInButtons() {
 
@@ -28,7 +27,6 @@ export default function SignInButtons() {
   })
   const [imageLoading, setImageLoading] = useState(false);
   const [ signupComplete, setSignupComplete ] = useState(false);
-  const router = useRouter();
   
 
   const handleSignupClick = () => {
