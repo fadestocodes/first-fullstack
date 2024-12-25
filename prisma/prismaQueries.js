@@ -57,7 +57,7 @@ async function getAllPosts(){
             comments : true
         },
         orderBy : {
-            lastUpdated : 'desc'
+            createdAt : 'desc'
         }
     })
 }
