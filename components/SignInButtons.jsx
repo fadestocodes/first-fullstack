@@ -199,7 +199,7 @@ export default function SignInButtons() {
                 <div className="flex flex-col gap-3">
                   <div className="w-full justify-center items-center">
                     <Label>Profile picture*</Label>
-                    <p className="text-xs !my-0">( .HEIC images may not be supported )</p>
+                    <p className="text-xs !my-0">( iPhone .HEIC images may not be supported )</p>
                     <Input className="w-[70%] cursor-pointer " accept='image/*,.heic' name="picture" onChange={imageUpload} type="file"></Input>
                     {inputs?.picture && !imageLoading ? (
                       <div className=" w-full h-full flex justify-center items-center my-8">
@@ -273,7 +273,7 @@ export default function SignInButtons() {
               <div className="flex items-center">
                 <hr className="flex-grow border-t" /><span className="mx-4 text-xs">OR</span> <hr className="flex-grow border-t" />
               </div>
-              <Button variant='outline' onClick={() => signIn('google')} className="">
+              <Button disabled={true} variant='outline' onClick={() => signIn('google')} className="">
                 <div className="flex justify-center items-center gap-3">
                   <GoogleIcon sx={{ color: "#EA4335" }} className="m-0 p-0"/>
                   <p className="mb-6">Sign in with Google</p>

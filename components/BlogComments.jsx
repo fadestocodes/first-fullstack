@@ -5,10 +5,8 @@ import {Textarea} from '@/components/ui/textarea'
 import {Button} from '@/components/ui/button'
 import { signIn } from 'next-auth/react';
 import { useSession } from 'next-auth/react';
-import {  X } from 'lucide-react';
-import {Card} from '@/components/ui/card'
-import GoogleIcon from '@mui/icons-material/Google';
 import {Avatar, AvatarFallback, AvatarImage} from '@/components/ui/avatar'
+import SignInButtons from '@/components/SignInButtons'
 
 
 const BlogComments = ({postId}) => {
@@ -228,43 +226,14 @@ const BlogComments = ({postId}) => {
                         <div className="text-center text-xs">
                             Your info will not be shared with anyone
                         </div>
-                        {!session?.data?.user && showModal && (
-                            <div className="modal z-[60] fixed flex justify-center items-center inset-0 m-0 p-0 bg-black bg-opacity-50">
-                                <Card className="modal-content p-8 relative flex gap-4 flex-col items-center justify-center w-96">
-                                    <X
-                                        variant="secondary"
-                                        className="size-5 absolute top-2 right-2 cursor-pointer text-gray-300"
-                                        onClick={() => setShowModal(false)}
-                                    />
-                                    <h3 className="font-bold leading-3 mt-6">Sign In</h3>
-                                    <p>Please log in to post your comment</p>
-                                    <Button
-                                        className="w-60"
-                                        variant="outline"
-                                        onClick={() => handleLogin("google")}
-                                    >
-                                        <GoogleIcon sx={{ color: "#EA4335" }} />
-                                        Sign in with Google
-                                    </Button>
-                                    <Button
-                                    disabled = {true}
-                                        className="w-60"
-                                        variant="outline"
-                                        onClick={() => handleLogin("facebook")}
-                                    >
-                                        Sign in with Facebook
-                                    </Button>
-                                    <Button
-                                        variant=""
-                                        onClick={() => setShowModal(false)}
-                                    >
-                                        Cancel
-                                    </Button>
-                                </Card>
-                            </div>
-                        )}
                     </form>
                 </div>
+                        {!session?.data?.user && showModal && (
+                            <div className='login-modal px-6 bg-black bg-opacity-50 z-30 fixed w-full h-full inset-0 flex flex-col justify-center items-center' onClick={()=>setModalOn(false)}>
+                            <div onClick={(e) => e.stopPropagation()}>
+                                <SignInButtons ></SignInButtons>
+                            </div>
+                        </div>)}
                 <div className="comment-list">
                     {commentsList?.length > 0 &&
                         commentsList.map(
