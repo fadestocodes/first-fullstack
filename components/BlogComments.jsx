@@ -181,18 +181,7 @@ const BlogComments = ({postId}) => {
         setReplyingTo(null);
     }
 
-    const handleLogin = async (provider) => {
-        sessionStorage.setItem(`userComment-${blogId}`, inputs.comment);
-        try {
-            const result = await signIn(provider);
-            console.log('login result', result);
-            // const updatedSession = await fetch('http://localhost:3000/api/auth/session').then((res)=>res.json());
-            // onSuccess(updatedSession);
     
-        } catch (err) {
-            console.log('errorrr', err)
-        }
-    }
 
 
    
