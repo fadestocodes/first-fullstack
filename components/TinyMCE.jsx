@@ -30,7 +30,7 @@ export default function TinyMCE({value , onEditorChange, handleImageUpload}) {
                 file_picker_callback: (cb) => {
                     const input = document.createElement('input');
                     input.setAttribute('type', 'file');
-                    input.setAttribute('accept', 'image/*');
+                    input.setAttribute('accept', 'image/*,.heic');
                 
                     input.addEventListener('change', (e) => {
                       const file = e.target.files[0];

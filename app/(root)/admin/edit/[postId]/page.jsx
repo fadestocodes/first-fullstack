@@ -182,7 +182,7 @@ const EditPost =   () => {
             }
             console.log('payload is ', payload)
 
-            const submitResponse = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/save-post`, {
+            const submitResponse = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/post/create-draft`, {
                 method : 'POST',
                 headers : {
                     'Content-Type' : 'application/json'

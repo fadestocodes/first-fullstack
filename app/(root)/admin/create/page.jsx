@@ -19,6 +19,7 @@ import {
   } from "@/components/ui/dialog"
   import { SubscribeButton } from '@/components/ui/SubscribeButton';
   import Image from 'next/image'
+  import heic2any from 'heic2any';
 
 
 
@@ -86,7 +87,18 @@ const AdminCreatePage =  () => {
     const coverPhotoUpload = async (event) => {
         
         setImageLoading(true);
-        const file = event.target.files[0];
+        let imageFile = event.target.files[0];
+        if (imageFile.type === "image/heic") {
+            try {
+                const convertedBlob = await heic2any({ blob: imageFile, toType: "image/jpeg" });
+                imageFile = new File([convertedBlob], `${imageFile.name.split('.')[0]}.jpg`, { type: "image/jpeg" });
+                console.log('file after converting', imageFile);
+            } catch (error) {
+                console.error("HEIC conversion failed:", error);
+                setImageLoading(false);
+                return;
+            }
+        }
 
         const requestCall = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/presigned-url`, {
             method : 'POST',
@@ -94,8 +106,8 @@ const AdminCreatePage =  () => {
                 'Content-Type' : 'application/json'
             },
             body : JSON.stringify({
-                fileName : file.name,
-                fileType : file.type
+                fileName : imageFile.name,
+                fileType : imageFile.type
                 })
         })
         const {url, location} = await requestCall.json();
@@ -104,7 +116,7 @@ const AdminCreatePage =  () => {
 
         const uploadResponse = await fetch(url, {
         method : 'PUT',
-        body : file
+        body : imageFile
         })
         if (!uploadResponse.ok) {
             setImageLoading(false);
@@ -118,6 +130,64 @@ const AdminCreatePage =  () => {
         setImageLoading(false);
         console.log(inputs);
     }
+
+
+    //-------
+
+// const photoUpload = async (event) => {
+//     setImageLoading(true);
+//     let file = event.target.files[0];
+//     console.log('file is ',file);
+
+//     // Convert HEIC to JPG if necessary
+//     if (file.type === "image/heic") {
+//         try {
+//             const convertedBlob = await heic2any({ blob: file, toType: "image/jpeg" });
+//             file = new File([convertedBlob], `${file.name.split('.')[0]}.jpg`, { type: "image/jpeg" });
+//             console.log('file after converting', file);
+//         } catch (error) {
+//             console.error("HEIC conversion failed:", error);
+//             setImageLoading(false);
+//             return;
+//         }
+//     }
+
+//     const requestCall = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/presigned-url`, {
+//         method: "POST",
+//         headers: {
+//             "Content-Type": "application/json",
+//         },
+//         body: JSON.stringify({
+//             fileName: file.name,
+//             fileType: file.type,
+//         }),
+//     });
+
+//     const { url, location } = await requestCall.json();
+//     console.log('url is', url)
+//     console.log('location is', location)
+//     const uploadResponse = await fetch(url, {
+//         method: "PUT",
+//         headers: {
+//             "Content-Type": file.type,
+//         },
+//         body: file,
+//     });
+
+//     if (!uploadResponse.ok) {
+//         setImageLoading(false);
+//         throw new Error("Image upload to S3 failed");
+//     }
+
+//     setInputs((prevData) => ({
+//         ...prevData,
+//         picture: location,
+//     }));
+
+//     setImageLoading(false);
+// };
+
+//--------
 
 
     const saveDraft = async () => {

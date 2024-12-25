@@ -38,7 +38,7 @@ const DraftsPage =  () => {
           return; // Wait for session to load
         }
     
-        if (!session || session.data.user.role !== 'ADMIN') {
+        if (!session || session?.data?.user?.role !== 'ADMIN') {
           router.push('/'); // Redirect to login page
         }
       }, [session, session.status, router]);

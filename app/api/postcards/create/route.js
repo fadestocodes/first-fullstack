@@ -1,3 +1,5 @@
+import {prisma} from '@/prisma/prisma'
+
 export async function POST(req){
     
     const { caption, country, countryCode, emoji, location, picture, userId } = await req.json();

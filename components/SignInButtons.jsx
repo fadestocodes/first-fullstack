@@ -11,6 +11,7 @@ import { Input } from "./ui/input";
 import {signUpValidation} from '@/lib/validation';
 import {Label} from '@/components/ui/label';
 import {Avatar, AvatarImage} from '@/components/ui/avatar'
+import heic2any from 'heic2any'
 
 export default function SignInButtons() {
 
@@ -66,42 +67,102 @@ export default function SignInButtons() {
 
   },[inputs])
 
-  const imageUpload = async (event) => {
-    setImageLoading(true);
-    const file = event.target.files[0]
-    const fileName =  file.name;
-    const fileType = file.type;
+
+//-------------------------------
+  // const imageUpload = async (event) => {
+  //   setImageLoading(true);
+  //   const file = event.target.files[0]
+  //   const fileName =  file.name;
+  //   const fileType = file.type;
   
-    try {
-      const data = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/presigned-url`, {
-        method : "POST",
-        headers : {
-          'Content-type' : 'application/json'
-        },
-        body : JSON.stringify({fileName, fileType})
-      })
-      console.log('data from presignedurl', data)
-      const {url, location} = await data.json();
+  //   try {
+  //     const data = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/presigned-url`, {
+  //       method : "POST",
+  //       headers : {
+  //         'Content-type' : 'application/json'
+  //       },
+  //       body : JSON.stringify({fileName, fileType})
+  //     })
+  //     console.log('data from presignedurl', data)
+  //     const {url, location} = await data.json();
       
-      const uploadResponse = await fetch (url, {
-        method : 'PUT',
-        body : file
-      })
-      if (!uploadResponse){
-        throw new Error ('Problem uploading image to S3')
+  //     const uploadResponse = await fetch (url, {
+  //       method : 'PUT',
+  //       body : file
+  //     })
+  //     if (!uploadResponse){
+  //       throw new Error ('Problem uploading image to S3')
+  //     }
+  //     console.log('url is ', url)
+  //     console.log('location is ', location)
+  //     setInputs((prevData)=>({
+  //       ...prevData,
+  //       picture : location
+  //     }))
+  //     setImageLoading(false);
+  //     console.log('inputs are', inputs)
+  //   } catch (err) {
+  //     console.log('error message is', err.message);
+  //   }
+  // }
+
+
+//--------------------------------------//
+const imageUpload = async (event) => {
+  setImageLoading(true);
+  let file = event.target.files[0];
+  console.log('file is ',file);
+
+  // Convert HEIC to JPG if necessary
+  if (file.type === "image/heic") {
+      try {
+          const convertedBlob = await heic2any({ blob: file, toType: "image/jpeg" });
+          file = new File([convertedBlob], `${file.name.split('.')[0]}.jpg`, { type: "image/jpeg" });
+          console.log('file after converting', file);
+      } catch (error) {
+          console.error("HEIC conversion failed:", error);
+          setImageLoading(false);
+          return;
       }
-      console.log('url is ', url)
-      console.log('location is ', location)
-      setInputs((prevData)=>({
-        ...prevData,
-        picture : location
-      }))
-      setImageLoading(false);
-      console.log('inputs are', inputs)
-    } catch (err) {
-      console.log('error message is', err.message);
-    }
   }
+
+  const requestCall = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/presigned-url`, {
+      method: "POST",
+      headers: {
+          "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+          fileName: file.name,
+          fileType: file.type,
+      }),
+  });
+
+  const { url, location } = await requestCall.json();
+  console.log('url is', url)
+  console.log('location is', location)
+  const uploadResponse = await fetch(url, {
+      method: "PUT",
+      headers: {
+          "Content-Type": file.type,
+      },
+      body: file,
+  });
+
+  if (!uploadResponse.ok) {
+      setImageLoading(false);
+      throw new Error("Image upload to S3 failed");
+  }
+
+  setInputs((prevData) => ({
+      ...prevData,
+      picture: location,
+  }));
+
+  setImageLoading(false);
+};
+
+
+
 
   const handleSubmit = async (event) => {
     event.preventDefault();
