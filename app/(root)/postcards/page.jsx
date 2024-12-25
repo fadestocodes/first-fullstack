@@ -432,8 +432,8 @@ const photoUpload = async (event) => {
                                 { selectedPost.comments && (
                                     selectedPost.comments.map((comment,index)=>(
                                         <div key={comment.id || index} className='comments flex justify-start w-full px-10 md:px-32 items-start gap-3'>
-                                            <Avatar>
-                                                <AvatarImage src={`${process.env.NEXT_PUBLIC_API_URL}/api/proxy-image?url=${encodeURIComponent(comment.users.picture)}` }/>
+                                            <Avatar className='size-8'>
+                                                <AvatarImage className='object-cover' src={`${process.env.NEXT_PUBLIC_API_URL}/api/proxy-image?url=${encodeURIComponent(comment.users.picture)}` }/>
                                                     <AvatarFallback>{comment.users.name.charAt(0).toUpperCase()}</AvatarFallback>
                                             </Avatar>
                                             <div className='flex flex-col justify-center items-start'>
