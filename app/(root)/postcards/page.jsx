@@ -376,7 +376,7 @@ const photoUpload = async (event) => {
                              <div
                                 className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent rounded-md"
                                 ></div>
-                            <p className="text-left text-xs md:text-base !my-0 absolute bottom-3 left-3 text-white px-2">👋 from {post.location}  {post.emoji}</p>
+                            <p className="text-left break-words text-wrap  text-xs md:text-base !my-0 absolute bottom-3 left-3 text-white px-2">👋 from {post.location}  {post.emoji}</p>
                         </div>
                     ))}
                 </Masonry>
@@ -415,7 +415,7 @@ const photoUpload = async (event) => {
                                 </div>
                             <div className="flex flex-col justify-center items-center gap-8">
                                 <DrawerDescription className='text-base !mt-2 p-0'>{selectedPost.caption}</DrawerDescription>
-                                <DrawerTitle className='!mt-4 !leading-[0] !mb-0 p-0'>👋 from {selectedPost.location} {selectedPost.emoji}</DrawerTitle>
+                                <DrawerTitle className='!mt-4  !mb-0 p-0'>👋 from {selectedPost.location} {selectedPost.emoji}</DrawerTitle>
                                
                                 <div className="flex justify-start gap-3 items-center mb-4">
                                     <Avatar className='size-6' >
