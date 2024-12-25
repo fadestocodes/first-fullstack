@@ -45,7 +45,7 @@ const AdminCreatePage =  () => {
     const [editorContent, setEditorContent] = useState('<p>Start writing your blog!</p>');
 
     useEffect(() => {
-        if (!session || session?.data?.user?.role !== 'ADMIN') {
+        if (!session || session.data.user.role !== 'ADMIN') {
         router.push('/auth/error') 
         }
     }, [session, session.status, router]);
@@ -255,7 +255,6 @@ const AdminCreatePage =  () => {
                 method : 'PUT',
                 headers : {
                     'Content-Type' : fileType,
-                    // "Host": "fadestoblogsite.s3.us-east-2.amazonaws.com"
                 },
                 body : file
             });
@@ -264,10 +263,7 @@ const AdminCreatePage =  () => {
             }
         
             console.log('editor content is : ', editorContent);
-        return location;
-
-            
-
+            return location;
                 
         } catch (err) {
             console.error('Failure getting url', err);
@@ -275,38 +271,38 @@ const AdminCreatePage =  () => {
 
     }
 
-        const publishPost = async () => {
-            const user = session.data.user;
+    const publishPost = async () => {
+        const user = session.data.user;
 
-            console.log('handling submit');
-            try {
-                console.log(JSON.stringify(editorContent));
-                const payload = {
-                    userId : user.id,
-                    content : editorContent,
-                    title : inputs.title,
-                    category : inputs.category,
-                    coverPhoto : inputs.coverPhoto,
-                }
-                console.log('payload is ', payload)
-
-                const submitResponse = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/post/publish`, {
-                    method : 'POST',
-                    headers : {
-                        'Content-Type' : 'application/json'
-                    },
-                    body : JSON.stringify(payload)
-                });
-                if (!submitResponse.ok){
-                    throw new Error ('Error sending post request');
-                }
-                const submitData = await submitResponse.json();
-                console.log('Submit Data is : ', submitData);
-                router.push('/blog')
-
-            } catch (err) {
-                console.error('Error', err);
+        console.log('handling submit');
+        try {
+            console.log(JSON.stringify(editorContent));
+            const payload = {
+                userId : user.id,
+                content : editorContent,
+                title : inputs.title,
+                category : inputs.category,
+                coverPhoto : inputs.coverPhoto,
             }
+            console.log('payload is ', payload)
+
+            const submitResponse = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/post/publish`, {
+                method : 'POST',
+                headers : {
+                    'Content-Type' : 'application/json'
+                },
+                body : JSON.stringify(payload)
+            });
+            if (!submitResponse.ok){
+                throw new Error ('Error sending post request');
+            }
+            const submitData = await submitResponse.json();
+            console.log('Submit Data is : ', submitData);
+            router.push('/blog')
+
+        } catch (err) {
+            console.error('Error', err);
+        }
     }
         return (
             <div className='flex flex-col items-center justify-center'>
