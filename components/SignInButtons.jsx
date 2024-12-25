@@ -11,7 +11,10 @@ import { Input } from "./ui/input";
 import {signUpValidation} from '@/lib/validation';
 import {Label} from '@/components/ui/label';
 import {Avatar, AvatarImage} from '@/components/ui/avatar'
-import heic2any from 'heic2any'
+// import heic2any from 'heic2any'
+import dynamic from 'next/dynamic';
+
+const DynamicHeic2Any = dynamic(() => import('heic2any'), { ssr: false }); // Dynamically import 'heic2any' (client-side only)
 
 export default function SignInButtons() {
 
@@ -115,6 +118,7 @@ const imageUpload = async (event) => {
 
   // Convert HEIC to JPG if necessary
   if (file.type === "image/heic") {
+    const heic2any = await DynamicHeic2Any;
       try {
           const convertedBlob = await heic2any({ blob: file, toType: "image/jpeg" });
           file = new File([convertedBlob], `${file.name.split('.')[0]}.jpg`, { type: "image/jpeg" });
@@ -313,7 +317,7 @@ const imageUpload = async (event) => {
               <CardTitle className="justify-center items-center flex flex-col"><h2>Sign In </h2></CardTitle>
             </CardHeader>
             <CardContent className="flex flex-col gap-3 md:w-96">
-              <form className="flex flex-col gap-3" action={handleCredentialsSignin}>
+              <form onSubmit={handleCredentialsSignin} className="flex flex-col gap-3" >
                   { errors.loginPassword && <p className="text-red-400 !my-0 text-sm">{errors.loginPassword}</p> }
                 <div className="flex flex-col gap-3">
                   <Label>Email address*</Label>
@@ -323,7 +327,7 @@ const imageUpload = async (event) => {
                   <Label>Password*</Label>
                   <Input placeholder="Password*" name="loginPassword" value={inputs.loginPassword} onChange={handleChange} type="password" className="w-full"></Input>
                 </div>
-                <Button  variant='default' onClick={handleCredentialsSignin} className="">
+                <Button  variant='default' type="submit"  className="">
                 <div className="flex justify-center items-center gap-3">
                   <Mail />
                   <p className="mb-6">Sign in with Email</p>

@@ -25,7 +25,10 @@ import SignInButtons from '@/components/SignInButtons'
 import {dateFormat} from '@/lib/dateFormat'
 import {Avatar, AvatarFallback, AvatarImage} from '@/components/ui/avatar'
 import { BounceFade } from "@/components/ui/animations";
-import heic2any from "heic2any";
+// import heic2any from "heic2any";
+import dynamic from 'next/dynamic';
+
+const DynamicHeic2Any = dynamic(() => import('heic2any'), { ssr: false }); // Dynamically import 'heic2any' (client-side only)
 
 
 const PostcardsPage = () => {
@@ -201,6 +204,7 @@ const photoUpload = async (event) => {
 
     // Convert HEIC to JPG if necessary
     if (file.type === "image/heic") {
+        const heic2any = await DynamicHeic2Any
         try {
             const convertedBlob = await heic2any({ blob: file, toType: "image/jpeg" });
             file = new File([convertedBlob], `${file.name.split('.')[0]}.jpg`, { type: "image/jpeg" });

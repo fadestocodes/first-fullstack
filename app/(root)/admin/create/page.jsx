@@ -19,7 +19,11 @@ import {
   } from "@/components/ui/dialog"
   import { SubscribeButton } from '@/components/ui/SubscribeButton';
   import Image from 'next/image'
-  import heic2any from 'heic2any';
+//   import heic2any from 'heic2any';
+import dynamic from 'next/dynamic';
+
+const DynamicHeic2Any = dynamic(() => import('heic2any'), { ssr: false }); // Dynamically import 'heic2any' (client-side only)
+
 
 
 
@@ -45,14 +49,14 @@ const AdminCreatePage =  () => {
     const [editorContent, setEditorContent] = useState('<p>Start writing your blog!</p>');
 
     useEffect(() => {
-        if (!session || session.data.user.role !== 'ADMIN') {
+        if ( session?.data?.user?.role !== 'ADMIN') {
         router.push('/auth/error') 
         }
-    }, [session, session.status, router]);
+    }, []);
 
-    if (session.status === 'loading') {
-        return <div>Loading...</div>;
-    }
+    // if (session.status === 'loading') {
+    //     return <div>Loading...</div>;
+    // }
 
 
     const handleChange = (event) => {
@@ -90,6 +94,7 @@ const AdminCreatePage =  () => {
         let imageFile = event.target.files[0];
         if (imageFile.type === "image/heic") {
             try {
+                const heic2any = await DynamicHeic2Any
                 const convertedBlob = await heic2any({ blob: imageFile, toType: "image/jpeg" });
                 imageFile = new File([convertedBlob], `${imageFile.name.split('.')[0]}.jpg`, { type: "image/jpeg" });
                 console.log('file after converting', imageFile);
