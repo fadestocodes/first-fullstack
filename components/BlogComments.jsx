@@ -3,7 +3,6 @@
 import React, {useState, useEffect, useRef} from 'react'
 import {Textarea} from '@/components/ui/textarea'
 import {Button} from '@/components/ui/button'
-import { signIn } from 'next-auth/react';
 import { useSession } from 'next-auth/react';
 import {Avatar, AvatarFallback, AvatarImage} from '@/components/ui/avatar'
 import SignInButtons from '@/components/SignInButtons'
