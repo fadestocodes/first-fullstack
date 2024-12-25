@@ -362,9 +362,9 @@ const AdminCreatePage =  () => {
                                         { errors.find((error)=> error.path.includes('category')) && <span className='text-red-400 self-start'>{errors.find((error)=>error.path.includes('category'))?.message}</span> }
                                         </Select>
                                 </div>
-                                <div className='flex flex-col  w-full' >
-                                    <Label htmlFor="" className='font-medium  mb-4'>Upload Cover Photo*</Label>
-
+                                <div className='flex flex-col gap-3  w-full' >
+                                    <Label htmlFor="" className='font-medium '>Upload Cover Photo*</Label>
+                                    <p className="text-xs !my-0">( iPhone "Live" images may not be supported )</p>
                                     <Input className=' mb-8 cursor-pointer w-[25%]' type='file'  name='coverPhoto' accept='image/*,.heic' onChange={coverPhotoUpload} ></Input>
                                     { inputs.coverPhoto ?  (
                                         <Image

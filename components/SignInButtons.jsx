@@ -117,7 +117,7 @@ const imageUpload = async (event) => {
   console.log('file is ',file);
 
   // Convert HEIC to JPG if necessary
-  if (file.type === "image/heic") {
+  if (file.type === "image/heic" ) {
     const heic2any = await DynamicHeic2Any;
       try {
           const convertedBlob = await heic2any({ blob: file, toType: "image/jpeg" });
@@ -264,8 +264,8 @@ const imageUpload = async (event) => {
                 <div className="flex flex-col gap-3">
                   <div className="w-full justify-center items-center">
                     <Label>Profile picture*</Label>
-                    <p className="text-xs !my-0">( iPhone .HEIC images may not be supported )</p>
-                    <Input className="w-[70%] cursor-pointer " accept='image/*,.heic' name="picture" onChange={imageUpload} type="file"></Input>
+                    <p className="text-xs !my-0">( iPhone "Live" images may not be supported )</p>
+                    <Input className="w-[70%] cursor-pointer " accept='image/*,.heic,.HEIC,.heif' name="picture" onChange={imageUpload} type="file"></Input>
                     {inputs?.picture && !imageLoading ? (
                       <div className=" w-full h-full flex justify-center items-center my-8">
                         <Avatar size='40' className="size-20 md:size-32">

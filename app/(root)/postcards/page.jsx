@@ -324,7 +324,12 @@ const photoUpload = async (event) => {
                             <CardContent className='relative'>
                             <div className='flex flex-col justify-start items-start gap-4 w-full '>
                                 { errors?.picture && <p className='text-red-600 text-sm'>{errors.picture}</p>  }
+                                <div>
+                                    <Label>Upload image</Label>
+                                    <p className="text-xs !mt-0 mb-3">( iPhone "Live" images may not be supported )</p>
                                 <Input className=' cursor-pointer ' type='file'  name='picture' accept='image/*,.heic' onChange={photoUpload} />
+                                </div>
+
                                 { imageLoading ? (
                                 <Card className='flex flex-col self-center justify-center items-center w-[50px] h-[50px]'>
                                     <div className='spinner'></div>
