@@ -47,9 +47,7 @@ import { useRouter } from "next/navigation";
 
       const session  = useSession();
       const router = useRouter();
-
-      const firstName = session?.data?.user.name.split(' ')[0];
-      const lastName = session?.data?.user.name.split(' ')[1];
+      const name = session?.data?.user.name;
  
 
 
@@ -71,7 +69,7 @@ import { useRouter } from "next/navigation";
                                         <AvatarFallback >{session.data.user.name.charAt(0).toUpperCase()}</AvatarFallback >
                                     ) }
                                 </Avatar>
-                                <p className="text-base font-bold !my-0">Hello, {firstName}</p>
+                                <p className="text-base font-bold !my-0">Hello, {name}</p>
                             </div>
 
                         </div>
