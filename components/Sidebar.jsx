@@ -50,10 +50,7 @@ import { useRouter } from "next/navigation";
 
       const firstName = session?.data?.user.name.split(' ')[0];
       const lastName = session?.data?.user.name.split(' ')[1];
-      const initials =
-      firstName && lastName
-      ? `${firstName[0].toUpperCase()}${lastName[0].toUpperCase()}`
-      : '';
+ 
 
 
     return (
