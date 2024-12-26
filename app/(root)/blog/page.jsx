@@ -64,7 +64,7 @@
                                     { post.user.picture ? (
                                         <AvatarImage className=' object-cover' src={`${process.env.NEXT_PUBLIC_API_URL}/api/proxy-image?url=${encodeURIComponent(post.user.picture)}`}></AvatarImage>
                                     ) : (
-                                        <AvatarFallback >{post.user.name.charAt(0).toUpperCase()}</AvatarFallback >
+                                        <AvatarFallback className=''>{post.user.name.charAt(0).toUpperCase()}</AvatarFallback >
                                     ) }
                                 </Avatar>
                                 <div className='flex flex-col'>
