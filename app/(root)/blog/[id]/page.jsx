@@ -54,7 +54,7 @@ const BlogDetails = async ( {params} ) => {
                     </div>
                 </div>
                     <hr className='my-12'/>
-                    <div  dangerouslySetInnerHTML={{__html : post.content}}>
+                    <div className='[&>p]:text-lg'  dangerouslySetInnerHTML={{__html : post.content}}>
                 </div>
                 <hr className='my-12'/>
                     <BounceFade>

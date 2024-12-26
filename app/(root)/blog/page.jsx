@@ -5,7 +5,7 @@
   import {formatKebab} from '@/lib/formatKebabCase'
   import {  Eye, MessageSquareText } from 'lucide-react';
   import {paraphraseContent} from  '@/lib/paraphraseContent'
-  import {Avatar, AvatarImage} from '@/components/ui/avatar'
+  import {Avatar, AvatarFallback, AvatarImage} from '@/components/ui/avatar'
   import {RedirectButton} from '@/lib/RedirectButton'
   import { BounceFade } from "@/components/ui/animations";
   import ClickableDiv from '@/components/ClickableDiv';
@@ -48,6 +48,7 @@
                   <Card className='w-full border-0 shadow-none items-center flex flex-col px-4  my-12     md:w-[42rem]  lg:flex-row lg:h-[14rem] lg:w-[52rem] lg:py-0 lg:my-4  lg:gap-0 '>
                       <div className='relative  object-cover  w-full  md:w-full lg:w-[20rem] lg:h-[14rem]'>
                         <img src={post.coverPhoto} alt="Blog post cover photo" className='object-cover  h-56 w-full   md:w-full  lg:w-[20rem] lg:h-[14rem] '   />
+                        
                         <div><Badge variant='secondary' className='absolute z-1 bottom-4 left-4 '>{formatKebab(post.category)}</Badge></div>
                       </div>
                       <div className="  w-full h-full flex justify-evenly flex-col overflow-hidden lg:h-[14rem] lg:w-full">
@@ -56,8 +57,15 @@
                             <p className='!my-0 text-2xl font-bold line-clamp-2 cursor-pointer'>{post.title}</p> 
                           </ClickableDiv>
                               <div className='flex gap-2 justify-start items-center '>
-                                <Avatar className='size-5' >
+                                {/* <Avatar className='size-5' >
                                   <AvatarImage className='' src={ `/api/proxy-image?url=${encodeURIComponent(post.user.picture)}` } ></AvatarImage>
+                                </Avatar> */}
+                                <Avatar className='size-5 my-4 '>
+                                    { post.user.picture ? (
+                                        <AvatarImage className=' object-cover' src={`${process.env.NEXT_PUBLIC_API_URL}/api/proxy-image?url=${encodeURIComponent(post.user.picture)}`}></AvatarImage>
+                                    ) : (
+                                        <AvatarFallback >{post.user.name.charAt(0).toUpperCase()}</AvatarFallback >
+                                    ) }
                                 </Avatar>
                                 <div className='flex flex-col'>
                                   <p className='!my-0 text-sm text-[rgb(120,113,108)]  font-normal'>Published {dateFormat(post.createdAt)}</p>

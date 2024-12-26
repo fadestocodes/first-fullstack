@@ -418,9 +418,13 @@ const photoUpload = async (event) => {
                                 <DrawerTitle className='!mt-4  !mb-0 p-0'>👋 from {selectedPost.location} {selectedPost.emoji}</DrawerTitle>
                                
                                 <div className="flex justify-start gap-3 items-center mb-4">
-                                    <Avatar className='size-6' >
-                                        <AvatarImage className='justify-center items-center'  src={ `${process.env.NEXT_PUBLIC_API_URL}/api/proxy-image?url=${encodeURIComponent(selectedPost.user.picture)}` }/>
-                                    </Avatar>   
+                                    <Avatar className='size-8 my-4 '>
+                                    { selectedPost.user.picture ? (
+                                        <AvatarImage className=' object-cover' src={`${process.env.NEXT_PUBLIC_API_URL}/api/proxy-image?url=${encodeURIComponent(selectedPost.user.picture)}`}></AvatarImage>
+                                    ) : (
+                                        <AvatarFallback >{selectedPost.user.name.charAt(0).toUpperCase()}</AvatarFallback >
+                                    ) }
+                                </Avatar>
                                     <div className="flex flex-col justify-start items-start gap-0">
                                         <p className='!my-2 text-sm !leading-[0] p-0 font-bold '>Posted by {selectedPost.user.name}</p>
                                         <p className='text-xs !my-2 p-0 !leading-[0] '>{dateFormat(selectedPost.createdAt)}</p>

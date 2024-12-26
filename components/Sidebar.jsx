@@ -67,9 +67,12 @@ import { useRouter } from "next/navigation";
                         <div className="mt-14 flex flex-col gap-3">
                             <p>Admin Dashboard</p>
                             <div className="flex  gap-3 items-center justify-center">
-                                <Avatar className="size-8">
-                                    <AvatarImage src={session.data.user.image}  />
-                                    <AvatarFallback>{  initials}</AvatarFallback>
+                                <Avatar className='size-8 my-4 '>
+                                    { session.data.user.picture ? (
+                                        <AvatarImage className=' object-cover' src={`${process.env.NEXT_PUBLIC_API_URL}/api/proxy-image?url=${encodeURIComponent(session.data.user.picture)}`}></AvatarImage>
+                                    ) : (
+                                        <AvatarFallback >{session.data.user.name.charAt(0).toUpperCase()}</AvatarFallback >
+                                    ) }
                                 </Avatar>
                                 <p className="text-base font-bold !my-0">Hello, {firstName}</p>
                             </div>
