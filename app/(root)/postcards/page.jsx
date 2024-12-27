@@ -479,22 +479,22 @@ const PostcardsPage = () => {
 
                                     </div>
                                 </div>
-                                <div className='flex justify-center items-center gap-8'>
-                                <div className='flex justify-center items-center gap-2'>
-                                    <Button variant='outline' className='px-2 h-7' onClick={()=>handleLike(selectedPost)}>
-                                        <Heart className='!m-0 !p-0' />
-                                    </Button><p className='text-sm !my-0'>{selectedPost.likes !== 0 ?  selectedPost.likes : ''  }</p>
-                                </div>
-                                <div className='flex justify-center items-center gap-2'>
-                                    <Button variant='outline' className='px-2 h-7' onClick={()=>handleBeenThere(selectedPost)}>
-                                        <MapPinCheck className='!m-0 !p-0' /> Been there
-                                    </Button><p className='text-sm !my-0'>{selectedPost.beenThere > 1 ?  `${selectedPost.beenThere} people have been there`  : ''  }</p>
-                                </div>
-                                <div className='flex justify-center items-center gap-2'>
-                                    <Button variant='outline' className='px-2 h-7' onClick={()=>handleWantToGo(selectedPost)}>
-                                        <Pin  className='!m-0 !p-0' /> Want to go there
-                                    </Button><p className='text-sm !my-0'>{selectedPost.wantToGo > 1 ?  `${selectedPost.wantToGo} people want to go` : ''  }</p>
-                                </div>
+                                <div className='flex flex-col justify-center items-start gap-2 lg:flex-row lg:items-center lg:gap-8' >
+                                    <div className='flex justify-center items-center gap-2'>
+                                        <Button variant='outline' className='px-2 h-7' onClick={()=>handleLike(selectedPost)}>
+                                            <Heart className='!m-0 !p-0' />
+                                        </Button><p className='text-sm !my-0'>{selectedPost.likes !== 0 ?  selectedPost.likes : ''  }</p>
+                                    </div>
+                                    <div className='flex justify-center items-center gap-2'>
+                                        <Button variant='outline' className='px-2 h-7' onClick={()=>handleBeenThere(selectedPost)}>
+                                            <MapPinCheck className='!m-0 !p-0' /> Been there
+                                        </Button><p className='text-sm !my-0'>{selectedPost.beenThere > 1 ?  `${selectedPost.beenThere} people have been there`  : ''  }</p>
+                                    </div>
+                                    <div className='flex justify-center items-center gap-2'>
+                                        <Button variant='outline' className='px-2 h-7' onClick={()=>handleWantToGo(selectedPost)}>
+                                            <Pin  className='!m-0 !p-0' /> Want to go there
+                                        </Button><p className='text-sm !my-0'>{selectedPost.wantToGo > 1 ?  `${selectedPost.wantToGo} people want to go` : ''  }</p>
+                                    </div>
                                 </div>
                                     <hr className='w-[70%] mb-4' />
                                 { selectedPost.comments && (

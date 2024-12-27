@@ -193,7 +193,7 @@ export function NavigationMenuDemo() {
                           <div key={notif.id} className={`${ notif.isRead ? 'bg-white' : 'bg-blue-100' }  px-2 rounded-md`} >
 
                             <hr />
-                             <div className="flex justify-center items-start gap-2">
+                             <div className="flex  justify-center items-start gap-2">
                               <Avatar className="size-7 cursor-pointer mt-3"  >
                                 <AvatarImage className="object-cover" src={ `/api/proxy-image?url=${encodeURIComponent(session?.data?.user?.picture)}` } />
                                 <AvatarFallback>{session?.data?.user?.name.split('')[0]}</AvatarFallback>
