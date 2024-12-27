@@ -29,6 +29,8 @@ model User {
   comments  Comment[]
   sessions  Session[]
   postcards  Postcard[]
+  receivedNotifications  Notifications[]  @relation("ReceivedNotifications")
+  sentNotifications  Notifications[]  @relation("SentNotifications")
 } 
 
 model Blogpost {
@@ -47,6 +49,7 @@ model Blogpost {
   views  Int  @default(0)
   user        User      @relation(fields: [userId], references: [id])
   comments    Comment[]
+  notifications  Notifications[]
 }
 
 model Comment {
@@ -73,13 +76,31 @@ model Postcard {
   user       User    @relation(fields:[userId], references:[id])
   likes       Int      @default(0)
   views       Int      @default(0)
+  beenThere  Int  @default(0)
+  wantToGo  Int  @default(0)
   createdAt   DateTime @default(now())
   caption     String
   country     String
   location    String
   comments  Comment[]  @relation("PostcardComments")
-  
+  notifications  Notifications[]
 }
+
+model Notifications {
+  id  Int  @id @default(autoincrement())
+  recipientUserId  Int
+  senderUserId  Int
+  content  String
+  isRead  Boolean  @default(false)  
+  postcardId  Int? 
+  blogpostId  Int?
+  createdAt  DateTime  @default(now())
+  recipient  User  @relation("ReceivedNotifications", fields : [recipientUserId], references : [id])
+  sender  User  @relation("SentNotifications", fields : [senderUserId], references : [id])
+  blogpost  Blogpost?  @relation(fields: [blogpostId], references : [id])
+  postcard  Postcard?  @relation(fields: [postcardId], references : [id])
+}
+
 
 enum Role {
   ADMIN

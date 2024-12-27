@@ -97,7 +97,7 @@ async function getSinglePost(id){
 }
 
 async function publishPost(postId){
-    console.log('Publishing post with ID:', postId);
+    // console.log('Publishing post with ID:', postId);
     try {
         await prisma.blogpost.update({
             where : {

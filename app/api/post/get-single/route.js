@@ -15,9 +15,8 @@ export async function POST(req){
     })
 
     
-    // console.log('post is is ', postId);
     const blogpost = await getSinglePost(Number(postId));
-    console.log('blogpost is ', blogpost);
+    // console.log('blogpost is ', blogpost);
 
     
     return Response.json(blogpost);

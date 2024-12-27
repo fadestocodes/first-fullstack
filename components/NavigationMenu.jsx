@@ -14,13 +14,14 @@ import {
   navigationMenuTriggerStyle,
 } from "@/components/ui/navigation-menu"
 import { useSession } from "next-auth/react"
+import { useEffect } from "react"
 import { signOut} from 'next-auth/react'
 import { Button } from "@/components/ui/button"
 import {Avatar, AvatarFallback, AvatarImage} from '@/components/ui/avatar'
 import {useState} from 'react'
 import { redirect } from "next/navigation"
 import {Toggle} from '@/components/ui/toggle'
-import { Card, CardContent} from '@/components/ui/card'
+import { Card, CardContent, CardFooter} from '@/components/ui/card'
 
 export function NavigationMenuDemo() {
 
@@ -30,10 +31,66 @@ export function NavigationMenuDemo() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [modalOn, setModalOn] = useState(false);
   const [locationToggle, setLocationToggle] = useState(false);
+  const [maxNotifId, setMaxNotifId] = useState(null);
+  const [currentNotifs, setCurrentNotifs] = useState([]);
+
+  useEffect(()=>{
+    if (session.status === 'authenticated'){
+      setCurrentNotifs(session.data.user.notifications);
+      console.log('initial render currentNotifs:', currentNotifs)
+      const getCurrentNotifs = async () => {
+        const response = await fetch (`${process.env.NEXT_PUBLIC_API_URL}/api/notifications/get-all/${session.data.user.id}`)
+        const data = await response.json();
+        console.log('the data back is ', data);
+        setCurrentNotifs(data);
+      }
+      getCurrentNotifs();
+    }
+  }, [session])
+
+  useEffect(()=> {
+    if (session.status === 'authenticated'){
+      console.log('notifications', session.data.user.notifications[0])
+      const maxNotif = session.data.user.notifications[0];
+      if (maxNotif){
+        setMaxNotifId(maxNotif.id);
+        console.log('maxNotifId', maxNotifId);
+      }
+    }
+  }, [session])
 
 
-  const handleAvatarClick = () => {
+  const handleAvatarClick = async () => {
     setIsOpen((prevState)=>(!prevState))
+  if (isOpen){
+      try {
+        console.log('max id is ', maxNotifId)
+        const payload = {
+          maxNotifId,
+          userId : session.data.user.id
+        }
+        const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/notifications/read`,{
+          method : "POST",
+          headers : {
+            'Content-type' : 'application/json'
+          },
+          body : JSON.stringify(payload)
+        })
+        const responseData = await response.json();
+        console.log('response data', responseData);
+        try {
+          const response = await fetch (`${process.env.NEXT_PUBLIC_API_URL}/api/notifications/get-all/${session.data.user.id}`)
+          const data = await response.json();
+          console.log('the data back is ', data);
+          setCurrentNotifs(data);
+        }catch(err){
+          console.log('error trying to get new notifs after closing menu', err.message)
+        }
+
+      } catch(err) {
+        console.log('Error tring to update notification read status', err.message)
+      }
+    }
   }
 
   const handleLogout =() => {
@@ -54,7 +111,7 @@ export function NavigationMenuDemo() {
 
   return (
     <NavigationMenu>
-      <NavigationMenuList className="z-40   w-full fixed top-0 items-start left-0 right-0  grid grid-cols-3 bg-white h-24  pt-4 " >
+      <NavigationMenuList className="z-40   w-full fixed top-0 items-start left-0 right-0  grid grid-cols-3 bg-white h-24  pt-6 " >
         <div className='currently-at flex  gap-3 items-center  ml-6  md:ml-12'>
           <div className="flex flex-col justify-center items-center relative ">
 
@@ -116,17 +173,53 @@ export function NavigationMenuDemo() {
         </div>
         <div className=" login  text-black items-center justify-self-end px-8  " >
             { session && session?.data?.user ? (
-              <div className="flex flex-col items-center justify-center ">
-                <Avatar className="size-7 cursor-pointer" onClick={handleAvatarClick} >
-                  <AvatarImage className="object-cover" src={ `/api/proxy-image?url=${encodeURIComponent(session?.data?.user?.picture)}` } />
-                  <AvatarFallback>{session?.data?.user?.name.split('')[0]}</AvatarFallback>
-                </Avatar>{ isOpen && (
-                  <Button className="w-13 h-8 absolute mt-20 mr-5 " variant='default' onClick={handleLogout}>Log Out</Button>
-                ) }
+              <div>
+                <div className="flex flex-col items-center justify-center relative ">
+                  <Avatar className="size-9 cursor-pointer" onClick={handleAvatarClick} >
+                    <AvatarImage className="object-cover" src={ `/api/proxy-image?url=${encodeURIComponent(session?.data?.user?.picture)}` } />
+                    <AvatarFallback>{session?.data?.user?.name.split('')[0]}</AvatarFallback>
+                    
+                  </Avatar>
+                  { currentNotifs.filter(notif => !notif.isRead).length > 0 && (
+                    <div className="absolute -top-2 -right-2 flex items-center justify-center bg-red-500 rounded-full w-6 h-6 text-white">
+                        <span className="  text-base">{currentNotifs.filter(notif => !notif.isRead).length }</span>
+                    </div>
+                  ) }
+                  { isOpen && (
+                    <Card className="absolute top-10 right-0 w-80" >
+                      <CardContent className="text-sm pt-3 overflow-scroll max-h-72  " >
+                      { currentNotifs.length > 0 ? (
+                         currentNotifs.map( notif => (
+                          <div key={notif.id} className={`${ notif.isRead ? 'bg-white' : 'bg-blue-100' }  px-2 rounded-md`} >
+
+                            <hr />
+                             <div className="flex justify-center items-start gap-2">
+                              <Avatar className="size-7 cursor-pointer mt-3"  >
+                                <AvatarImage className="object-cover" src={ `/api/proxy-image?url=${encodeURIComponent(session?.data?.user?.picture)}` } />
+                                <AvatarFallback>{session?.data?.user?.name.split('')[0]}</AvatarFallback>
+                              </Avatar>
+                              <p className="!my-2 !leading-5 line-clamp-2 text-xs overflow-ellipsis ">{notif.content}</p>
+                             </div>
+                          </div>
+                        ) ) 
+                      ) : ( <div>
+                        <p className="!my-0">No new notifications</p>
+                      </div>) }
+                      </CardContent>
+                      <CardFooter className="flex flex-col gap-2">
+                        <Button className="w-full " variant='outline'>My Account</Button>
+                        <Button className="w-full " variant='default' onClick={handleLogout}>Log Out</Button>
+                        </CardFooter>
+                    </Card>
+                  ) }
+                    
+                </div>
+               
               </div>
             ) : (
-              <div>
-                <Button className='' onClick={async () => setModalOn(true)}>Log In</Button>
+              <div className="menu">
+                
+                  <Button className='' onClick={async () => setModalOn(true)}>Log In</Button>
               </div>
 
             ) }

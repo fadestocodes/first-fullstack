@@ -1,4 +1,5 @@
 import { addComment, addUser, findUser } from '@/prisma/prismaQueries'
+import {prisma} from '@/prisma/prisma'
 
 export async function POST(req) {
     
@@ -38,6 +39,50 @@ export async function POST(req) {
             blogId : Number(blogId),
             parentCommentId : Number(parentId) || null
         });
+
+        // notification to blog author when user comments
+        
+        try {
+            const recipientUser = await prisma.blogpost.findUnique({
+                where : { id : Number(blogId) },
+                select : { userId : true }
+            })
+            
+            const notification = await prisma.notifications.create({
+                data : {
+                    recipientUserId : recipientUser.userId ,
+                    senderUserId : userId,
+                    blogpostId : Number(blogId),
+                    content : `${name.split(' ')[0]} commented on your post: ${comment}`,
+                }
+            })
+        } catch (err) {
+            console.log('error ',err.message)
+        }
+
+        // notification to parent commentor when someone replies
+        if (parentId){
+            try {
+
+                const recipientUser = await prisma.comment.findUnique({
+                    where : { id : Number(parentId) },
+                    select : { userId : true }
+                })
+
+                const notification = await prisma.notifications.create({
+                    data : {
+                        recipientUserId : recipientUser.userId ,
+                        senderUserId : userId,
+                        blogpostId : Number(blogId),
+                        content : `${name} replied to your comment: ${comment}`,
+                    }
+                })
+            } catch (err) {
+                console.log('error ',err.message)
+            }
+        }
+
+
         return Response.json({newComment});
 
     } catch (err) {

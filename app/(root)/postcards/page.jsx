@@ -15,11 +15,11 @@ import {
     DrawerHeader,
     DrawerTitle,
   } from "@/components/ui/drawer"
-import {  Maximize2, Minimize2 } from 'lucide-react';
+import {  Maximize2, Minimize2, Heart } from 'lucide-react';
 import {Textarea} from '@/components/ui/textarea'
 import { useSession } from 'next-auth/react';
 import {Input} from '@/components/ui/input'
-import { Send } from 'lucide-react';
+import { Send, MapPinCheck, Pin } from 'lucide-react';
 import {Label} from '@/components/ui/label'
 import SignInButtons from '@/components/SignInButtons'
 import {dateFormat} from '@/lib/dateFormat'
@@ -45,7 +45,7 @@ const PostcardsPage = () => {
     const session = useSession();
     const [viewDetails, setViewDetails] = useState(false);
     const [selectedPost, setSelectedPost] = useState(null);
-    const [selectedToggle, setSelectedToggle] = useState('vertical');
+    const [selectedToggle, setSelectedToggle] = useState('horizontal');
     const [imageLoading, setImageLoading] = useState(false);
     const [createMenu, setCreateMenu] = useState(false);
     const [ selectedPlace, setSelectedPlace ] = useState('');
@@ -59,17 +59,6 @@ const PostcardsPage = () => {
     // const [allPostcardComments, setAllPostcardComments] = useState([]);
     const [commentModal, setCommentModal] = useState(false);
 
-
-    // const getPostcardComments = async () => {
-    //     try {
-    //         const data = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/postcards/comments`);
-    //         const allPostcardCommentsRes = await data.json();
-    //         setAllPostcardComments(allPostcardCommentsRes);
-    //         console.log('all postcard comments', allPostcardComments);
-    //     } catch (err ) {
-    //         console.log("couldn't fetch postcard comments", err);
-    //     }
-    // }
     useEffect(()=>{
         const getAllPostcards = async () => {
             try {
@@ -86,10 +75,7 @@ const PostcardsPage = () => {
         // getPostcardComments();
         console.log('all postcards from usefffect', allPostcards)
     }, [])
-
-    // useEffect(()=>{
-    //     getPostcardComments();
-    // }, [ selectedPost ])
+    
 
     const createPostcard = async () => {
         const newErrors = {};
@@ -156,100 +142,63 @@ const PostcardsPage = () => {
         setSelectedPost(allPostcards.find(post=>post.id===id));
         console.log('all carsd from openDrawer', allPostcards);
         setViewDetails(true)
+        console.log('selected post ',selectedPost);
 
     }
 
-    // const photoUpload = async (event) => {
-    //     setImageLoading(true);
-    //     const file = event.target.files[0];
-    //     const requestCall = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/presigned-url`, {
-    //         method : 'POST',
-    //         headers:{
-    //             'Content-Type' : 'application/json'
-    //         },
-    //         body : JSON.stringify({
-    //             fileName : file.name,
-    //             fileType : file.type
-    //         })
-    //     })
+    const photoUpload = async (event) => {
+        setImageLoading(true);
+        let file = event.target.files[0];
+        console.log('file is ',file);
 
-    //     const {url, location} = await requestCall.json();
-    //     console.log('Location is : ', location);
-    //     const uploadResponse = await fetch(url, {
-    //         method : 'PUT',
-    //         headers : {
-    //             'Content-Type' : file.type
-    //         },
-    //         body : file
-    //     })
-    //     if (!uploadResponse.ok) {
-    //         setImageLoading(false);
-    //     throw new Error ('Image upload to S3 failed')
-    //     }
-    //     console.log('status from the PUT req', uploadResponse.status)
-    //     setInputs(prevData=>({
-    //         ...prevData,
-    //         picture : location
-    //     }))
-    //     setImageLoading(false);
-    //     console.log('url is ', url);
-    // }
-    
-    
-
-const photoUpload = async (event) => {
-    setImageLoading(true);
-    let file = event.target.files[0];
-    console.log('file is ',file);
-
-    // Convert HEIC to JPG if necessary
-    if (file.type === "image/heic") {
-        const heic2any = await DynamicHeic2Any
-        try {
-            const convertedBlob = await heic2any({ blob: file, toType: "image/jpeg" });
-            file = new File([convertedBlob], `${file.name.split('.')[0]}.jpg`, { type: "image/jpeg" });
-            console.log('file after converting', file);
-        } catch (error) {
-            console.error("HEIC conversion failed:", error);
-            setImageLoading(false);
-            return;
+        // Convert HEIC to JPG if necessary
+        if (file.type === "image/heic") {
+            const heic2any = await DynamicHeic2Any
+            try {
+                const convertedBlob = await heic2any({ blob: file, toType: "image/jpeg" });
+                file = new File([convertedBlob], `${file.name.split('.')[0]}.jpg`, { type: "image/jpeg" });
+                console.log('file after converting', file);
+            } catch (error) {
+                console.error("HEIC conversion failed:", error);
+                setImageLoading(false);
+                return;
+            }
         }
-    }
 
-    const requestCall = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/presigned-url`, {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-            fileName: file.name,
-            fileType: file.type,
-        }),
-    });
+        const requestCall = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/presigned-url`, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+                fileName: file.name,
+                fileType: file.type,
+            }),
+        });
 
-    const { url, location } = await requestCall.json();
-    console.log('url is', url)
-    console.log('location is', location)
-    const uploadResponse = await fetch(url, {
-        method: "PUT",
-        headers: {
-            "Content-Type": file.type,
-        },
-        body: file,
-    });
+        const { url, location } = await requestCall.json();
+        console.log('url is', url)
+        console.log('location is', location)
+        const uploadResponse = await fetch(url, {
+            method: "PUT",
+            headers: {
+                "Content-Type": file.type,
+            },
+            body: file,
+        });
 
-    if (!uploadResponse.ok) {
+        if (!uploadResponse.ok) {
+            setImageLoading(false);
+            throw new Error("Image upload to S3 failed");
+        }
+
+        setInputs((prevData) => ({
+            ...prevData,
+            picture: location,
+        }));
+
         setImageLoading(false);
-        throw new Error("Image upload to S3 failed");
-    }
-
-    setInputs((prevData) => ({
-        ...prevData,
-        picture: location,
-    }));
-
-    setImageLoading(false);
-};
+    };
 
     
 
@@ -300,6 +249,89 @@ const photoUpload = async (event) => {
         }))
             window.location.href='/postcards';
 
+    }
+
+
+    const handleLike = async (selectedPost) => {
+        try {
+            console.log('selectedPost is ', selectedPost);
+            const postcardId = selectedPost.id
+            console.log('postcardID is ', postcardId)
+            const payload = {
+                postcardId,
+                recipientUserId : selectedPost.userId,
+                senderUserId : session.data.user.id,
+                name : session.data.user.name,
+                emoji : selectedPost.emoji,
+                location : selectedPost.location,
+            }
+            const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/postcards/likes`, {
+                method : 'POST',
+                headers: {
+                    'Content-type' : 'application/json'
+                },
+                body : JSON.stringify(payload)
+            })
+            console.log('response is', response);
+            window.location.reload();
+        } catch(err) {
+            console.log('eror was ', err.message)
+        }
+    }
+
+    const handleBeenThere = async (selectedPost) => {
+        try {
+            console.log('selectedPost is ', selectedPost);
+            const postcardId = selectedPost.id
+            console.log('postcardID is ', postcardId)
+            const payload = {
+                postcardId,
+                recipientUserId : selectedPost.userId,
+                senderUserId : session.data.user.id,
+                name : session.data.user.name,
+                emoji : selectedPost.emoji,
+                location : selectedPost.location
+            }
+            const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/postcards/been-there`, {
+                method : 'POST',
+                headers : {
+                    'Content-type' : 'application/json'
+                },
+                body : JSON.stringify(payload)
+            })
+            const responseData = await response.json()
+            console.log('response is', responseData);
+            window.location.reload();
+        } catch(err) {
+            console.log('eror was ', err.message)
+        }
+    }
+
+    const handleWantToGo = async (selectedPost) => {
+        try {
+            console.log('selectedPost is ', selectedPost);
+            const postcardId = selectedPost.id
+            console.log('postcardID is ', postcardId)
+            const payload = {
+                postcardId,
+                recipientUserId : selectedPost.userId,
+                senderUserId : session.data.user.id,
+                name : session.data.user.name,
+                emoji : selectedPost.emoji,
+                location : selectedPost.location
+            }
+            const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/postcards/want-to-go`, {
+                method : 'POST',
+                headers : {
+                    'Content-type' : 'application/json'
+                },
+                body : JSON.stringify(payload)
+            })
+            console.log('response is', response);
+            window.location.reload();
+        } catch(err) {
+            console.log('eror was ', err.message)
+        }
     }
 
   return (
@@ -406,31 +438,47 @@ const photoUpload = async (event) => {
                                 className={`rounded-md m-0 w-full   ${ selectedToggle === 'vertical' ? 'h-[65vh]  object-cover lg:h-full lg:px-32 lg:object-contain ' : 'h-[50vh] object-contain '}  `}
                                 />
                                 <div className='flex justify-center gap-3 my-3'>
-                                    <Toggle data-state={selectedToggle === 'vertical' ? 'on' : 'off'} onClick={()=>setSelectedToggle('vertical')} >
-                                        <Maximize2  />
-                                    </Toggle>
                                     <Toggle data-state={selectedToggle === 'horizontal' ? 'on' : 'off'} onClick={()=>setSelectedToggle('horizontal')}>
                                         <Minimize2 />
                                     </Toggle>
+                                    <Toggle data-state={selectedToggle === 'vertical' ? 'on' : 'off'} onClick={()=>setSelectedToggle('vertical')} >
+                                        <Maximize2  />
+                                    </Toggle>
                                 </div>
-                            <div className="flex flex-col justify-center items-center gap-8">
+                            <div className="flex flex-col justify-center items-center gap-4">
                                 <DrawerDescription className='text-base !mt-2 p-0'>{selectedPost.caption}</DrawerDescription>
                                 <DrawerTitle className='!mt-4  !mb-0 p-0'>👋 from {selectedPost.location} {selectedPost.emoji}</DrawerTitle>
                                
-                                <div className="flex justify-start gap-3 items-center mb-4">
+                                <div className="flex justify-start gap-3 items-center ">
                                     <Avatar className='size-8 my-4 '>
                                     { selectedPost.user.picture ? (
                                         <AvatarImage className=' object-cover' src={`${process.env.NEXT_PUBLIC_API_URL}/api/proxy-image?url=${encodeURIComponent(selectedPost.user.picture)}`}></AvatarImage>
                                     ) : (
                                         <AvatarFallback >{selectedPost.user.name.charAt(0).toUpperCase()}</AvatarFallback >
                                     ) }
-                                </Avatar>
+                                    </Avatar>
                                     <div className="flex flex-col justify-start items-start gap-0">
                                         <p className='!my-2 text-sm !leading-[0] p-0 font-bold '>Posted by {selectedPost.user.name}</p>
                                         <p className='text-xs !my-2 p-0 !leading-[0] '>{dateFormat(selectedPost.createdAt)}</p>
 
                                     </div>
-
+                                </div>
+                                <div className='flex justify-center items-center gap-8'>
+                                <div className='flex justify-center items-center gap-2'>
+                                    <Button variant='outline' className='px-2 h-7' onClick={()=>handleLike(selectedPost)}>
+                                        <Heart className='!m-0 !p-0' />
+                                    </Button><p className='text-sm !my-0'>{selectedPost.likes !== 0 ?  selectedPost.likes : ''  }</p>
+                                </div>
+                                <div className='flex justify-center items-center gap-2'>
+                                    <Button variant='outline' className='px-2 h-7' onClick={()=>handleBeenThere(selectedPost)}>
+                                        <MapPinCheck className='!m-0 !p-0' /> Been there
+                                    </Button><p className='text-sm !my-0'>{selectedPost.beenThere > 1 ?  `${selectedPost.beenThere} people have been there`  : ''  }</p>
+                                </div>
+                                <div className='flex justify-center items-center gap-2'>
+                                    <Button variant='outline' className='px-2 h-7' onClick={()=>handleWantToGo(selectedPost)}>
+                                        <Pin  className='!m-0 !p-0' /> Want to go there
+                                    </Button><p className='text-sm !my-0'>{selectedPost.wantToGo > 1 ?  `${selectedPost.wantToGo} people want to go` : ''  }</p>
+                                </div>
                                 </div>
                                     <hr className='w-[70%] mb-4' />
                                 { selectedPost.comments && (

@@ -56,10 +56,10 @@ const authOptions = {
       
     callbacks : {
         async signIn({user, account, profile}){
-            console.log('Profile received', profile);
-            console.log("Account:", account);
-            console.log("Profile:", profile);
-            console.log("User:", user);
+            // console.log('Profile received', profile);
+            // console.log("Account:", account);
+            // console.log("Profile:", profile);
+            // console.log("User:", user);
             if (account?.provider === 'credentials') {
                 return true
             }
@@ -122,7 +122,7 @@ const authOptions = {
             }
           
             if (session.user) {  // Ensure session.user exists
-                console.log("Session User:", session.user);
+                // console.log("Session User:", session.user);
             
                 // Adding logging for email
                 if (!session.user.email) {
@@ -131,23 +131,36 @@ const authOptions = {
             
                 const userWithRole = await prisma.user.findUnique({
                   where: { email: session.user.email },
-                  select: {
-                    id: true,
-                    name: true,  // Make sure 'name' field exists in schema
-                    role: true,
-                    picture: true
+                
+                  include : {
+                    receivedNotifications : {
+                        take : 15,
+                        orderBy:{
+                            createdAt : 'desc'
+                        },
+                        include : {
+                            recipient : {
+                                select : {
+                                    name : true,
+                                    picture : true
+                            } 
+                            }
+                        }
+                    }
                   }
                 });
             
                 if (!userWithRole) {
                   console.error("User with email not found:", session.user.email);
                 } else {
-                  console.log("User found with role:", userWithRole);
+                //   console.log("User found with role:", userWithRole);
                   session.user.role = userWithRole.role;
                   session.user.id = userWithRole.id;
                   session.user.name = userWithRole.name;
                   session.user.picture = userWithRole.picture;
+                  session.user.notifications = userWithRole.receivedNotifications;
                   session.user.refreshToken = token.refreshToken;
+
                 }
               }
             

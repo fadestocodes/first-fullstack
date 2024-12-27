@@ -1,0 +1,3 @@
+-- AlterTable
+ALTER TABLE "Postcard" ADD COLUMN     "beenThere" INTEGER NOT NULL DEFAULT 0,
+ADD COLUMN     "wantToGo" INTEGER NOT NULL DEFAULT 0;
