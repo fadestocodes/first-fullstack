@@ -198,7 +198,7 @@ export function NavigationMenuDemo() {
                                 <AvatarImage className="object-cover" src={ `/api/proxy-image?url=${encodeURIComponent(session?.data?.user?.picture)}` } />
                                 <AvatarFallback>{session?.data?.user?.name.split('')[0]}</AvatarFallback>
                               </Avatar>
-                              <p className="!my-2 !leading-5 line-clamp-2 text-xs overflow-ellipsis ">{notif.content}</p>
+                              <p className="!my-2 !leading-5 line-clamp-3 text-xs overflow-ellipsis ">{notif.content}</p>
                              </div>
                           </div>
                         ) ) 

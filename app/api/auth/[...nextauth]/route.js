@@ -55,7 +55,7 @@ const authOptions = {
     },
       
     callbacks : {
-        async signIn({user, account, profile}){
+        async signIn({ account, profile}){
             // console.log('Profile received', profile);
             // console.log("Account:", account);
             // console.log("Profile:", profile);

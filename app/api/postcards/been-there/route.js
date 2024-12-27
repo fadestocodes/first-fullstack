@@ -17,7 +17,7 @@ export async function POST(req, ){
         try {
 
             //Create notification for when someone has "been there" on a postcard
-            const response = await prisma.notifications.create({
+            await prisma.notifications.create({
                 data : {
                     recipientUserId : Number(recipientUserId) ,
                     senderUserId : Number(senderUserId) ,

@@ -48,7 +48,7 @@ export async function POST(req) {
                 select : { userId : true }
             })
             
-            const notification = await prisma.notifications.create({
+            await prisma.notifications.create({
                 data : {
                     recipientUserId : recipientUser.userId ,
                     senderUserId : userId,
@@ -69,7 +69,7 @@ export async function POST(req) {
                     select : { userId : true }
                 })
 
-                const notification = await prisma.notifications.create({
+                await prisma.notifications.create({
                     data : {
                         recipientUserId : recipientUser.userId ,
                         senderUserId : userId,

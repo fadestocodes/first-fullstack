@@ -253,84 +253,100 @@ const PostcardsPage = () => {
 
 
     const handleLike = async (selectedPost) => {
-        try {
-            console.log('selectedPost is ', selectedPost);
-            const postcardId = selectedPost.id
-            console.log('postcardID is ', postcardId)
-            const payload = {
-                postcardId,
-                recipientUserId : selectedPost.userId,
-                senderUserId : session.data.user.id,
-                name : session.data.user.name,
-                emoji : selectedPost.emoji,
-                location : selectedPost.location,
+        if (!session?.data?.user){
+            setCommentModal(true)
+            return
+        } else {
+
+            try {
+                console.log('selectedPost is ', selectedPost);
+                const postcardId = selectedPost.id
+                console.log('postcardID is ', postcardId)
+                const payload = {
+                    postcardId,
+                    recipientUserId : selectedPost.userId,
+                    senderUserId : session.data.user.id,
+                    name : session.data.user.name,
+                    emoji : selectedPost.emoji,
+                    location : selectedPost.location,
+                }
+                const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/postcards/likes`, {
+                    method : 'POST',
+                    headers: {
+                        'Content-type' : 'application/json'
+                    },
+                    body : JSON.stringify(payload)
+                })
+                console.log('response is', response);
+                window.location.reload();
+            } catch(err) {
+                console.log('eror was ', err.message)
             }
-            const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/postcards/likes`, {
-                method : 'POST',
-                headers: {
-                    'Content-type' : 'application/json'
-                },
-                body : JSON.stringify(payload)
-            })
-            console.log('response is', response);
-            window.location.reload();
-        } catch(err) {
-            console.log('eror was ', err.message)
         }
     }
 
     const handleBeenThere = async (selectedPost) => {
-        try {
-            console.log('selectedPost is ', selectedPost);
-            const postcardId = selectedPost.id
-            console.log('postcardID is ', postcardId)
-            const payload = {
-                postcardId,
-                recipientUserId : selectedPost.userId,
-                senderUserId : session.data.user.id,
-                name : session.data.user.name,
-                emoji : selectedPost.emoji,
-                location : selectedPost.location
+        if (!session?.data?.user){
+            setCommentModal(true)
+            return
+        } else {
+            try {
+                console.log('selectedPost is ', selectedPost);
+                const postcardId = selectedPost.id
+                console.log('postcardID is ', postcardId)
+                const payload = {
+                    postcardId,
+                    recipientUserId : selectedPost.userId,
+                    senderUserId : session.data.user.id,
+                    name : session.data.user.name,
+                    emoji : selectedPost.emoji,
+                    location : selectedPost.location
+                }
+                const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/postcards/been-there`, {
+                    method : 'POST',
+                    headers : {
+                        'Content-type' : 'application/json'
+                    },
+                    body : JSON.stringify(payload)
+                })
+                const responseData = await response.json()
+                console.log('response is', responseData);
+                window.location.reload();
+            } catch(err) {
+                console.log('eror was ', err.message)
             }
-            const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/postcards/been-there`, {
-                method : 'POST',
-                headers : {
-                    'Content-type' : 'application/json'
-                },
-                body : JSON.stringify(payload)
-            })
-            const responseData = await response.json()
-            console.log('response is', responseData);
-            window.location.reload();
-        } catch(err) {
-            console.log('eror was ', err.message)
         }
     }
 
     const handleWantToGo = async (selectedPost) => {
-        try {
-            console.log('selectedPost is ', selectedPost);
-            const postcardId = selectedPost.id
-            console.log('postcardID is ', postcardId)
-            const payload = {
-                postcardId,
-                recipientUserId : selectedPost.userId,
-                senderUserId : session.data.user.id,
-                name : session.data.user.name,
-                emoji : selectedPost.emoji,
-                location : selectedPost.location
+        if (!session?.data?.user){
+            setCommentModal(true)
+            return
+        } else {
+            try {
+                console.log('selectedPost is ', selectedPost);
+                const postcardId = selectedPost.id
+                console.log('postcardID is ', postcardId)
+                const payload = {
+                    postcardId,
+                    recipientUserId : selectedPost.userId,
+                    senderUserId : session.data.user.id,
+                    name : session.data.user.name,
+                    emoji : selectedPost.emoji,
+                    location : selectedPost.location
+                }
+                const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/postcards/want-to-go`, {
+                    method : 'POST',
+                    headers : {
+                        'Content-type' : 'application/json'
+                    },
+                    body : JSON.stringify(payload)
+                })
+                console.log('response is', response);
+                window.location.reload();
+            } catch(err) {
+                console.log('eror was ', err.message)
             }
-            const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/postcards/want-to-go`, {
-                method : 'POST',
-                headers : {
-                    'Content-type' : 'application/json'
-                },
-                body : JSON.stringify(payload)
-            })
-            console.log('response is', response);
-            window.location.reload();
-        } catch(err) {
-            console.log('eror was ', err.message)
         }
     }
 
