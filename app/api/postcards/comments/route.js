@@ -17,7 +17,7 @@ export async function GET(){
 
 export async function POST(req){
     try{
-        const { content, userId, parentCommentId, postcardId  } = await req.json();
+        const { content, userId, parentCommentId, postcardId, recipientUserId, name  } = await req.json();
         const comment = await prisma.comment.create({
             data : {
                 content,
@@ -27,6 +27,21 @@ export async function POST(req){
             }
         });
         console.log('comment added was ', comment);
+        try {
+            const response = await prisma.notifications.create({
+                data : {
+                    recipientUserId,
+                    senderUserId : userId,
+                    content : ` 💬 ${name.split(' ')[0]} commented on your Postcard: ${content}`,
+                    postcardId ,
+
+                }
+            })
+            console.log('added notification is ', response)
+        } catch(err) {
+            console.log('error adding notification', err.message)
+        }
+
         return Response.json(comment);
     } catch (err) {
         console.log('couldnt post comment')

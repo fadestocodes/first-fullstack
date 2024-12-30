@@ -227,7 +227,9 @@ const PostcardsPage = () => {
             content : inputs.comment,
             userId : session?.data?.user?.id,
             parentCommentId : inputs.parentId || null,
-            postcardId : selectedPost.id
+            postcardId : selectedPost.id,
+            recipientUserId : selectedPost.userId,
+            name : session?.data?.user?.name
         }
         console.log('data is ', data);
         const newCommentData = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/postcards/comments`, {

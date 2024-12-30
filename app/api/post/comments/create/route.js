@@ -53,7 +53,7 @@ export async function POST(req) {
                     recipientUserId : recipientUser.userId ,
                     senderUserId : userId,
                     blogpostId : Number(blogId),
-                    content : `${name.split(' ')[0]} commented on your post: ${comment}`,
+                    content : ` 💬 ${name.split(' ')[0]} commented on your Blog: ${comment}`,
                 }
             })
         } catch (err) {
@@ -63,7 +63,6 @@ export async function POST(req) {
         // notification to parent commentor when someone replies
         if (parentId){
             try {
-
                 const recipientUser = await prisma.comment.findUnique({
                     where : { id : Number(parentId) },
                     select : { userId : true }
@@ -74,7 +73,7 @@ export async function POST(req) {
                         recipientUserId : recipientUser.userId ,
                         senderUserId : userId,
                         blogpostId : Number(blogId),
-                        content : `${name} replied to your comment: ${comment}`,
+                        content : ` 💬 ${name} replied to your comment: ${comment}`,
                     }
                 })
             } catch (err) {

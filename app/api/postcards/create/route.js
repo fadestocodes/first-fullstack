@@ -21,7 +21,6 @@ export async function POST(req){
                 countryCode,
                 emoji,
                 userId,
-    
             }
         })
     
