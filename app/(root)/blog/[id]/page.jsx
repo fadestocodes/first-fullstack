@@ -34,15 +34,15 @@ const BlogDetails = async ( {params} ) => {
 
   
     return (
-        <div className='main-container flex flex-col gap-8'>
+        <div className='main-container -mt-28 flex flex-col gap-8 w-full'>
              
             <div className='w-full relative'>
-                <img src={post.coverPhoto} alt="Blog cover photo" className=' h-[32rem] w-full object-cover lg:h-[34rem]  2xl:h-[40rem] bigscreen:h-[56rem]'/>
+                <img src={post.coverPhoto} alt="Blog cover photo" className=' h-[32rem] w-full object-cover lg:h-[54rem]  2xl:h-[54rem] bigscreen:h-[56rem]'/>
                 <div className="absolute inset-0 bg-black opacity-0"></div>
             </div>
-            <div className='flex flex-col sm:px-12  lg:px-40   2xl:px-[22rem] bigscreen:px-[32rem] '>
+            <div className='flex flex-col px-12 sm:px-12  lg:px-40   2xl:px-[22rem] bigscreen:px-[32rem] '>
                 <div className='title-author self-center gap-5 flex  flex-col justify-center items-center'>
-                    <h1 className='text-center' >{post.title}</h1>
+                    <h1 className='text-left' >{post.title}</h1>
                     <div className='flex gap-3 justify-start items-center'>
                         {/* <Avatar className='size-9'>
                             <AvatarImage src={ `/api/proxy-image?url=${encodeURIComponent( post.user.picture)}` } />
@@ -60,10 +60,10 @@ const BlogDetails = async ( {params} ) => {
                         </div>
                     </div>
                 </div>
-                    <hr className='my-12'/>
+                    <hr className='my-12 h-10'/>
                     <div className='[&>p]:text-lg'  dangerouslySetInnerHTML={{__html : post.content}}>
                 </div>
-                <hr className='my-12'/>
+                <hr className='my-12 h-4'/>
                     <BounceFade>
                         <BlogComments  postId={postId}  />
                     </BounceFade>

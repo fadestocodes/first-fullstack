@@ -19,10 +19,8 @@ import {
   } from "@/components/ui/dialog"
   import { SubscribeButton } from '@/components/ui/SubscribeButton';
   import Image from 'next/image'
-//   import heic2any from 'heic2any';
-import dynamic from 'next/dynamic';
+import { convertHeicToJpg } from '../../../../lib/convertHEIC';
 
-const DynamicHeic2Any = dynamic(() => import('heic2any'), { ssr: false }); // Dynamically import 'heic2any' (client-side only)
 
 
 
@@ -89,20 +87,14 @@ const AdminCreatePage =  () => {
 
 
     const coverPhotoUpload = async (event) => {
-        
+
+       
+    
         setImageLoading(true);
-        let imageFile = event.target.files[0];
-        if (imageFile.type === "image/heic") {
-            try {
-                const heic2any = await DynamicHeic2Any
-                const convertedBlob = await heic2any({ blob: imageFile, toType: "image/jpeg" });
-                imageFile = new File([convertedBlob], `${imageFile.name.split('.')[0]}.jpg`, { type: "image/jpeg" });
-                console.log('file after converting', imageFile);
-            } catch (error) {
-                console.error("HEIC conversion failed:", error);
-                setImageLoading(false);
-                return;
-            }
+        let file = event.target.files[0];
+
+        if (file.type === "image/heic" ) {
+            file = await convertHeicToJpg(file);
         }
 
         const requestCall = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/presigned-url`, {
@@ -111,8 +103,8 @@ const AdminCreatePage =  () => {
                 'Content-Type' : 'application/json'
             },
             body : JSON.stringify({
-                fileName : imageFile.name,
-                fileType : imageFile.type
+                fileName : file.name,
+                fileType : file.type
                 })
         })
         const {url, location} = await requestCall.json();
@@ -121,7 +113,7 @@ const AdminCreatePage =  () => {
 
         const uploadResponse = await fetch(url, {
         method : 'PUT',
-        body : imageFile
+        body : file
         })
         if (!uploadResponse.ok) {
             setImageLoading(false);
@@ -132,8 +124,8 @@ const AdminCreatePage =  () => {
             ...prevData,
             coverPhoto : location
         }))
-        setImageLoading(false);
-        console.log(inputs);
+            setImageLoading(false);
+            console.log(inputs);
     }
 
 
@@ -370,7 +362,7 @@ const AdminCreatePage =  () => {
                                         <Image
                                         src={inputs.coverPhoto}
                                         alt="User entered cover photo for blog"
-                                        layout="responsive"
+                                        // layout="responsive"
                                         width={100} 
                                         height={100} />
                                     ) : imageLoading && (

@@ -21,6 +21,22 @@ import {
     DialogTitle,
     DialogTrigger,
   } from "@/components/ui/dialog"
+import { convertHeicToJpg } from '../../../../../lib/convertHEIC';
+  
+
+
+//   async function getImageDimensions(file) {
+//     const img = new Image();
+//     const url = URL.createObjectURL(file);
+//     return new Promise((resolve, reject) => {
+//       img.onload = () => {
+//         resolve({ width: img.width, height: img.height });
+//         URL.revokeObjectURL(url); // Clean up the URL object after it's done loading
+//       };
+//       img.onerror = reject;
+//       img.src = url;
+//     });
+// }
   
 
 const EditPost =   () => {
@@ -130,9 +146,15 @@ const EditPost =   () => {
 
 
     const coverPhotoUpload = async (event) => {
+
+       
     
         setImageLoading(true);
-        const file = event.target.files[0];
+        let file = event.target.files[0];
+
+        if (file.type === "image/heic" ) {
+            file = await convertHeicToJpg(file);
+        }
 
         const requestCall = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/presigned-url`, {
             method : 'POST',
@@ -209,9 +231,15 @@ const EditPost =   () => {
 
 
   const handleImageUpload = async (blobInfo) =>{
-    const file = blobInfo.blob();
-    const fileName = blobInfo.filename();
-    const fileType = file.type;
+    let file = blobInfo.blob();
+    let fileName = blobInfo.filename();
+    let fileType = file.type;
+
+    if (file.type === "image/heic" ) {
+        file = await convertHeicToJpg(file);
+        fileName = file.name;
+        fileType = file.type; 
+    }
 
     try {
         const response = await fetch (`${process.env.NEXT_PUBLIC_API_URL}/api/presigned-url`, {
@@ -240,8 +268,11 @@ const EditPost =   () => {
             throw new Error ('Error uploading to S3');
         }
        
-        console.log('editor content is : ', editorContent);
-       return location;
+        // console.log('editor content is : ', editorContent);
+       
+        return location;
+
+        
 
         
 
@@ -300,7 +331,7 @@ const EditPost =   () => {
                         <div className="flex justify-between mt-12">
                         <Button variant="outline" size="icon" className={`w-auto px-3  bg-zinc-50 text-gray-400'  }  `} onClick={firstPage ? backToDrafts : backToSetup}><ChevronLeft />Back</Button>
                         <Dialog>
-                        <DialogTrigger className={`size-lg bg-black rounded-md text-sm text-white px-4 py-2 ${firstPage && 'hidden bg-zinc-50 text-gray-400 transition-none pointer-events-none  cursor-default' } `}>Save Post</DialogTrigger>
+                        <DialogTrigger className={`size-lg bg-black rounded-md text-sm text-white px-4 py-2  `}>Save Post</DialogTrigger>
                         <DialogContent>
                             <DialogHeader>
                             <DialogTitle>Save your work as a draft or publish live!</DialogTitle>

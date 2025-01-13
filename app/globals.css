@@ -2,22 +2,40 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+@font-face {
+  font-family: 'Outfit';
+  src: url('/fonts/Outfit-VariableFont_wght.ttf') format('truetype');
+  font-weight: 100 900;
+  font-style: normal;
+}
+
+@font-face{
+  font-family: 'Logo';
+  src: url('/fonts/MichiganSignature.ttf') format('truetype');
+  font-weight: 400;
+  font-style: normal;
+}
+
 
 body {
-  font-family: Geist, Inter, Arial, Helvetica, sans-serif;
+  font-family: Outfit, Geist, Inter, Arial, Helvetica, sans-serif;
 }
 
 
 @layer base {
   :root {
     --background: 0 0% 100%;
+    /* --background: 50 16% 93%; */
+    /* --background: #52b788; */
     --foreground: 20 14.3% 4.1%;
     --card: 0 0% 100%;
     --card-foreground: 20 14.3% 4.1%;
     --popover: 0 0% 100%;
     --popover-foreground: 20 14.3% 4.1%;
-    --primary: 24 9.8% 10%;
+    /* --primary: 24 9.8% 10%; */
+    --primary: 	133 23% 64%;
     --primary-foreground: 60 9.1% 97.8%;
+    /* --primary-foreground: #52b788; */
     --secondary: 60 4.8% 95.9%;
     --secondary-foreground: 24 9.8% 10%;
     --muted: 60 4.8% 95.9%;

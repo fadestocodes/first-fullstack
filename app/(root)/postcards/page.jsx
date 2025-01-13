@@ -25,10 +25,7 @@ import SignInButtons from '@/components/SignInButtons'
 import {dateFormat} from '@/lib/dateFormat'
 import {Avatar, AvatarFallback, AvatarImage} from '@/components/ui/avatar'
 import { BounceFade } from "@/components/ui/animations";
-// import heic2any from "heic2any";
-import dynamic from 'next/dynamic';
-
-const DynamicHeic2Any = dynamic(() => import('heic2any'), { ssr: false }); // Dynamically import 'heic2any' (client-side only)
+import { convertHeicToJpg } from '../../../lib/convertHEIC';
 
 
 const PostcardsPage = () => {
@@ -42,6 +39,7 @@ const PostcardsPage = () => {
         768: 2,
     };
 
+     
     const session = useSession();
     const [viewDetails, setViewDetails] = useState(false);
     const [selectedPost, setSelectedPost] = useState(null);
@@ -145,24 +143,15 @@ const PostcardsPage = () => {
         console.log('selected post ',selectedPost);
 
     }
+   
 
     const photoUpload = async (event) => {
         setImageLoading(true);
         let file = event.target.files[0];
         console.log('file is ',file);
 
-        // Convert HEIC to JPG if necessary
-        if (file.type === "image/heic") {
-            const heic2any = await DynamicHeic2Any
-            try {
-                const convertedBlob = await heic2any({ blob: file, toType: "image/jpeg" });
-                file = new File([convertedBlob], `${file.name.split('.')[0]}.jpg`, { type: "image/jpeg" });
-                console.log('file after converting', file);
-            } catch (error) {
-                console.error("HEIC conversion failed:", error);
-                setImageLoading(false);
-                return;
-            }
+        if (file.type === "image/heic" ) {
+            file = await convertHeicToJpg(file);
         }
 
         const requestCall = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/presigned-url`, {
@@ -186,6 +175,7 @@ const PostcardsPage = () => {
             },
             body: file,
         });
+        console.log('upload response ', uploadResponse)
 
         if (!uploadResponse.ok) {
             setImageLoading(false);

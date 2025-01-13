@@ -11,22 +11,24 @@ const Layout = async ({children}) => {
 
     
     return (
-                <SessionProviderWrapper >
+        <SessionProviderWrapper >
+            <SidebarProvider>
+            <AppSidebar ></AppSidebar>
                     <div className='flex flex-col justify-center items-center w-full mb-0 '>
-                                <NavigationMenuDemo/>
-                                <SidebarProvider>
-                                <AppSidebar ></AppSidebar>
-                                    <div className='flex flex-col justify-center items-center w-full min-h-svh mb-0'>
+                                <div className='flex flex-col w-full'>
+                                    <div className="z-10 w-full  justify-center items-center "><NavigationMenuDemo/></div>
+                                        <div className='flex flex-col justify-center items-center w-full min-h-svh mb-0'>
                     
-                                        <div className='pt-20 w-full px-6 justify-center items-center '>
+                                        <div className=' w-full px-0  justify-center items-center '>
                                             {children  }
                                         </div>
                                         <div className='w-full mt-32'>
                                             <Footer2></Footer2>
                                         </div>
                                     </div>
-                                </SidebarProvider>
+                                </div>
                     </div>
+                                </SidebarProvider>
                 </SessionProviderWrapper>
   )
 }

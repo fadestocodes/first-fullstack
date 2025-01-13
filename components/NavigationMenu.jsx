@@ -3,16 +3,8 @@
 import SignInButtons from "./SignInButtons"
 import * as React from "react"
 import Link from "next/link"
-import { MapPinned, Menu, House, BookText, Image, Hand, PlaneTakeoff } from "lucide-react"
-import { cn } from "@/lib/utils"
-// import { Icons } from "@/components/icons"
-import {
-  NavigationMenu,
-  NavigationMenuItem,
-  NavigationMenuLink,
-  NavigationMenuList,
-  navigationMenuTriggerStyle,
-} from "@/components/ui/navigation-menu"
+import {  Menu, House, BookText, Image, Hand } from "lucide-react"
+
 import { useSession } from "next-auth/react"
 import { useEffect } from "react"
 import { signOut} from 'next-auth/react'
@@ -30,7 +22,6 @@ export function NavigationMenuDemo() {
   const [isOpen, setIsOpen] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
   const [modalOn, setModalOn] = useState(false);
-  const [locationToggle, setLocationToggle] = useState(false);
   const [maxNotifId, setMaxNotifId] = useState(null);
   const [currentNotifs, setCurrentNotifs] = useState([]);
 
@@ -110,65 +101,35 @@ export function NavigationMenuDemo() {
 
 
   return (
-    <NavigationMenu>
-      <NavigationMenuList className="z-40   w-full fixed top-0 items-start left-0 right-0  grid grid-cols-3 bg-white h-24  pt-6 " >
-        <div className='currently-at flex  gap-3 items-center  ml-6  md:ml-12'>
-          <div className="flex flex-col justify-center items-center relative ">
-
-            <Toggle data-state={locationToggle ? 'on' : 'off'} onClick={()=>setLocationToggle(prevData => !prevData)}><MapPinned></MapPinned></Toggle>
-            { locationToggle && (
-              <Card className="pt-4 absolute top-8 left-0 w-52 md:w-64 z-50">
-                  <CardContent>
-                    <div className="flex justify-between space-x-4 ">
-                      <div className="space-y-1">
-                        <h4 className="text-sm font-semibold">Currently: Vancouver, BC</h4>
-                        <p className="text-sm">
-                        😪 Daydreaming of the next trip while working at the hospital.
-                        </p>
-                        <div className="flex items-center pt-2">
-                          <PlaneTakeoff  className="mr-2 h-4 w-4 opacity-70" />{" "}
-                          <span className="text-xs text-muted-foreground">
-                            Next trip: New Mexico
-                          </span>
-                        </div>
-                      </div>
-                    </div>
-                  </CardContent>
-              </Card>
-            ) }
-          </div>
+    <div className="w-full items-center justify-center">
+      <div className=" w-full   justify-end items-center  grid grid-cols-3 bg-transparent h-24  pt-6 " >
+        <div className='currently-at flex w-full  gap-3 items-center  ml-6  md:ml-12'>
+          <Link href='/'>
+            <div className="flex flex-col justify-center items-center font-logo text-xl ">
+              Louise Uncharted
+            </div>
+          </Link>
         </div>
           <Toggle className="sm:hidden" data-state={menuOpen === true ? 'on' : 'off'} onClick={handleToggle}><Menu/></Toggle>
-        <div className="sm:flex justify-center items-center hidden " >
-          
-          <NavigationMenuItem>
-              <Link href="/" legacyBehavior passHref>
-                <NavigationMenuLink className={navigationMenuTriggerStyle()}>
-                  Home
-                </NavigationMenuLink>
+        <div className="sm:flex w-full justify-center gap-10  items-center hidden " >
+            <div>
+              <Link href='/'>
+                <div className="font-medium uppercase text-base  bg-transparent hover:text-slate-600">Home</div>
               </Link>
-            </NavigationMenuItem>
-            <NavigationMenuItem>
-              <Link href="/blog" legacyBehavior passHref>
-                <NavigationMenuLink className={navigationMenuTriggerStyle()}>
-                  Blog
-                </NavigationMenuLink>
+            </div>
+            <div>
+              <Link href='/blog'>
+                <div className="font-medium uppercase text-base  bg-transparent hover:text-slate-600">Blog</div>
               </Link>
-            </NavigationMenuItem>
-            <NavigationMenuItem>
-              <Link href="/postcards" legacyBehavior passHref>
-                <NavigationMenuLink className={navigationMenuTriggerStyle()}>
-                  Postcards
-                </NavigationMenuLink>
+            </div>
+              <Link href='/postcards'>
+              <div className="font-medium uppercase text-base  bg-transparent hover:text-slate-600">Postcards</div>
+            </Link>
+            <div>
+              <Link href='/about'>
+                <div className="font-medium uppercase text-base  bg-transparent hover:text-slate-600">About</div>
               </Link>
-            </NavigationMenuItem>
-            <NavigationMenuItem>
-              <Link href="/docs" legacyBehavior passHref>
-                <NavigationMenuLink className={navigationMenuTriggerStyle()}>
-                  About Me
-                </NavigationMenuLink>
-              </Link>
-            </NavigationMenuItem>
+            </div>
             
         </div>
         <div className=" login  text-black items-center justify-self-end px-8  " >
@@ -190,7 +151,7 @@ export function NavigationMenuDemo() {
                       <CardContent className="text-sm pt-3 overflow-scroll max-h-72  " >
                       { currentNotifs.length > 0 ? (
                          currentNotifs.map( notif => (
-                          <div key={notif.id} className={`${ notif.isRead ? 'bg-white' : 'bg-blue-100' }  px-2 rounded-md`} >
+                          <div key={notif.id} className={`${ notif.isRead ? 'bg-transparent' : 'bg-blue-100' }  px-2 rounded-md`} >
 
                             <hr />
                              <div className="flex  justify-center items-start gap-2">
@@ -264,8 +225,8 @@ export function NavigationMenuDemo() {
           {/* <div className="absolute top-[4rem] left-12 text-[rgb(120,113,108)] hover:text-black cursor-pointer text-sm">
               /blog/1
           </div> */}
-      </NavigationMenuList>
-    </NavigationMenu>
+      </div>
+    </div>
     
   )
 }
@@ -296,26 +257,26 @@ export function NavigationMenuDemo() {
 // })
 // ListItem.displayName = "ListItem"
 
-const ListItem = React.forwardRef(({ className, title, children, ...props }, ref) => {
-  return (
-    <li>
-      <NavigationMenuLink asChild>
-        <a
-          ref={ref}
-          className={cn(
-            "block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground",
-            className
-          )}
-          {...props}
-        >
-          <div className="text-sm font-medium leading-none">{title}</div>
-          <p className="line-clamp-2 text-sm leading-snug text-muted-foreground">
-            {children}
-          </p>
-        </a>
-      </NavigationMenuLink>
-    </li>
-  )
-})
+// const ListItem = React.forwardRef(({ className, title, children, ...props }, ref) => {
+//   return (
+//     <li>
+//       <NavigationMenuLink asChild>
+//         <a
+//           ref={ref}
+//           className={cn(
+//             "block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground",
+//             className
+//           )}
+//           {...props}
+//         >
+//           <div className="text-sm font-medium leading-none">{title}</div>
+//           <p className="line-clamp-2 text-sm leading-snug text-muted-foreground">
+//             {children}
+//           </p>
+//         </a>
+//       </NavigationMenuLink>
+//     </li>
+//   )
+// })
 
-ListItem.displayName = "ListItem"
+// ListItem.displayName = "ListItem"

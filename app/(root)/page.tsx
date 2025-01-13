@@ -1,6 +1,7 @@
 import Image from "next/image";
-import { Bounce, BounceFade, FadeIn } from "@/components/ui/animations";
+import { Bounce } from "@/components/ui/animations";
 import tofino from '@/public/tofino.png'
+import korea from '@/public/korea.jpg'
 import moherCliffs from '@/public/mohercliffs.jpg'
 import ireland from '@/public/ireland1.jpg'
 import sunset from '@/public/sunset.jpg'
@@ -13,26 +14,16 @@ import { Badge } from "@/components/ui/badge";
 
 export default function Home() {
   return (
-    <div className="w-full  flex flex-col relative justify-center items-center gap-20 ">
-     <div 
-        className="hero-image   h-[46rem]  w-full   -mt-14 bg-cover  bg-center lg:h-[60rem] bigscreen:h-[80rem]"
-        style={{ backgroundImage: `url('/tofinopic.jpg')` }}>
-        <div className="pt-48  relative flex flex-col items-center justify-center h-full w-full text-center text-white px-4">
-
-            <BounceFade duration={1.3}>
-              <h1 className="text-4xl sm:text-6xl font-bold mb-4  text-white">
-                Hi, I&apos;m Louise.
-              </h1>
-            </BounceFade >
-            <div>
-              <FadeIn duration={1.2} delay={0.4} >
-                <p className="text-lg sm:text-xl max-w-2xl">
-                Nurse by day, traveler by heart. Follow my journey as I explore the world and share my adventures!
-                </p>
-              </FadeIn>
-            </div>
-        </div>
-      </div>
+    <div className="w-full !pt-0   flex flex-col relative justify-center items-center gap-20 ">
+     {/* <div 
+        className="hero-image !pt-0 !px-0 h-[100vh]   w-full   bg-cover  bg-center lg:h-[100vh] bigscreen:h-[100vh]"
+        style={{ backgroundImage: `url('/korea.jpg')` }}>
+      </div> */}
+      <Image
+        src={korea}
+        alt="hero image"
+        className="w-full pt-0 -mt-28 object-cover h-[100vh] object-[calc(100%+170px)_center] sm:object-[calc(100%+120px)_center] lg:object-[calc(100%)_center] bigscreen:object-[calc(100%)_center]"
+      />
       <Bounce  delay={.2  } duration={4}>
           <h2 className="text-center !mt-12 !py-0 !leading-3">Featured Posts</h2>
          <div className="vertical-cards-container relative gap-3 justify-center items-center mt-10  w-full flex flex-shrink flex-1 flex-wrap flex-col  lg:flex-row" >

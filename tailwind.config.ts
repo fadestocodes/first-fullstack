@@ -10,7 +10,9 @@ export default {
   theme: {
   	extend: {
 		fontFamily: {
-			sans: ['Geist Sans', 'Inter', 'sans-serif']
+			sans: ['Geist Sans', 'Inter', 'sans-serif'],
+			outfit : ['Outfit', 'sans-serif'],
+			logo : ['Logo']
 		},
   		screens: {
   			xs: '475px',
@@ -62,6 +64,9 @@ export default {
 			  },
 		},
   		colors: {
+			myGreen : '#8eb897',
+			mySand : '#efeee9',
+			myNude : '#e7e0da',
   			background: 'hsl(var(--background))',
   			foreground: 'hsl(var(--foreground))',
   			card: {

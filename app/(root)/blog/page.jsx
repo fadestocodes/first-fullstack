@@ -9,12 +9,13 @@
   import {RedirectButton} from '@/lib/RedirectButton'
   import { BounceFade } from "@/components/ui/animations";
   import ClickableDiv from '@/components/ClickableDiv';
-
+  import ClickableImage from '@/lib/clickableImage';
 
   async function fetchPosts() {
     const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/post/get-all`, {
       cache: 'no-store', // Ensure always up-to-date content
     });
+    
   
     console.log(res);
 
@@ -38,7 +39,7 @@
 
 
     return (
-      <div className='main-container flex flex-col justify-center items-center h-full w-full py-8'>
+      <div className='main-container flex flex-col justify-center items-center h-full w-full !mx-0 !px-0 py-8'>
         <BounceFade>
           <h1 className='text-left my-8'>All posts</h1>
         </BounceFade>
@@ -47,36 +48,34 @@
               <div key={post.id} className='flex flex-col justify-center items-center'>
                   <Card className='w-full border-0 shadow-none items-center flex flex-col px-4  my-12     md:w-[42rem]  lg:flex-row lg:h-[14rem] lg:w-[52rem] lg:py-0 lg:my-4  lg:gap-0 '>
                       <div className='relative  object-cover  w-full  md:w-full lg:w-[20rem] lg:h-[14rem]'>
-                        <img src={post.coverPhoto} alt="Blog post cover photo" className='object-cover  h-56 w-full   md:w-full  lg:w-[20rem] lg:h-[14rem] '   />
-                        
+                      <ClickableImage postId={post.id} imgSrc={post.coverPhoto} />
                         <div><Badge variant='secondary' className='absolute z-1 bottom-4 left-4 '>{formatKebab(post.category)}</Badge></div>
                       </div>
                       <div className="  w-full h-full flex justify-evenly flex-col overflow-hidden lg:h-[14rem] lg:w-full">
-                          <CardHeader className='px-0  lg:py-2 lg:px-6'>
-                          <ClickableDiv route={`/blog/${post.id}`} >
-                            <p className='!my-0 text-2xl font-bold line-clamp-2 cursor-pointer'>{post.title}</p> 
-                          </ClickableDiv>
-                              <div className='flex gap-2 justify-start items-center '>
-                                {/* <Avatar className='size-5' >
-                                  <AvatarImage className='' src={ `/api/proxy-image?url=${encodeURIComponent(post.user.picture)}` } ></AvatarImage>
-                                </Avatar> */}
-                                <Avatar className='size-5 my-4 '>
-                                    { post.user.picture ? (
-                                        <AvatarImage className=' object-cover' src={`${process.env.NEXT_PUBLIC_API_URL}/api/proxy-image?url=${encodeURIComponent(post.user.picture)}`}></AvatarImage>
-                                    ) : (
-                                        <AvatarFallback className=''>{post.user.name.charAt(0).toUpperCase()}</AvatarFallback >
-                                    ) }
-                                </Avatar>
-                                <div className='flex flex-col'>
-                                  <p className='!my-0 text-sm text-[rgb(120,113,108)]  font-normal'>Published {dateFormat(post.createdAt)}</p>
-                                </div>
+                          <CardHeader className='px-0  lg:py-0 lg:px-6'>
+                          <div className="">
+                            <ClickableDiv route={`/blog/${post.id}`} >
+                              <p className='!my-0  text-2xl font-bold line-clamp-2 cursor-pointer'>{post.title}</p>
+                            </ClickableDiv>
+                            <div className='avatar-and-date flex gap-2 justify-start items-center !my-0 '>
+                              <Avatar className='size-5 my-1 '>
+                                  { post.user.picture ? (
+                                      <AvatarImage className=' object-cover' src={`${process.env.NEXT_PUBLIC_API_URL}/api/proxy-image?url=${encodeURIComponent(post.user.picture)}`}></AvatarImage>
+                                  ) : (
+                                      <AvatarFallback className=''>{post.user.name.charAt(0).toUpperCase()}</AvatarFallback >
+                                  ) }
+                              </Avatar>
+                              <div className='flex flex-col'>
+                                <p className='!my-0 text-sm text-[rgb(150,147,145)]  font-medium'>Published {dateFormat(post.createdAt)}</p>
                               </div>
+                            </div>
+                          </div>
                           </CardHeader>
                               <CardContent className=' px-0 flex flex-col gap-4 lg:gap-1 py-0   lg:px-6 '>
                               <p  className='line-clamp-3 lg:overflow-hidden lg:overflow-ellipsis lg:line-clamp-2 text-sm lg:mb-1' dangerouslySetInnerHTML={{ __html: paraphraseContent(post.content) }} />
                                 <hr />
                                 <div className='flex w-full justify-between  lg:px-0 lg:mt-2'>
-                                  <div className="flex gap-2">
+                                  <div className="flex gap-4">
                                     <div className='flex gap-2 justify-center items-center'>
                                       <Eye size='20' />{  post.views }
                                     </div>
@@ -92,12 +91,6 @@
               </div>
             )) }
           </div>
-          <div className='flex flex-col items-center justify-center'>
-              
-          </div>
-        <div className='flex' >
-
-        </div>
       </div>
     )
   }
