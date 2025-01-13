@@ -10,6 +10,7 @@
   import { BounceFade } from "@/components/ui/animations";
   import ClickableDiv from '@/components/ClickableDiv';
   import ClickableImage from '@/lib/clickableImage';
+  import EditDeleteButtons from '@/components/EditDeleteButtons'
 
   async function fetchPosts() {
     const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/post/get-all`, {
@@ -84,7 +85,7 @@
                                     </div>
                                   </div>
                                   <div className="flex gap-3">
-                                   
+                                    <EditDeleteButtons post={post}></EditDeleteButtons>
                                     <RedirectButton  postId={post.id}/>
                                   </div>
                                 </div>
