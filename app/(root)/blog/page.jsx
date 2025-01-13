@@ -10,9 +10,6 @@
   import { BounceFade } from "@/components/ui/animations";
   import ClickableDiv from '@/components/ClickableDiv';
   import ClickableImage from '@/lib/clickableImage';
-  import { getServerSession } from 'next-auth';
-  import { authOptions } from '@/app/api/auth/[...nextauth]/route';
-  import EditDeleteButtons from '@/components/EditDeleteButtons';
 
   async function fetchPosts() {
     const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/post/get-all`, {
@@ -33,8 +30,6 @@
 
 
   const BlogsPage = async () => {
-    const session = await getServerSession(authOptions);
-    console.log('server side session is ', session)
 
     // const data = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/post/get-all`);
     // const allPosts = await data.json();
@@ -89,13 +84,7 @@
                                     </div>
                                   </div>
                                   <div className="flex gap-3">
-                                    { session?.user.role === 'ADMIN' && (
-                                      <div className='flex gap-3'>
-                                        {/* <Button onClick={()=>handleEdit()} >Edit</Button>
-                                        <Button onClick={()=>setDeleteModal()} >Delete</Button> */}
-                                        <EditDeleteButtons post={post} />
-                                      </div>
-                                    ) }
+                                   
                                     <RedirectButton  postId={post.id}/>
                                   </div>
                                 </div>

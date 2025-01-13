@@ -6,7 +6,7 @@ import {prisma} from "@/prisma/prisma";
 import bcrypt from 'bcrypt'
 
 
-export const authOptions = {
+const authOptions = {
     // adapter : PrismaAdapter(prisma),
 
     providers: [
@@ -33,7 +33,8 @@ export const authOptions = {
             async authorize(credentials){
                 console.log('credentials are ', credentials)
                 const user = await prisma.user.findUnique({
-                    where : { email : credentials.email }
+                    where : { email : credentials.email },
+                    
                 })
                 console.log('user is ', user)
                 if (!user){
@@ -75,7 +76,7 @@ export const authOptions = {
                 console.log('Searching prisam for unique user');
                 const existingUser = await prisma.user.findUnique({
                     where : {
-                        email : profile.email
+                        email : profile.email,
                     },
                 })
                 console.log('found user?');
@@ -131,7 +132,7 @@ export const authOptions = {
             
                 const userWithRole = await prisma.user.findUnique({
                   where: { email: session.user.email },
-                
+                    
                   include : {
                     receivedNotifications : {
                         take : 15,
