@@ -307,7 +307,7 @@ const AdminCreatePage =  () => {
                             <div className="flex justify-between mt-12">
                             <Button variant="outline" size="icon" className={`w-auto px-3 ${firstPage && 'pointer-events-none bg-zinc-50 text-gray-400'  }  `} onClick={firstPage ? null : backToSetup}><ChevronLeft />Back</Button>
                             <Dialog>
-                            <DialogTrigger className={`size-lg bg-black rounded-md text-sm text-white px-4 py-2 ${firstPage && 'hidden bg-zinc-50 text-gray-400 transition-none pointer-events-none  cursor-default' } `}>Save Post</DialogTrigger>
+                            <DialogTrigger className={`size-lg bg-myGreen rounded-md text-sm text-white px-4 py-2 ${firstPage && 'hidden bg-zinc-50 text-gray-400 transition-none pointer-events-none  cursor-default' } `}>Save Post</DialogTrigger>
                             <DialogContent>
                                 <DialogHeader>
                                 <DialogTitle>Save your work as a draft or publish live!</DialogTitle>
@@ -315,7 +315,7 @@ const AdminCreatePage =  () => {
                                 </DialogHeader>
                                 <div className='flex justify-center items-center gap-5'>
                                     <Button variant='outline' onClick={saveDraft}>Save as Draft</Button>
-                                    <SubscribeButton onClick={publishPost} className='rounded-lg' text='Publish Post'></SubscribeButton>
+                                    <SubscribeButton onClick={publishPost} className='rounded-lg bg-myGreen' text='Publish Post'></SubscribeButton>
                                 </div>
                             </DialogContent>
                             </Dialog>

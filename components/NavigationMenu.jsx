@@ -110,28 +110,32 @@ export function NavigationMenuDemo() {
             </div>
           </Link>
         </div>
-          <Toggle className="sm:hidden" data-state={menuOpen === true ? 'on' : 'off'} onClick={handleToggle}><Menu/></Toggle>
-        <div className="sm:flex w-full justify-center gap-10  items-center hidden " >
-            <div>
-              <Link href='/'>
-                <div className="font-medium uppercase text-base  bg-transparent hover:text-slate-600">Home</div>
-              </Link>
+          <div>
+            <div className="w-full flex ">
+              <Toggle className="sm:hidden flex w-full" data-state={menuOpen === true ? 'on' : 'off'} onClick={handleToggle}><Menu/></Toggle>
             </div>
-            <div>
-              <Link href='/blog'>
-                <div className="font-medium uppercase text-base  bg-transparent hover:text-slate-600">Blog</div>
+                    <div className="md:flex w-full justify-center gap-10  items-center hidden " >
+              <div>
+                <Link href='/'>
+                  <div className="font-medium uppercase text-base  bg-transparent hover:text-slate-600">Home</div>
+                </Link>
+              </div>
+              <div>
+                <Link href='/blog'>
+                  <div className="font-medium uppercase text-base  bg-transparent hover:text-slate-600">Blog</div>
+                </Link>
+              </div>
+                <Link href='/postcards'>
+                <div className="font-medium uppercase text-base  bg-transparent hover:text-slate-600">Postcards</div>
               </Link>
-            </div>
-              <Link href='/postcards'>
-              <div className="font-medium uppercase text-base  bg-transparent hover:text-slate-600">Postcards</div>
-            </Link>
-            <div>
-              <Link href='/about'>
-                <div className="font-medium uppercase text-base  bg-transparent hover:text-slate-600">About</div>
-              </Link>
-            </div>
-            
-        </div>
+              <div>
+                <Link href='/about'>
+                  <div className="font-medium uppercase text-base  bg-transparent hover:text-slate-600">About</div>
+                </Link>
+              </div>
+              
+                    </div>
+          </div>
         <div className=" login  text-black items-center justify-self-end px-8  " >
             { session && session?.data?.user ? (
               <div>
@@ -193,7 +197,7 @@ export function NavigationMenuDemo() {
             </div>
         )  }
         { menuOpen && (
-              <div className="fixed top-16 left-0 right-0 bottom-0 z-40 bg-white flex flex-col items-center justify-start !px-0  !mx-0 py-6 animate-fadeIn w-full">
+              <div className="fixed top-0 pt-24 left-0 right-0 bottom-0 z-40 bg-white flex flex-col items-center justify-start !px-0  !mx-0 py-6 animate-fadeIn w-full">
               <ul className="space-y-4 flex flex-col  items-start  ">
                 <li className="">
                   <Link className="flex justify-center items-center gap-2" href="/" onClick={() => setMenuOpen(false)}>
@@ -219,6 +223,11 @@ export function NavigationMenuDemo() {
                   </Link>
                 </li>
                 <hr />
+                <li>
+                  <Button onClick={()=>setMenuOpen(false)}>
+                    Close
+                  </Button>
+                </li>
               </ul>
             </div>
             ) }

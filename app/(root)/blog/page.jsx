@@ -10,12 +10,16 @@
   import { BounceFade } from "@/components/ui/animations";
   import ClickableDiv from '@/components/ClickableDiv';
   import ClickableImage from '@/lib/clickableImage';
+  import { getServerSession } from 'next-auth';
+  import { authOptions } from '@/app/api/auth/[...nextauth]/route';
+  import EditDeleteButtons from '@/components/EditDeleteButtons';
 
   async function fetchPosts() {
     const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/post/get-all`, {
       cache: 'no-store', // Ensure always up-to-date content
     });
     
+  
   
     console.log(res);
 
@@ -29,7 +33,8 @@
 
 
   const BlogsPage = async () => {
-
+    const session = await getServerSession(authOptions);
+    console.log('server side session is ', session)
 
     // const data = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/post/get-all`);
     // const allPosts = await data.json();
@@ -49,7 +54,7 @@
                   <Card className='w-full border-0 shadow-none items-center flex flex-col px-4  my-12     md:w-[42rem]  lg:flex-row lg:h-[14rem] lg:w-[52rem] lg:py-0 lg:my-4  lg:gap-0 '>
                       <div className='relative  object-cover  w-full  md:w-full lg:w-[20rem] lg:h-[14rem]'>
                       <ClickableImage postId={post.id} imgSrc={post.coverPhoto} />
-                        <div><Badge variant='secondary' className='absolute z-1 bottom-4 left-4 '>{formatKebab(post.category)}</Badge></div>
+                        <div><Badge variant='secondary' className='absolute bg-myGreen z-1 bottom-4 left-4 '>{formatKebab(post.category)}</Badge></div>
                       </div>
                       <div className="  w-full h-full flex justify-evenly flex-col overflow-hidden lg:h-[14rem] lg:w-full">
                           <CardHeader className='px-0  lg:py-0 lg:px-6'>
@@ -83,7 +88,16 @@
                                       <MessageSquareText size='20'/>{ post.comments.length }
                                     </div>
                                   </div>
-                                  <RedirectButton  postId={post.id}/>
+                                  <div className="flex gap-3">
+                                    { session?.user.role === 'ADMIN' && (
+                                      <div className='flex gap-3'>
+                                        {/* <Button onClick={()=>handleEdit()} >Edit</Button>
+                                        <Button onClick={()=>setDeleteModal()} >Delete</Button> */}
+                                        <EditDeleteButtons post={post} />
+                                      </div>
+                                    ) }
+                                    <RedirectButton  postId={post.id}/>
+                                  </div>
                                 </div>
                               </CardContent>
                       </div>

@@ -37,7 +37,7 @@ const BlogDetails = async ( {params} ) => {
         <div className='main-container -mt-28 flex flex-col gap-8 w-full'>
              
             <div className='w-full relative'>
-                <img src={post.coverPhoto} alt="Blog cover photo" className=' h-[32rem] w-full object-cover lg:h-[54rem]  2xl:h-[54rem] bigscreen:h-[56rem]'/>
+                <img src={post.coverPhoto} alt="Blog cover photo" className=' w-full object-cover h-[100vh] '/>
                 <div className="absolute inset-0 bg-black opacity-0"></div>
             </div>
             <div className='flex flex-col px-12 sm:px-12  lg:px-40   2xl:px-[22rem] bigscreen:px-[32rem] '>

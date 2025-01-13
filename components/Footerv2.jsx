@@ -1,7 +1,6 @@
 'use server';
 
 import React from 'react';
-import {Card} from '../components/ui/card';
 import newprofilepic from '@/public/newprofilepic.jpg'
 import { Input } from '@/components/ui/input'
 import { Button } from '@/components/ui/button';
@@ -15,7 +14,7 @@ export async function Footer2 (){
     <div className="footer-container relative bg-myNude   items-center justify-center  pt-32 flex flex-col  ">
         
             <div className='flex flex-col justify-center items-center gap-28 md:flex-row md:justify-evenly '>
-                <Card className='dark bg-transparent pt-14 flex-col gap-3 justify-center items-center w-72 h-full '>
+                <div className= ' border-0  bg-transparent pt-14 flex-col gap-3 justify-center items-center w-72 h-full '>
                     <div className='flex justify-center items-center'>
                         <Image
                             src={newprofilepic}
@@ -31,7 +30,7 @@ export async function Footer2 (){
                                 14 years later, I&apos;m still traveling -- 88 countries and 7 continents -- and now living in Prague!</p>
                         <Button  variant='outline' className='bg-transparent dark text-slate-800'>Read more.</Button>
                     </div>
-                </Card>
+                </div>
                 <div className='newsletter px-10'>
                     <div className='flex flex-col items-center  justify-center gap-0    '>
                         <h3 className=' text-slate-800 font-bold' >Join My Newsletter</h3>
